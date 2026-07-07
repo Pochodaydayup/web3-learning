@@ -18,7 +18,7 @@
 ## 本卷章节
 
 - [第 1 章 Solidity 与状态基础](./chapter-01-solidity-state-foundations/)
-- 第 2 章 Event、Error 与接口设计
+- [第 2 章 Function、Event、Error 与边界设计](./chapter-02-functions-events-and-errors/)
 - 第 3 章 OpenZeppelin 常用模块
 - 第 4 章 升级模式与初始化
 - 第 5 章 合约设计中的状态机思维

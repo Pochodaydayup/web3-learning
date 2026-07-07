@@ -15,7 +15,7 @@
 ## 本卷章节
 
 - [第 1 章 如何读真实协议](./chapter-01-reading-real-protocols/)
-- 第 2 章 OpenZeppelin 阅读法
+- [第 2 章 OpenZeppelin 阅读法](./chapter-02-reading-openzeppelin/)
 - 第 3 章 Uniswap V2 结构拆解
 - 第 4 章 Aave 借贷主线阅读法
 - 第 5 章 EigenLayer 与复杂系统阅读策略

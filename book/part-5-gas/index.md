@@ -15,7 +15,7 @@ Gas 是很多 Solidity 工程师最早听说、最晚真正理解的主题。你
 ## 本卷章节
 
 - [第 1 章 Gas 成本心智模型](./chapter-01-gas-cost-mental-model/)
-- 第 2 章 Storage 布局与 Packing
+- [第 2 章 Storage 布局与 Packing](./chapter-02-storage-layout-and-packing/)
 - 第 3 章 常见优化手法与收益判断
 - 第 4 章 批处理、循环与复杂度
 - 第 5 章 可读性、可维护性与优化取舍

@@ -15,7 +15,7 @@
 ## 本卷章节
 
 - [第 1 章 安全审查基础](./chapter-01-security-review-basics/)
-- 第 2 章 签名、授权与重放
+- [第 2 章 签名、重放与 Delegatecall](./chapter-02-signatures-replay-and-delegatecall/)
 - 第 3 章 升级、代理与初始化风险
 - 第 4 章 Oracle、MEV 与价格依赖
 - 第 5 章 安全测试与审计协作

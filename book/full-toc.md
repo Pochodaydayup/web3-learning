@@ -2,87 +2,80 @@
 
 ## 卷一：Web3 与 Ethereum 基础
 
-1. Web3 全景与学习策略
-2. Ethereum 账户模型与状态模型
-3. 一笔交易的完整生命周期
-4. Gas、Nonce、Fee 与 Receipt
-5. Event、Log 与前端可观察性
+1. [第 1 章 交易心智模型](/part-1-foundations/chapter-01-transaction-mental-model/)
+2. [第 2 章 账户模型与 Nonce](/part-1-foundations/chapter-02-account-model-and-nonce/)
+3. Gas Fee、Base Fee 与 Priority Fee
+4. Receipt、Event 与链下索引
+5. 前端状态管理里的链上异步模型
 
 ## 卷二：Solidity（从零到高级）
 
-1. Solidity 基础语法与类型
-2. Storage / Memory / Calldata
-3. Function / Modifier / Event / Error
-4. Mapping / Struct / Array / Enum
-5. 权限、接口与库
-6. OpenZeppelin 与标准代币
-7. Upgradeable 与 UUPS
+1. [第 1 章 Solidity 与状态基础](/part-2-solidity/chapter-01-solidity-state-foundations/)
+2. [第 2 章 Function、Event、Error 与边界设计](/part-2-solidity/chapter-02-functions-events-and-errors/)
+3. OpenZeppelin 常用模块
+4. 升级模式与初始化
+5. 合约设计中的状态机思维
 
 ## 卷三：Foundry 完整开发指南
 
-1. Toolchain 与项目结构
-2. Forge / Cast / Anvil / Script
-3. 单元测试与 Cheatcodes
-4. Fuzz / Invariant / Fork Test
-5. Debug / Deploy / Verify / CI
+1. [第 1 章 Foundry 工程工作流](/part-3-foundry/chapter-01-foundry-engineering-workflow/)
+2. [第 2 章 Forge Test、Fuzz 与 Fork](/part-3-foundry/chapter-02-testing-fuzz-and-fork/)
+3. Script、部署与验证
+4. 调试、Trace 与 Gas 报告
+5. 更完整的 CI 与工程自动化
 
 ## 卷四：EVM 原理
 
-1. 执行模型
-2. Stack / Memory / Storage / Calldata
-3. Opcode 与调用上下文
-4. Storage Slot 与 Layout
-5. Bytecode 与 ABI Encoding
+1. [第 1 章 EVM 执行模型](/part-4-evm/chapter-01-evm-execution-model/)
+2. [第 2 章 Opcode 与调用上下文](/part-4-evm/chapter-02-call-context-and-opcodes/)
+3. 存储布局与 Slot
+4. 低级调用、返回数据与回滚
+5. 字节码、部署代码与运行时代码
 
 ## 卷五：Gas 与性能优化
 
-1. Gas 计量模型
-2. Storage 成本
-3. Memory / Calldata 成本
-4. Packing / Immutable / Constant
-5. 优化模式与反模式
-6. 实战案例
+1. [第 1 章 Gas 成本心智模型](/part-5-gas/chapter-01-gas-cost-mental-model/)
+2. [第 2 章 Storage 布局与 Packing](/part-5-gas/chapter-02-storage-layout-and-packing/)
+3. 常见优化手法与收益判断
+4. 批处理、循环与复杂度
+5. 可读性、可维护性与优化取舍
 
 ## 卷六：智能合约安全
 
-1. 威胁建模
-2. Reentrancy
-3. Access Control
-4. Signature / Permit / Replay
-5. Delegatecall / Proxy / Upgrade
-6. Oracle / Flash Loan / MEV
-7. 审计前自查
+1. [第 1 章 安全审查基础](/part-6-security/chapter-01-security-review-basics/)
+2. [第 2 章 签名、重放与 Delegatecall](/part-6-security/chapter-02-signatures-replay-and-delegatecall/)
+3. 升级、代理与初始化风险
+4. Oracle、MEV 与价格依赖
+5. 安全测试与审计协作
 
 ## 卷七：Ethereum 底层原理
 
-1. Transaction / Block / State Transition
-2. Mempool / Reorg / Finality
-3. Merkle / Trie
-4. Consensus / Validator
-5. Hash / ECDSA / Wallet
+1. [第 1 章 交易、区块与状态](/part-7-ethereum-internals/chapter-01-transaction-block-state/)
+2. [第 2 章 Mempool、重组与最终性](/part-7-ethereum-internals/chapter-02-mempool-reorg-and-finality/)
+3. Gas Limit、Base Fee 与打包激励
+4. Merkle Patricia Trie 与 State Root
+5. 共识、验证者与最终性基础
 
 ## 卷八：DeFi 原理
 
-1. DeFi 积木
-2. AMM
-3. Lending
-4. Oracle
-5. Liquidation
-6. MEV
+1. [第 1 章 DeFi 基础积木](/part-8-defi/chapter-01-defi-primitives/)
+2. [第 2 章 AMM 与流动性池设计](/part-8-defi/chapter-02-amm-design/)
+3. 借贷、抵押与清算
+4. Oracle、TWAP 与价格操纵
+5. MEV、套利与协议设计约束
 
 ## 卷九：协议源码阅读
 
-1. OpenZeppelin
-2. Uniswap V2
-3. Uniswap V3
-4. Aave
-5. EigenLayer
-6. 阅读方法总结
+1. [第 1 章 如何读真实协议](/part-9-protocol-reading/chapter-01-reading-real-protocols/)
+2. [第 2 章 OpenZeppelin 阅读法](/part-9-protocol-reading/chapter-02-reading-openzeppelin/)
+3. Uniswap V2 结构拆解
+4. Aave 借贷主线阅读法
+5. EigenLayer 与复杂系统阅读策略
 
 ## 卷十：训练与实战
 
-1. 100 天学习计划
-2. 面试题体系
-3. 项目实战路线
-4. 从 Todo 到 DEX
-5. 长期学习系统
+1. [第 1 章 项目路线与 100 天计划](/part-10-training/chapter-01-roadmap-and-100-days/)
+2. [第 2 章 面试题系统与输出节奏](/part-10-training/chapter-02-interview-system-and-output/)
+3. 项目复盘模板
+4. 作品集与源码笔记仓库
+5. 持续迭代的长期学习系统

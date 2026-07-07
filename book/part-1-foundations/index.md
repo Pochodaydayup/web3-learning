@@ -22,7 +22,7 @@
 ## 本卷章节
 
 - [第 1 章 交易心智模型](./chapter-01-transaction-mental-model/)
-- 第 2 章 账户模型与 Nonce
+- [第 2 章 账户模型与 Nonce](./chapter-02-account-model-and-nonce/)
 - 第 3 章 Gas Fee、Base Fee 与 Priority Fee
 - 第 4 章 Receipt、Event 与链下索引
 - 第 5 章 前端状态管理里的链上异步模型

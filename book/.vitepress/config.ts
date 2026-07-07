@@ -43,70 +43,80 @@ export default defineConfig({
         text: "卷一：基础",
         items: [
           { text: "卷一导读", link: "/part-1-foundations/" },
-          { text: "第 1 章 交易心智模型", link: "/part-1-foundations/chapter-01-transaction-mental-model/" }
+          { text: "第 1 章 交易心智模型", link: "/part-1-foundations/chapter-01-transaction-mental-model/" },
+          { text: "第 2 章 账户模型与 Nonce", link: "/part-1-foundations/chapter-02-account-model-and-nonce/" }
         ]
       },
       {
         text: "卷二：Solidity",
         items: [
           { text: "卷二导读", link: "/part-2-solidity/" },
-          { text: "第 1 章 Solidity 与状态基础", link: "/part-2-solidity/chapter-01-solidity-state-foundations/" }
+          { text: "第 1 章 Solidity 与状态基础", link: "/part-2-solidity/chapter-01-solidity-state-foundations/" },
+          { text: "第 2 章 Function、Event、Error 与边界设计", link: "/part-2-solidity/chapter-02-functions-events-and-errors/" }
         ]
       },
       {
         text: "卷三：Foundry",
         items: [
           { text: "卷三导读", link: "/part-3-foundry/" },
-          { text: "第 1 章 Foundry 工程工作流", link: "/part-3-foundry/chapter-01-foundry-engineering-workflow/" }
+          { text: "第 1 章 Foundry 工程工作流", link: "/part-3-foundry/chapter-01-foundry-engineering-workflow/" },
+          { text: "第 2 章 Forge Test、Fuzz 与 Fork", link: "/part-3-foundry/chapter-02-testing-fuzz-and-fork/" }
         ]
       },
       {
         text: "卷四：EVM",
         items: [
           { text: "卷四导读", link: "/part-4-evm/" },
-          { text: "第 1 章 EVM 执行模型", link: "/part-4-evm/chapter-01-evm-execution-model/" }
+          { text: "第 1 章 EVM 执行模型", link: "/part-4-evm/chapter-01-evm-execution-model/" },
+          { text: "第 2 章 Opcode 与调用上下文", link: "/part-4-evm/chapter-02-call-context-and-opcodes/" }
         ]
       },
       {
         text: "卷五：Gas",
         items: [
           { text: "卷五导读", link: "/part-5-gas/" },
-          { text: "第 1 章 Gas 成本心智模型", link: "/part-5-gas/chapter-01-gas-cost-mental-model/" }
+          { text: "第 1 章 Gas 成本心智模型", link: "/part-5-gas/chapter-01-gas-cost-mental-model/" },
+          { text: "第 2 章 Storage 布局与 Packing", link: "/part-5-gas/chapter-02-storage-layout-and-packing/" }
         ]
       },
       {
         text: "卷六：安全",
         items: [
           { text: "卷六导读", link: "/part-6-security/" },
-          { text: "第 1 章 安全审查基础", link: "/part-6-security/chapter-01-security-review-basics/" }
+          { text: "第 1 章 安全审查基础", link: "/part-6-security/chapter-01-security-review-basics/" },
+          { text: "第 2 章 签名、重放与 Delegatecall", link: "/part-6-security/chapter-02-signatures-replay-and-delegatecall/" }
         ]
       },
       {
         text: "卷七：Ethereum 底层",
         items: [
           { text: "卷七导读", link: "/part-7-ethereum-internals/" },
-          { text: "第 1 章 交易、区块与状态", link: "/part-7-ethereum-internals/chapter-01-transaction-block-state/" }
+          { text: "第 1 章 交易、区块与状态", link: "/part-7-ethereum-internals/chapter-01-transaction-block-state/" },
+          { text: "第 2 章 Mempool、重组与最终性", link: "/part-7-ethereum-internals/chapter-02-mempool-reorg-and-finality/" }
         ]
       },
       {
         text: "卷八：DeFi",
         items: [
           { text: "卷八导读", link: "/part-8-defi/" },
-          { text: "第 1 章 DeFi 基础积木", link: "/part-8-defi/chapter-01-defi-primitives/" }
+          { text: "第 1 章 DeFi 基础积木", link: "/part-8-defi/chapter-01-defi-primitives/" },
+          { text: "第 2 章 AMM 与流动性池设计", link: "/part-8-defi/chapter-02-amm-design/" }
         ]
       },
       {
         text: "卷九：协议源码阅读",
         items: [
           { text: "卷九导读", link: "/part-9-protocol-reading/" },
-          { text: "第 1 章 如何读真实协议", link: "/part-9-protocol-reading/chapter-01-reading-real-protocols/" }
+          { text: "第 1 章 如何读真实协议", link: "/part-9-protocol-reading/chapter-01-reading-real-protocols/" },
+          { text: "第 2 章 OpenZeppelin 阅读法", link: "/part-9-protocol-reading/chapter-02-reading-openzeppelin/" }
         ]
       },
       {
         text: "卷十：训练与实战",
         items: [
           { text: "卷十导读", link: "/part-10-training/" },
-          { text: "第 1 章 项目路线与 100 天计划", link: "/part-10-training/chapter-01-roadmap-and-100-days/" }
+          { text: "第 1 章 项目路线与 100 天计划", link: "/part-10-training/chapter-01-roadmap-and-100-days/" },
+          { text: "第 2 章 面试题系统与输出节奏", link: "/part-10-training/chapter-02-interview-system-and-output/" }
         ]
       },
       {

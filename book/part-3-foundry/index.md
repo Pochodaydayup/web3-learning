@@ -18,7 +18,7 @@
 ## 本卷章节
 
 - [第 1 章 Foundry 工程工作流](./chapter-01-foundry-engineering-workflow/)
-- 第 2 章 Forge Test、Fuzz 与 Invariant
+- [第 2 章 Forge Test、Fuzz 与 Fork](./chapter-02-testing-fuzz-and-fork/)
 - 第 3 章 Fork Test 与真实协议联调
 - 第 4 章 Script、部署与验证
 - 第 5 章 调试、Trace 与 Gas 报告

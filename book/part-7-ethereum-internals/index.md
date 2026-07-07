@@ -15,7 +15,7 @@
 ## 本卷章节
 
 - [第 1 章 交易、区块与状态](./chapter-01-transaction-block-state/)
-- 第 2 章 账户模型、Nonce 与交易排序
+- [第 2 章 Mempool、重组与最终性](./chapter-02-mempool-reorg-and-finality/)
 - 第 3 章 Gas Limit、Base Fee 与打包激励
 - 第 4 章 Merkle Patricia Trie 与 State Root
 - 第 5 章 共识、验证者与最终性基础
