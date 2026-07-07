@@ -1,0 +1,15 @@
+{
+  "name": "web3-learning",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "docs:dev": "vitepress dev book",
+    "docs:build": "vitepress build book",
+    "docs:preview": "vitepress preview book",
+    "docs:check": "node scripts/validate-book.mjs"
+  },
+  "devDependencies": {
+    "vitepress": "^1.0.0"
+  }
+}
