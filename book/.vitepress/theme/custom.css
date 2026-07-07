@@ -31,3 +31,24 @@
 .vp-doc a {
   text-decoration: none;
 }
+
+.book-outline {
+  padding: 1rem 1.1rem;
+  border: 1px solid rgba(15, 118, 110, 0.14);
+  border-radius: 16px;
+  background: rgba(15, 118, 110, 0.04);
+}
+
+.book-card-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.book-callout {
+  margin: 1.5rem 0;
+  padding: 1rem 1.1rem;
+  border-left: 4px solid var(--vp-c-brand-1);
+  background: rgba(15, 118, 110, 0.06);
+  border-radius: 10px;
+}

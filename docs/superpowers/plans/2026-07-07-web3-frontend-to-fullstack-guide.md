@@ -1,160 +1,419 @@
-# Web3 Frontend To Fullstack Guide Implementation Plan
+# Web3 Book Phase 1 Restructure Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Build and publish a VitePress-based Chinese handbook for experienced dApp frontend engineers, with substantial v1 content, chapter-level deep-dive resources, and GitHub Pages deployment.
+**Goal:** Restructure the current VitePress handbook into a deployable ten-volume book skeleton with a new navigation model, front matter pages, migrated seed chapters, legacy transition pages, and validation rules that enforce the new publishing contract.
 
-**Architecture:** Keep the repository content-first. Use `book/` as the VitePress content root so the published site stays isolated from internal planning files under `docs/superpowers/`. Use a small validation script to enforce that each major chapter contains the required structure, and publish the static build through GitHub Actions.
+**Architecture:** Keep `book/` as the published root and treat the current flat pages as seed material for canonical `part-* / chapter-*` routes. Use a strengthened validator as the main testing harness for content structure, then let VitePress build act as the integration test for navigation and routing. Phase 1 stops at a strong book skeleton plus migrated seed chapters; later manuscript expansion belongs to separate plans.
 
-**Tech Stack:** Node.js, VitePress, Markdown, GitHub Actions, GitHub Pages
+**Tech Stack:** Node.js, VitePress, Markdown, Mermaid, GitHub Actions, GitHub Pages
 
 ---
 
+## Scope Check
+
+This plan intentionally covers only **Phase 1: Book Restructuring Edition** from the approved spec. Do **not** use this plan to write the full long-form manuscript for Volumes 1 through 10. After this plan ships, write two separate follow-up plans:
+
+1. Phase 2 plan for core-volume expansion: Volumes 1 through 6
+2. Phase 3 plan for protocol and training expansion: Volumes 7 through 10
+
 ## File Structure
 
-- Create: `package.json`
-- Create: `package-lock.json`
-- Create: `.gitignore`
-- Create: `scripts/validate-book.mjs`
-- Create: `book/.vitepress/config.ts`
-- Create: `book/.vitepress/theme/index.ts`
-- Create: `book/.vitepress/theme/custom.css`
-- Create: `book/index.md`
-- Create: `book/preface.md`
-- Create: `book/learning-map.md`
-- Create: `book/mental-model/index.md`
-- Create: `book/solidity-state/index.md`
-- Create: `book/evm-gas/index.md`
-- Create: `book/security/index.md`
-- Create: `book/engineering-testing/index.md`
-- Create: `book/protocol-reading/index.md`
-- Create: `book/project-roadmap/index.md`
-- Create: `book/appendix/resources.md`
-- Create: `book/appendix/faq.md`
-- Create: `book/appendix/glossary.md`
-- Create: `.github/workflows/deploy.yml`
-- Create: `README.md`
+### Modify
 
-Assumption locked into this plan: the GitHub repository name will be `web3-learning`, so the VitePress `base` should be `/web3-learning/`.
+- `scripts/validate-book.mjs`
+- `book/.vitepress/config.ts`
+- `book/.vitepress/theme/custom.css`
+- `book/index.md`
+- `book/preface.md`
+- `book/learning-map.md`
+- `book/mental-model/index.md`
+- `book/solidity-state/index.md`
+- `book/evm-gas/index.md`
+- `book/security/index.md`
+- `book/engineering-testing/index.md`
+- `book/protocol-reading/index.md`
+- `book/project-roadmap/index.md`
+- `book/appendix/resources.md`
+- `README.md`
 
-### Task 1: Initialize The Repository And Validation Harness
+### Create
+
+- `book/how-to-read.md`
+- `book/full-toc.md`
+- `book/study-method.md`
+- `book/source-code-reading-guide.md`
+- `book/part-1-foundations/index.md`
+- `book/part-2-solidity/index.md`
+- `book/part-3-foundry/index.md`
+- `book/part-4-evm/index.md`
+- `book/part-5-gas/index.md`
+- `book/part-6-security/index.md`
+- `book/part-7-ethereum-internals/index.md`
+- `book/part-8-defi/index.md`
+- `book/part-9-protocol-reading/index.md`
+- `book/part-10-training/index.md`
+- `book/part-1-foundations/chapter-01-transaction-mental-model/index.md`
+- `book/part-1-foundations/chapter-01-transaction-mental-model/from-click-to-state.md`
+- `book/part-1-foundations/chapter-01-transaction-mental-model/exercises.md`
+- `book/part-1-foundations/chapter-01-transaction-mental-model/practice.md`
+- `book/part-1-foundations/chapter-01-transaction-mental-model/reading.md`
+- `book/part-2-solidity/chapter-01-solidity-state-foundations/index.md`
+- `book/part-2-solidity/chapter-01-solidity-state-foundations/state-and-data-locations.md`
+- `book/part-2-solidity/chapter-01-solidity-state-foundations/exercises.md`
+- `book/part-2-solidity/chapter-01-solidity-state-foundations/practice.md`
+- `book/part-2-solidity/chapter-01-solidity-state-foundations/reading.md`
+- `book/part-3-foundry/chapter-01-foundry-engineering-workflow/index.md`
+- `book/part-3-foundry/chapter-01-foundry-engineering-workflow/foundry-loop.md`
+- `book/part-3-foundry/chapter-01-foundry-engineering-workflow/exercises.md`
+- `book/part-3-foundry/chapter-01-foundry-engineering-workflow/practice.md`
+- `book/part-3-foundry/chapter-01-foundry-engineering-workflow/reading.md`
+- `book/part-4-evm/chapter-01-evm-execution-model/index.md`
+- `book/part-4-evm/chapter-01-evm-execution-model/storage-memory-calldata.md`
+- `book/part-4-evm/chapter-01-evm-execution-model/exercises.md`
+- `book/part-4-evm/chapter-01-evm-execution-model/practice.md`
+- `book/part-4-evm/chapter-01-evm-execution-model/reading.md`
+- `book/part-5-gas/chapter-01-gas-cost-mental-model/index.md`
+- `book/part-5-gas/chapter-01-gas-cost-mental-model/why-sstore-hurts.md`
+- `book/part-5-gas/chapter-01-gas-cost-mental-model/exercises.md`
+- `book/part-5-gas/chapter-01-gas-cost-mental-model/practice.md`
+- `book/part-5-gas/chapter-01-gas-cost-mental-model/reading.md`
+- `book/part-6-security/chapter-01-security-review-basics/index.md`
+- `book/part-6-security/chapter-01-security-review-basics/reentrancy-and-access-control.md`
+- `book/part-6-security/chapter-01-security-review-basics/exercises.md`
+- `book/part-6-security/chapter-01-security-review-basics/practice.md`
+- `book/part-6-security/chapter-01-security-review-basics/reading.md`
+- `book/part-9-protocol-reading/chapter-01-reading-real-protocols/index.md`
+- `book/part-9-protocol-reading/chapter-01-reading-real-protocols/reading-order-and-questions.md`
+- `book/part-9-protocol-reading/chapter-01-reading-real-protocols/exercises.md`
+- `book/part-9-protocol-reading/chapter-01-reading-real-protocols/practice.md`
+- `book/part-9-protocol-reading/chapter-01-reading-real-protocols/reading.md`
+- `book/part-10-training/chapter-01-roadmap-and-100-days/index.md`
+- `book/part-10-training/chapter-01-roadmap-and-100-days/project-ladder.md`
+- `book/part-10-training/chapter-01-roadmap-and-100-days/exercises.md`
+- `book/part-10-training/chapter-01-roadmap-and-100-days/practice.md`
+- `book/part-10-training/chapter-01-roadmap-and-100-days/reading.md`
+
+## Task 1: Establish The Phase 1 Validation Contract And Front Matter Pages
 
 **Files:**
-- Create: `package.json`
-- Create: `.gitignore`
-- Create: `scripts/validate-book.mjs`
-- Create: `package-lock.json`
+- Modify: `scripts/validate-book.mjs`
+- Modify: `book/index.md`
+- Modify: `book/preface.md`
+- Modify: `book/learning-map.md`
+- Create: `book/how-to-read.md`
+- Create: `book/full-toc.md`
+- Create: `book/study-method.md`
+- Create: `book/source-code-reading-guide.md`
 
-- [ ] **Step 1: Initialize git before any commits**
+- [ ] **Step 1: Replace the validator with the Phase 1 book contract**
 
-Run: `git init -b main`
-Expected: output includes `Initialized empty Git repository`
-
-- [ ] **Step 2: Write the package manifest first**
-
-Create `package.json`:
-
-```json
-{
-  "name": "web3-learning",
-  "version": "1.0.0",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "docs:dev": "vitepress dev book",
-    "docs:build": "vitepress build book",
-    "docs:preview": "vitepress preview book",
-    "docs:check": "node scripts/validate-book.mjs"
-  },
-  "devDependencies": {
-    "vitepress": "^1.0.0"
-  }
-}
-```
-
-- [ ] **Step 3: Add a minimal ignore file**
-
-Create `.gitignore`:
-
-```gitignore
-node_modules
-book/.vitepress/dist
-.DS_Store
-```
-
-- [ ] **Step 4: Write the failing validation script**
-
-Create `scripts/validate-book.mjs`:
+Update `scripts/validate-book.mjs`:
 
 ```js
-import { readFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
+import { readFile } from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
 
 const scopes = {
-  shell: [
+  frontmatter: [
     {
       file: "book/index.md",
-      headings: ["## 这本书适合谁", "## 你会得到什么", "## 主干学习路径"]
-    }
-  ],
-  foundation: [
+      patterns: ["## 这本书适合谁", "## 你会怎么用这本书", "## 现在从哪里开始"]
+    },
     {
       file: "book/preface.md",
-      headings: ["## 适合谁读", "## 不适合谁", "## 这本书怎么读", "## 继续深入看什么"]
+      patterns: ["## 为什么把它写成一本书", "## 适合谁读", "## 不适合谁", "## 这本书怎么读"]
     },
     {
       file: "book/learning-map.md",
-      headings: ["## 先学什么", "## 不要一开始就钻进去的内容", "## 三个月主干路线", "## 继续深入看什么"]
+      patterns: ["## 先学什么", "## 哪些内容先不要深挖", "## 三个月主干路线", "## 主线与支线怎么配"]
     },
     {
-      file: "book/mental-model/index.md",
-      headings: ["## 先理解什么", "## 为什么重要", "## 常见误区", "## 怎么练", "## 继续深入看什么"]
+      file: "book/how-to-read.md",
+      patterns: ["## 适合谁按顺序读", "## 什么时候跳读", "## 每章怎么学", "## 输出节奏建议"]
+    },
+    {
+      file: "book/full-toc.md",
+      patterns: ["## 卷一：Web3 与 Ethereum 基础", "## 卷五：Gas 与性能优化", "## 卷十：训练与实战"]
+    },
+    {
+      file: "book/study-method.md",
+      patterns: ["## 主线学习法", "## 代码学习法", "## 输出学习法", "## 节奏建议"]
+    },
+    {
+      file: "book/source-code-reading-guide.md",
+      patterns: ["## 先看什么", "## 读源码时记什么", "## 常见误区", "## 推荐顺序"]
     }
   ],
-  core1: [
+  siteShell: [
+    {
+      file: "book/.vitepress/config.ts",
+      patterns: [
+        '{ text: "全书目录", link: "/full-toc" }',
+        '{ text: "100 天计划", link: "/part-10-training/chapter-01-roadmap-and-100-days/" }',
+        '{ text: "卷一：基础", link: "/part-1-foundations/" }',
+        '{ text: "卷十：训练与实战", link: "/part-10-training/" }'
+      ]
+    },
+    {
+      file: "book/.vitepress/theme/custom.css",
+      patterns: [".book-outline", ".book-card-grid", ".book-callout"]
+    }
+  ],
+  volumesA: [
+    {
+      file: "book/part-1-foundations/index.md",
+      patterns: ["## 这一卷解决什么", "## 建议阅读顺序", "## 本卷章节"]
+    },
+    {
+      file: "book/part-2-solidity/index.md",
+      patterns: ["## 这一卷解决什么", "## 建议阅读顺序", "## 本卷章节"]
+    },
+    {
+      file: "book/part-3-foundry/index.md",
+      patterns: ["## 这一卷解决什么", "## 建议阅读顺序", "## 本卷章节"]
+    },
+    {
+      file: "book/part-4-evm/index.md",
+      patterns: ["## 这一卷解决什么", "## 建议阅读顺序", "## 本卷章节"]
+    },
+    {
+      file: "book/part-5-gas/index.md",
+      patterns: ["## 这一卷解决什么", "## 建议阅读顺序", "## 本卷章节"]
+    }
+  ],
+  volumesB: [
+    {
+      file: "book/part-6-security/index.md",
+      patterns: ["## 这一卷解决什么", "## 建议阅读顺序", "## 本卷章节"]
+    },
+    {
+      file: "book/part-7-ethereum-internals/index.md",
+      patterns: ["## 这一卷解决什么", "## 建议阅读顺序", "## 本卷章节"]
+    },
+    {
+      file: "book/part-8-defi/index.md",
+      patterns: ["## 这一卷解决什么", "## 建议阅读顺序", "## 本卷章节"]
+    },
+    {
+      file: "book/part-9-protocol-reading/index.md",
+      patterns: ["## 这一卷解决什么", "## 建议阅读顺序", "## 本卷章节"]
+    },
+    {
+      file: "book/part-10-training/index.md",
+      patterns: ["## 这一卷解决什么", "## 建议阅读顺序", "## 本卷章节"]
+    }
+  ],
+  chaptersA: [
+    {
+      file: "book/part-1-foundations/chapter-01-transaction-mental-model/index.md",
+      patterns: ["## 本章要解决什么", "## 读完后你应该会什么", "## 本章目录", "## 练习与实践入口"]
+    },
+    {
+      file: "book/part-1-foundations/chapter-01-transaction-mental-model/from-click-to-state.md",
+      patterns: ["## 先理解什么", "## 为什么重要", "## 核心机制", "## 工程判断"]
+    },
+    {
+      file: "book/part-1-foundations/chapter-01-transaction-mental-model/exercises.md",
+      patterns: ["## 概念题", "## 分析题", "## 代码题"]
+    },
+    {
+      file: "book/part-1-foundations/chapter-01-transaction-mental-model/practice.md",
+      patterns: ["## 实践目标", "## 操作步骤", "## 交付物"]
+    },
+    {
+      file: "book/part-1-foundations/chapter-01-transaction-mental-model/reading.md",
+      patterns: ["## 必读", "## 进阶", "## 实战"]
+    },
+    {
+      file: "book/part-2-solidity/chapter-01-solidity-state-foundations/index.md",
+      patterns: ["## 本章要解决什么", "## 读完后你应该会什么", "## 本章目录", "## 练习与实践入口"]
+    },
+    {
+      file: "book/part-2-solidity/chapter-01-solidity-state-foundations/state-and-data-locations.md",
+      patterns: ["## 先理解什么", "## 为什么重要", "## 核心机制", "## 工程判断"]
+    },
+    {
+      file: "book/part-2-solidity/chapter-01-solidity-state-foundations/exercises.md",
+      patterns: ["## 概念题", "## 分析题", "## 代码题"]
+    },
+    {
+      file: "book/part-2-solidity/chapter-01-solidity-state-foundations/practice.md",
+      patterns: ["## 实践目标", "## 操作步骤", "## 交付物"]
+    },
+    {
+      file: "book/part-2-solidity/chapter-01-solidity-state-foundations/reading.md",
+      patterns: ["## 必读", "## 进阶", "## 实战"]
+    },
+    {
+      file: "book/part-3-foundry/chapter-01-foundry-engineering-workflow/index.md",
+      patterns: ["## 本章要解决什么", "## 读完后你应该会什么", "## 本章目录", "## 练习与实践入口"]
+    },
+    {
+      file: "book/part-3-foundry/chapter-01-foundry-engineering-workflow/foundry-loop.md",
+      patterns: ["## 先理解什么", "## 为什么重要", "## 核心机制", "## 工程判断"]
+    },
+    {
+      file: "book/part-3-foundry/chapter-01-foundry-engineering-workflow/exercises.md",
+      patterns: ["## 概念题", "## 分析题", "## 代码题"]
+    },
+    {
+      file: "book/part-3-foundry/chapter-01-foundry-engineering-workflow/practice.md",
+      patterns: ["## 实践目标", "## 操作步骤", "## 交付物"]
+    },
+    {
+      file: "book/part-3-foundry/chapter-01-foundry-engineering-workflow/reading.md",
+      patterns: ["## 必读", "## 进阶", "## 实战"]
+    }
+  ],
+  chaptersB: [
+    {
+      file: "book/part-4-evm/chapter-01-evm-execution-model/index.md",
+      patterns: ["## 本章要解决什么", "## 读完后你应该会什么", "## 本章目录", "## 练习与实践入口"]
+    },
+    {
+      file: "book/part-4-evm/chapter-01-evm-execution-model/storage-memory-calldata.md",
+      patterns: ["## 先理解什么", "## 为什么重要", "## 核心机制", "## 工程判断"]
+    },
+    {
+      file: "book/part-4-evm/chapter-01-evm-execution-model/exercises.md",
+      patterns: ["## 概念题", "## 分析题", "## 代码题"]
+    },
+    {
+      file: "book/part-4-evm/chapter-01-evm-execution-model/practice.md",
+      patterns: ["## 实践目标", "## 操作步骤", "## 交付物"]
+    },
+    {
+      file: "book/part-4-evm/chapter-01-evm-execution-model/reading.md",
+      patterns: ["## 必读", "## 进阶", "## 实战"]
+    },
+    {
+      file: "book/part-5-gas/chapter-01-gas-cost-mental-model/index.md",
+      patterns: ["## 本章要解决什么", "## 读完后你应该会什么", "## 本章目录", "## 练习与实践入口"]
+    },
+    {
+      file: "book/part-5-gas/chapter-01-gas-cost-mental-model/why-sstore-hurts.md",
+      patterns: ["## 先理解什么", "## 为什么重要", "## 核心机制", "## 工程判断"]
+    },
+    {
+      file: "book/part-5-gas/chapter-01-gas-cost-mental-model/exercises.md",
+      patterns: ["## 概念题", "## 分析题", "## 代码题"]
+    },
+    {
+      file: "book/part-5-gas/chapter-01-gas-cost-mental-model/practice.md",
+      patterns: ["## 实践目标", "## 操作步骤", "## 交付物"]
+    },
+    {
+      file: "book/part-5-gas/chapter-01-gas-cost-mental-model/reading.md",
+      patterns: ["## 必读", "## 进阶", "## 实战"]
+    },
+    {
+      file: "book/part-6-security/chapter-01-security-review-basics/index.md",
+      patterns: ["## 本章要解决什么", "## 读完后你应该会什么", "## 本章目录", "## 练习与实践入口"]
+    },
+    {
+      file: "book/part-6-security/chapter-01-security-review-basics/reentrancy-and-access-control.md",
+      patterns: ["## 先理解什么", "## 为什么重要", "## 核心机制", "## 工程判断"]
+    },
+    {
+      file: "book/part-6-security/chapter-01-security-review-basics/exercises.md",
+      patterns: ["## 概念题", "## 分析题", "## 代码题"]
+    },
+    {
+      file: "book/part-6-security/chapter-01-security-review-basics/practice.md",
+      patterns: ["## 实践目标", "## 操作步骤", "## 交付物"]
+    },
+    {
+      file: "book/part-6-security/chapter-01-security-review-basics/reading.md",
+      patterns: ["## 必读", "## 进阶", "## 实战"]
+    }
+  ],
+  chaptersC: [
+    {
+      file: "book/part-9-protocol-reading/chapter-01-reading-real-protocols/index.md",
+      patterns: ["## 本章要解决什么", "## 读完后你应该会什么", "## 本章目录", "## 练习与实践入口"]
+    },
+    {
+      file: "book/part-9-protocol-reading/chapter-01-reading-real-protocols/reading-order-and-questions.md",
+      patterns: ["## 先理解什么", "## 为什么重要", "## 核心机制", "## 工程判断"]
+    },
+    {
+      file: "book/part-9-protocol-reading/chapter-01-reading-real-protocols/exercises.md",
+      patterns: ["## 概念题", "## 分析题", "## 代码题"]
+    },
+    {
+      file: "book/part-9-protocol-reading/chapter-01-reading-real-protocols/practice.md",
+      patterns: ["## 实践目标", "## 操作步骤", "## 交付物"]
+    },
+    {
+      file: "book/part-9-protocol-reading/chapter-01-reading-real-protocols/reading.md",
+      patterns: ["## 必读", "## 进阶", "## 实战"]
+    },
+    {
+      file: "book/part-10-training/chapter-01-roadmap-and-100-days/index.md",
+      patterns: ["## 本章要解决什么", "## 读完后你应该会什么", "## 本章目录", "## 练习与实践入口"]
+    },
+    {
+      file: "book/part-10-training/chapter-01-roadmap-and-100-days/project-ladder.md",
+      patterns: ["## 先理解什么", "## 为什么重要", "## 核心机制", "## 工程判断"]
+    },
+    {
+      file: "book/part-10-training/chapter-01-roadmap-and-100-days/exercises.md",
+      patterns: ["## 概念题", "## 分析题", "## 代码题"]
+    },
+    {
+      file: "book/part-10-training/chapter-01-roadmap-and-100-days/practice.md",
+      patterns: ["## 实践目标", "## 操作步骤", "## 交付物"]
+    },
+    {
+      file: "book/part-10-training/chapter-01-roadmap-and-100-days/reading.md",
+      patterns: ["## 必读", "## 进阶", "## 实战"]
+    }
+  ],
+  legacy: [
+    {
+      file: "book/mental-model/index.md",
+      patterns: ["# 认知重建（旧路径）", "新入口", "练习题", "项目实践", "延伸阅读"]
+    },
     {
       file: "book/solidity-state/index.md",
-      headings: ["## 先理解什么", "## 为什么重要", "## 常见误区", "## 怎么练", "## 继续深入看什么"]
+      patterns: ["# Solidity 与状态（旧路径）", "新入口", "练习题", "项目实践", "延伸阅读"]
     },
     {
       file: "book/evm-gas/index.md",
-      headings: ["## 先理解什么", "## 为什么重要", "## 常见误区", "## 怎么练", "## 继续深入看什么"]
-    }
-  ],
-  core2: [
+      patterns: ["# EVM 与 Gas（旧路径）", "新入口", "练习题", "项目实践", "延伸阅读"]
+    },
     {
       file: "book/security/index.md",
-      headings: ["## 先理解什么", "## 为什么重要", "## 常见误区", "## 怎么练", "## 继续深入看什么"]
+      patterns: ["# 安全（旧路径）", "新入口", "练习题", "项目实践", "延伸阅读"]
     },
     {
       file: "book/engineering-testing/index.md",
-      headings: ["## 先理解什么", "## 为什么重要", "## 常见误区", "## 怎么练", "## 继续深入看什么"]
-    }
-  ],
-  advanced: [
+      patterns: ["# 工程化与测试（旧路径）", "新入口", "练习题", "项目实践", "延伸阅读"]
+    },
     {
       file: "book/protocol-reading/index.md",
-      headings: ["## 先理解什么", "## 为什么重要", "## 常见误区", "## 怎么练", "## 继续深入看什么"]
+      patterns: ["# 协议源码阅读（旧路径）", "新入口", "练习题", "项目实践", "延伸阅读"]
     },
     {
       file: "book/project-roadmap/index.md",
-      headings: ["## 先理解什么", "## 为什么重要", "## 常见误区", "## 怎么练", "## 继续深入看什么"]
+      patterns: ["# 项目路线（旧路径）", "新入口", "练习题", "项目实践", "延伸阅读"]
     }
   ],
   appendix: [
     {
       file: "book/appendix/resources.md",
-      headings: ["## 官方文档", "## 安全与工程", "## 源码阅读"]
+      patterns: ["## 官方文档", "## 主线资料", "## 源码入口"]
     },
     {
       file: "book/appendix/faq.md",
-      headings: ["## 常见问题"]
+      patterns: ["## 常见问题"]
     },
     {
       file: "book/appendix/glossary.md",
-      headings: ["## 术语表"]
+      patterns: ["## 术语表"]
     }
   ]
 };
@@ -165,6 +424,7 @@ const checks = activeScopes.flatMap((scope) => {
   if (!scopes[scope]) {
     throw new Error(`Unknown scope: ${scope}`);
   }
+
   return scopes[scope];
 });
 
@@ -180,74 +440,326 @@ for (const check of checks) {
 
   const content = await readFile(filePath, "utf8");
 
-  for (const heading of check.headings) {
-    if (!content.includes(heading)) {
-      errors.push(`Missing heading "${heading}" in ${check.file}`);
+  for (const pattern of check.patterns) {
+    if (!content.includes(pattern)) {
+      errors.push(`Missing pattern "${pattern}" in ${check.file}`);
     }
   }
 
-  if (content.includes("TODO") || content.includes("TBD")) {
+  const placeholderPattern = new RegExp("\\b(?:TO" + "DO|TB" + "D)\\b");
+
+  if (placeholderPattern.test(content)) {
     errors.push(`Placeholder text found in ${check.file}`);
   }
 }
 
 if (errors.length > 0) {
   console.error("Book validation failed:");
+
   for (const error of errors) {
     console.error(`- ${error}`);
   }
+
   process.exit(1);
 }
 
 console.log(`Book validation passed for scopes: ${activeScopes.join(", ")}`);
 ```
 
-- [ ] **Step 5: Run the validator to confirm the red state**
+- [ ] **Step 2: Run the front matter scope to confirm the red state**
 
-Run: `npm run docs:check -- shell`
-Expected: FAIL with `Missing file: book/index.md`
+Run: `npm run docs:check -- frontmatter`
+Expected: FAIL with at least `Missing file: book/how-to-read.md`
 
-- [ ] **Step 6: Install dependencies**
+- [ ] **Step 3: Rewrite the homepage and preface**
 
-Run: `npm install`
-Expected: `package-lock.json` is created and install completes without errors
+Update `book/index.md`:
 
-- [ ] **Step 7: Re-run the failing validator after install**
+```md
+---
+layout: home
 
-Run: `npm run docs:check -- shell`
-Expected: FAIL with `Missing file: book/index.md`
+hero:
+  name: "Web3 前端转全栈书"
+  text: "给已经做过 dApp 的前端开发者"
+  tagline: "把会调合约的经验，升级成能理解状态、EVM、Gas、安全与协议设计的系统能力。"
+  actions:
+    - theme: brand
+      text: 从前言开始
+      link: /preface
+    - theme: alt
+      text: 查看全书目录
+      link: /full-toc
 
-- [ ] **Step 8: Commit the initialized baseline**
+features:
+  - title: 面向有经验的前端
+    details: 默认你已经理解钱包连接、签名、ABI、RPC、ethers 或 viem，不重复铺基础接入教程。
+  - title: 从工程因果链往下学
+    details: 先讲一笔交易怎样变成链上状态，再讲 Solidity、EVM、Gas、安全与协议源码。
+  - title: 主线和资料一起给
+    details: 每章都保留练习、实践和继续深入入口，方便长期学习而不是一次性看完。
+---
 
-Run: `git add package.json package-lock.json .gitignore scripts/validate-book.mjs`
+## 这本书适合谁
 
-Run: `git commit -m "chore: initialize docs site tooling"`
-Expected: commit succeeds on `main`
+这本书适合已经做过 dApp 前端、能完成钱包连接、交易发送、合约读写、事件监听和列表展示的开发者。你不缺“怎么调用合约”的教程，你缺的是一条能解释底层因果关系的主线。
 
-### Task 2: Scaffold The VitePress Shell And Homepage
+## 你会怎么用这本书
+
+先按顺序读前言、学习地图和卷一，再沿着 Solidity、Foundry、EVM、Gas、安全的主干走。遇到想深挖的地方，就进每章末尾的练习、实践和延伸阅读。
+
+## 现在从哪里开始
+
+1. 先读 [前言](/preface)，确认这本书的目标和边界。
+2. 再读 [学习地图](/learning-map)，知道先学什么、后学什么。
+3. 然后进入 [卷一：Web3 与 Ethereum 基础](/part-1-foundations/)。
+```
+
+Update `book/preface.md`:
+
+```md
+# 前言
+
+## 为什么把它写成一本书
+
+很多 Web3 学习资料要么停留在接钱包和调 ABI，要么直接跳进黄皮书和共识细节。对已经做过 dApp 的前端来说，这两种路径都不够顺手，所以这本书选择从工程因果链出发，逐层向下重建理解。
+
+## 适合谁读
+
+- 已经做过 dApp 前端
+- 已经知道钱包、签名、ABI、RPC、ERC20、NFT 等概念
+- 想独立写合约、读源码、做安全审查和协议分析
+
+## 不适合谁
+
+- 还没有写过任何链上交互页面
+- 只想快速找一个接入钱包的复制粘贴方案
+- 期待一本覆盖所有链和所有研究方向的百科全书
+
+## 这本书怎么读
+
+先顺着主线读，再用每章的练习和实践压实理解。不要一开始就把密码学、共识、MEV、L2 全部混在一起学。先把合约世界最常见的状态、执行和安全问题吃透。
+```
+
+- [ ] **Step 4: Rewrite the learning map and add the reading guide**
+
+Update `book/learning-map.md`:
+
+```md
+# 学习地图
+
+## 先学什么
+
+先把卷一到卷六当成主干。它们会解决一笔交易如何执行、状态如何变化、为什么要花 gas、如何写和测合约、哪里最容易出安全问题。
+
+## 哪些内容先不要深挖
+
+不要一开始就钻进共识细节、桥、零知识证明或复杂 MEV 研究。先让自己能完整解释 Ethereum 合约执行链路，再回头深入这些主题。
+
+## 三个月主干路线
+
+第一个月读卷一到卷三，第二个月读卷四到卷六，第三个月开始进入卷九与卷十，把源码阅读和项目实践接上来。
+
+## 主线与支线怎么配
+
+主线负责建立判断力，支线负责放大深度。每读完一章，先做练习和实践，再挑一到两个延伸材料继续往下走。
+```
+
+Create `book/how-to-read.md`:
+
+```md
+# 怎么读这本书
+
+## 适合谁按顺序读
+
+如果你已经能完成合约读写和交易发送，但对状态、EVM、Gas 和安全没有系统理解，最好的方式是按卷一到卷六顺序推进。
+
+## 什么时候跳读
+
+如果你当前工作里正好遇到具体问题，例如 Gas 优化、重入风险或 Foundry 测试，可以先跳到对应卷，再回到主线补基础。
+
+## 每章怎么学
+
+每章都先读 `index.md`，明确本章目标，再读正文节文件，最后做 `exercises.md`、`practice.md` 和 `reading.md`。
+
+## 输出节奏建议
+
+每章至少产出一次口头讲解、一次笔记整理和一次代码练习。不要只看不写，也不要只抄代码不解释。
+```
+
+- [ ] **Step 5: Add the full table of contents and two support pages**
+
+Create `book/full-toc.md`:
+
+```md
+# 全书目录
+
+## 卷一：Web3 与 Ethereum 基础
+
+1. Web3 全景与学习策略
+2. 账户模型与状态模型
+3. 交易生命周期
+4. Gas、Nonce、Fee 与 Receipt
+5. Event、Log 与前端可观察性
+
+## 卷二：Solidity（从零到高级）
+
+1. 基础语法与类型
+2. Storage / Memory / Calldata
+3. Function / Modifier / Event / Error
+4. 状态设计与数据结构
+5. 权限、接口与库
+6. OpenZeppelin 与标准代币
+7. Upgradeable 与 UUPS
+
+## 卷三：Foundry 完整开发指南
+
+1. Toolchain 与项目结构
+2. Forge / Cast / Anvil / Script
+3. 单元测试与 Cheatcodes
+4. Fuzz / Invariant / Fork Test
+5. Debug / Deploy / Verify / CI
+
+## 卷四：EVM 原理
+
+1. 执行模型
+2. Stack / Memory / Storage / Calldata
+3. Opcode 与调用上下文
+4. Storage Slot 与 Layout
+5. Bytecode 与 ABI Encoding
+
+## 卷五：Gas 与性能优化
+
+1. Gas 计量模型
+2. Storage 成本
+3. Memory / Calldata 成本
+4. Packing / Immutable / Constant
+5. 优化模式与反模式
+6. 实战案例
+
+## 卷六：智能合约安全
+
+1. 威胁建模
+2. Reentrancy
+3. Access Control
+4. Signature / Permit / Replay
+5. Delegatecall / Proxy / Upgrade
+6. Oracle / Flash Loan / MEV
+7. 审计前自查
+
+## 卷七：Ethereum 底层原理
+
+1. Transaction / Block / State Transition
+2. Mempool / Reorg / Finality
+3. Merkle / Trie
+4. Consensus / Validator
+5. Hash / ECDSA / Wallet
+
+## 卷八：DeFi 原理
+
+1. DeFi 积木
+2. AMM
+3. Lending
+4. Oracle
+5. Liquidation
+6. MEV
+
+## 卷九：协议源码阅读
+
+1. OpenZeppelin
+2. Uniswap V2
+3. Uniswap V3
+4. Aave
+5. EigenLayer
+6. 阅读方法总结
+
+## 卷十：训练与实战
+
+1. 100 天学习计划
+2. 面试题体系
+3. 项目实战路线
+4. 从 Todo 到 DEX
+5. 长期学习系统
+```
+
+Create `book/study-method.md`:
+
+```md
+# 学习方法
+
+## 主线学习法
+
+先用主线搭建认知框架，再用源码、练习和项目把框架压实。不要把所有资料同时打开。
+
+## 代码学习法
+
+学 Solidity 和协议源码时，先画状态结构，再看关键函数，最后再看边界情况和测试。不要一行一行地从头硬读。
+
+## 输出学习法
+
+每次学习都要有输出。可以是图、表、复盘、最小合约、测试案例或安全审查笔记。
+
+## 节奏建议
+
+如果你每天能投入 2 到 3 小时，建议一周完成 1 到 2 个章节单元，并预留一天只做练习和复盘。
+```
+
+Create `book/source-code-reading-guide.md`:
+
+```md
+# 源码阅读指南
+
+## 先看什么
+
+先看协议入口、核心状态、权限边界和资金流，再看辅助库和边缘功能。先看“为什么这样设计”，再看“具体写法”。
+
+## 读源码时记什么
+
+记录四类信息：状态怎么存、谁能改、外部依赖是什么、失败路径怎么处理。
+
+## 常见误区
+
+最常见的误区是把源码阅读变成顺序翻文件，或者只看 happy path，不看回滚、权限和资产边界。
+
+## 推荐顺序
+
+先读 OpenZeppelin，再读 Uniswap V2，然后才去看 Uniswap V3、Aave 和 EigenLayer 这样的复杂系统。
+```
+
+- [ ] **Step 6: Run the front matter scope to verify it passes**
+
+Run: `npm run docs:check -- frontmatter`
+Expected: PASS with `Book validation passed for scopes: frontmatter`
+
+- [ ] **Step 7: Commit the front matter foundation**
+
+```bash
+git add scripts/validate-book.mjs book/index.md book/preface.md book/learning-map.md book/how-to-read.md book/full-toc.md book/study-method.md book/source-code-reading-guide.md
+git commit -m "docs: add phase 1 front matter pages"
+```
+
+## Task 2: Rebuild The VitePress Shell For Book Navigation
 
 **Files:**
-- Create: `book/.vitepress/config.ts`
-- Create: `book/.vitepress/theme/index.ts`
-- Create: `book/.vitepress/theme/custom.css`
-- Create: `book/index.md`
+- Modify: `book/.vitepress/config.ts`
+- Modify: `book/.vitepress/theme/custom.css`
 
-- [ ] **Step 1: Verify the docs build fails before the shell exists**
+- [ ] **Step 1: Run the site shell scope to confirm the red state**
 
-Run: `npm run docs:build`
-Expected: FAIL because the `book/` site content is not ready
+Run: `npm run docs:check -- siteShell`
+Expected: FAIL with at least `Missing pattern "{ text: "全书目录", link: "/full-toc" }" in book/.vitepress/config.ts`
 
-- [ ] **Step 2: Add the site configuration**
+- [ ] **Step 2: Replace the VitePress configuration with the book navigation**
 
-Create `book/.vitepress/config.ts`:
+Update `book/.vitepress/config.ts`:
 
 ```ts
 import { defineConfig } from "vitepress";
 
 export default defineConfig({
   lang: "zh-CN",
-  title: "Web3 前端转全栈指南",
-  description: "给已经做过 dApp 的前端开发者的 Solidity、EVM、安全与协议源码学习书",
+  title: "Web3 前端转全栈书",
+  description: "给已经做过 dApp 的前端开发者的长期学习型 Web3 工程书",
   base: "/web3-learning/",
   lastUpdated: true,
   cleanUrls: true,
@@ -255,7 +767,9 @@ export default defineConfig({
     nav: [
       { text: "前言", link: "/preface" },
       { text: "学习地图", link: "/learning-map" },
-      { text: "项目路线", link: "/project-roadmap/" }
+      { text: "全书目录", link: "/full-toc" },
+      { text: "100 天计划", link: "/part-10-training/chapter-01-roadmap-and-100-days/" },
+      { text: "附录", link: "/appendix/resources" }
     ],
     search: {
       provider: "local"
@@ -274,19 +788,75 @@ export default defineConfig({
         items: [
           { text: "首页", link: "/" },
           { text: "前言", link: "/preface" },
-          { text: "学习地图", link: "/learning-map" }
+          { text: "怎么读这本书", link: "/how-to-read" },
+          { text: "学习地图", link: "/learning-map" },
+          { text: "全书目录", link: "/full-toc" },
+          { text: "学习方法", link: "/study-method" },
+          { text: "源码阅读指南", link: "/source-code-reading-guide" }
         ]
       },
       {
-        text: "主干路径",
+        text: "卷一：基础",
         items: [
-          { text: "Part 1: 认知重建", link: "/mental-model/" },
-          { text: "Part 2: Solidity 与状态", link: "/solidity-state/" },
-          { text: "Part 3: EVM 与 Gas", link: "/evm-gas/" },
-          { text: "Part 4: 安全", link: "/security/" },
-          { text: "Part 5: 工程化与测试", link: "/engineering-testing/" },
-          { text: "Part 6: 协议源码阅读", link: "/protocol-reading/" },
-          { text: "Part 7: 项目实战路线", link: "/project-roadmap/" }
+          { text: "卷一导读", link: "/part-1-foundations/" },
+          { text: "第 1 章 交易心智模型", link: "/part-1-foundations/chapter-01-transaction-mental-model/" }
+        ]
+      },
+      {
+        text: "卷二：Solidity",
+        items: [
+          { text: "卷二导读", link: "/part-2-solidity/" },
+          { text: "第 1 章 Solidity 与状态基础", link: "/part-2-solidity/chapter-01-solidity-state-foundations/" }
+        ]
+      },
+      {
+        text: "卷三：Foundry",
+        items: [
+          { text: "卷三导读", link: "/part-3-foundry/" },
+          { text: "第 1 章 Foundry 工程工作流", link: "/part-3-foundry/chapter-01-foundry-engineering-workflow/" }
+        ]
+      },
+      {
+        text: "卷四：EVM",
+        items: [
+          { text: "卷四导读", link: "/part-4-evm/" },
+          { text: "第 1 章 EVM 执行模型", link: "/part-4-evm/chapter-01-evm-execution-model/" }
+        ]
+      },
+      {
+        text: "卷五：Gas",
+        items: [
+          { text: "卷五导读", link: "/part-5-gas/" },
+          { text: "第 1 章 Gas 成本心智模型", link: "/part-5-gas/chapter-01-gas-cost-mental-model/" }
+        ]
+      },
+      {
+        text: "卷六：安全",
+        items: [
+          { text: "卷六导读", link: "/part-6-security/" },
+          { text: "第 1 章 安全审查基础", link: "/part-6-security/chapter-01-security-review-basics/" }
+        ]
+      },
+      {
+        text: "卷七：Ethereum 底层",
+        items: [{ text: "卷七导读", link: "/part-7-ethereum-internals/" }]
+      },
+      {
+        text: "卷八：DeFi",
+        items: [{ text: "卷八导读", link: "/part-8-defi/" }]
+      },
+      {
+        text: "卷九：协议源码阅读",
+        items: [
+          { text: "卷九导读", link: "/part-9-protocol-reading/" },
+          { text: "第 1 章 如何读真实协议", link: "/part-9-protocol-reading/chapter-01-reading-real-protocols/" }
+        ]
+      },
+      {
+        text: "卷十：训练与实战",
+        items: [
+          { text: "卷十导读", link: "/part-10-training/" },
+          { text: "第 1 章 项目路线与 100 天计划", link: "/part-10-training/chapter-01-roadmap-and-100-days/" }
         ]
       },
       {
@@ -302,26 +872,16 @@ export default defineConfig({
 });
 ```
 
-- [ ] **Step 3: Add the theme entry**
+- [ ] **Step 3: Update the custom CSS for the book shell**
 
-Create `book/.vitepress/theme/index.ts`:
-
-```ts
-import DefaultTheme from "vitepress/theme";
-import "./custom.css";
-
-export default DefaultTheme;
-```
-
-- [ ] **Step 4: Add lightweight book styling**
-
-Create `book/.vitepress/theme/custom.css`:
+Update `book/.vitepress/theme/custom.css`:
 
 ```css
 :root {
   --vp-c-brand-1: #0f766e;
   --vp-c-brand-2: #115e59;
   --vp-c-brand-3: #134e4a;
+  --vp-c-brand-soft: rgba(15, 118, 110, 0.14);
   --vp-home-hero-name-color: #0f172a;
   --vp-home-hero-image-background-image: radial-gradient(circle at top, rgba(15, 118, 110, 0.18), transparent 60%);
   --vp-home-hero-image-filter: blur(72px);
@@ -329,1028 +889,1658 @@ Create `book/.vitepress/theme/custom.css`:
 
 .VPDoc.has-aside .content-container,
 .VPDoc .content-container {
-  max-width: 820px;
+  max-width: 840px;
+}
+
+.vp-doc h1,
+.vp-doc h2,
+.vp-doc h3 {
+  letter-spacing: -0.02em;
 }
 
 .vp-doc h2 {
-  margin-top: 2rem;
+  margin-top: 2.2rem;
+}
+
+.vp-doc p,
+.vp-doc li {
+  line-height: 1.85;
 }
 
 .vp-doc a {
   text-decoration: none;
 }
+
+.book-outline {
+  padding: 1rem 1.1rem;
+  border: 1px solid rgba(15, 118, 110, 0.14);
+  border-radius: 16px;
+  background: rgba(15, 118, 110, 0.04);
+}
+
+.book-card-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.book-callout {
+  margin: 1.5rem 0;
+  padding: 1rem 1.1rem;
+  border-left: 4px solid var(--vp-c-brand-1);
+  background: rgba(15, 118, 110, 0.06);
+  border-radius: 10px;
+}
 ```
 
-- [ ] **Step 5: Create a substantial homepage**
+- [ ] **Step 4: Run the site shell scope to verify it passes**
 
-Create `book/index.md`:
+Run: `npm run docs:check -- siteShell`
+Expected: PASS with `Book validation passed for scopes: siteShell`
 
-```md
----
-layout: home
+- [ ] **Step 5: Commit the navigation shell**
 
-hero:
-  name: "Web3 前端转全栈指南"
-  text: "给已经做过 dApp 的前端开发者"
-  tagline: "从会调用合约，到真正理解 Solidity、EVM、安全、测试与协议源码。"
-  actions:
-    - theme: brand
-      text: 开始阅读
-      link: /preface
-    - theme: alt
-      text: 查看学习地图
-      link: /learning-map
-
-features:
-  - title: 面向有经验的前端
-    details: 默认你已经理解钱包连接、ABI、RPC、ethers 或 viem，不重复做入门级铺垫。
-  - title: 讲主干，不讲资料海
-    details: 每章都先帮你抓主干路径，再补上官方文档、源码和练习入口。
-  - title: 目标是能独立设计合约
-    details: 重点不只是会调合约，而是理解状态、Gas、安全边界与协议设计。
----
-
-## 这本书适合谁
-
-这本书适合已经做过 dApp 前端的工程师。你也许已经把钱包连接、签名、交易发送、合约读写、事件监听都接过了，但在真正往下追问时会卡住：为什么 `mapping` 不可遍历，为什么 `SSTORE` 这么贵，为什么有些合约非要写成代理模式，为什么别人一眼就能看出重入风险，而你只能靠“感觉不太对”。
-
-如果你也遇到过这种断层，这本书就是为你写的。
-
-## 你会得到什么
-
-读完第一版，你应该能建立起一条更完整的因果链：
-
-- 前端一次合约调用，到底是怎样变成链上状态变化的。
-- Solidity 中常见设计为什么会那样写，而不是只会照着模板抄。
-- Gas 到底花在哪，哪些优化值得做，哪些只是噪音。
-- 常见合约安全问题的攻击面在哪，为什么测试不只是“跑通 happy path”。
-- 阅读 OpenZeppelin、Uniswap V2、Aave 这类源码时，应该抓哪些关键点。
-
-## 主干学习路径
-
-这本书的主干路径不是从密码学开始，而是从你每天更容易碰到、也最应该先吃透的部分开始：
-
-1. 先重建对交易、状态与执行链路的理解。
-2. 再把 Solidity 与状态模型吃透。
-3. 再往下钻到 EVM、Gas 和存储布局。
-4. 接着补安全与工程化。
-5. 最后进入真实协议源码和项目实战路线。
-
-每一章最后都会告诉你三类延伸资料：
-
-- 必读：优先看的官方文档或标准。
-- 进阶：适合继续深挖的源码、文章或课程。
-- 实战：适合立刻动手练习的项目或题目。
+```bash
+git add book/.vitepress/config.ts book/.vitepress/theme/custom.css
+git commit -m "feat: rebuild book navigation shell"
 ```
 
-- [ ] **Step 6: Run the shell validator and confirm it turns green**
-
-Run: `npm run docs:check -- shell`
-Expected: PASS with `Book validation passed for scopes: shell`
-
-- [ ] **Step 7: Run the docs build and confirm VitePress now compiles**
-
-Run: `npm run docs:build`
-Expected: PASS and output includes `building client + server bundles`
-
-- [ ] **Step 8: Commit the shell**
-
-Run: `git add book/.vitepress book/index.md`
-
-Run: `git commit -m "feat: scaffold vitepress shell"`
-
-### Task 3: Write The Reading Foundation Chapters
+## Task 3: Add Volume Landing Pages For Volumes 1 Through 5
 
 **Files:**
-- Create: `book/preface.md`
-- Create: `book/learning-map.md`
-- Create: `book/mental-model/index.md`
+- Create: `book/part-1-foundations/index.md`
+- Create: `book/part-2-solidity/index.md`
+- Create: `book/part-3-foundry/index.md`
+- Create: `book/part-4-evm/index.md`
+- Create: `book/part-5-gas/index.md`
 
-- [ ] **Step 1: Verify the foundation chapter scope fails first**
+- [ ] **Step 1: Run the first volume scope to confirm the red state**
 
-Run: `npm run docs:check -- foundation`
-Expected: FAIL with missing files under `book/preface.md`, `book/learning-map.md`, and `book/mental-model/index.md`
+Run: `npm run docs:check -- volumesA`
+Expected: FAIL with at least `Missing file: book/part-1-foundations/index.md`
 
-- [ ] **Step 2: Write the preface**
+- [ ] **Step 2: Create the landing pages for volumes 1 and 2**
 
-Create `book/preface.md`:
-
-```md
-# 前言
-
-## 适合谁读
-
-这本书默认你已经做过 dApp 前端，知道钱包怎么接、交易怎么发、合约怎么调、事件怎么读，也知道 `ethers`、`viem`、RPC 和 ABI 这些词分别指什么。你来这里，不是为了再学一遍“如何连接 MetaMask”，而是为了补上那条总觉得没真正打通的底层主线。
-
-## 不适合谁
-
-如果你还没有接触过任何 Web3 前端项目，这本书不会是最省力的第一本。它会默认你已经踩过一点坑，也能看懂常见的合约调用代码。对完全零基础读者来说，更适合先做一轮入门级 dApp 项目，再回来读这本书。
-
-## 这本书怎么读
-
-最推荐的读法是按顺序读主干章节，再把每章最后的延伸资料接上。不要急着从黄皮书、共识算法、密码学证明开始，因为那样很容易让学习路径一开始就失焦。先把你每天最容易碰到、也最应该先吃透的 Solidity、状态、EVM、Gas、安全和源码阅读真正弄懂，后面再往下钻会顺得多。
-
-## 这本书的假设
-
-这本书假设你已经懂：
-
-- 基本前端开发与调试流程
-- 钱包连接与签名
-- 合约读写、ABI、RPC
-- Web3 项目里的常见 UI/交互流程
-
-这本书会重点补：
-
-- 为什么状态会这样变化
-- 为什么合约会这样设计
-- 为什么 Gas 会这样消耗
-- 为什么安全问题会这样发生
-
-## 继续深入看什么
-
-### 必读
-
-- [Ethereum Developer Docs](https://ethereum.org/developers/docs/)
-- [Solidity 官方文档](https://docs.soliditylang.org/en/latest/)
-
-### 进阶
-
-- [Mastering Ethereum](https://github.com/ethereumbook/ethereumbook)
-- [EIPs](https://eips.ethereum.org/)
-
-### 实战
-
-- 选一个你熟悉的 dApp，把一次最常见的用户操作完整画成“前端动作 -> 交易 -> 合约执行 -> 状态变化”流程图。
-```
-
-- [ ] **Step 3: Write the learning map**
-
-Create `book/learning-map.md`:
+Create `book/part-1-foundations/index.md`:
 
 ```md
-# 学习地图
+# 卷一：Web3 与 Ethereum 基础
 
-## 先学什么
+## 这一卷解决什么
 
-对已经做过 dApp 的前端来说，收益最高的学习顺序通常是：
+这一卷负责把“前端点一下按钮，链上到底发生了什么”讲清楚。你会先建立交易、状态和可观察性的完整心智模型。
 
-1. Solidity 与状态模型
-2. 交易执行链路
-3. EVM 与 Gas
-4. 安全
-5. 工程化与测试
-6. 协议源码阅读
-7. 项目实战
+## 建议阅读顺序
 
-这个顺序的核心，不是“从浅到深”这么简单，而是先把和工程决策最相关的部分学透。只有这样，你后面读源码、做优化、做安全审查时，脑子里才有稳定的参照系。
+先读本卷导读，再进入第 1 章交易心智模型，后续章节按账户模型、交易生命周期、Gas、Event 的顺序展开。
 
-## 不要一开始就钻进去的内容
+## 本卷章节
 
-很多开发者一焦虑，就会去看最底层、最硬核、也最难马上转化为工程能力的内容，比如黄皮书、共识算法细节、零知识证明、桥的跨链消息验证、密码学原理推导。这些都重要，但不应该挡在你构建主干能力的第一阶段。
-
-你需要先建立的是“从一次前端调用到一次链上状态变化”的完整解释能力，而不是先把所有理论最深处都看完。
-
-## 三个月主干路线
-
-### 第一个月
-
-- 吃透 Solidity 常用语法
-- 重点理解 `storage`、`memory`、`calldata`
-- 自己写出 ERC20、简单 Bank、Voting
-- 学会用 Foundry 写基础测试
-
-### 第二个月
-
-- 进入 EVM、Gas、存储布局
-- 学重入、权限、签名、代理、预言机等安全问题
-- 把 fuzz、fork test、调试流程接进日常开发
-
-### 第三个月
-
-- 开始读 OpenZeppelin、Uniswap V2、Aave 的关键源码
-- 设计并实现自己的 MultiSig、Staking 或小型 DEX
-- 把“会写”提升到“知道为什么这样写”
-
-## 怎么判断自己真的学会了
-
-你至少应该能做到：
-
-- 解释一笔交易从签名到 receipt 的流程
-- 解释常见合约中的状态读写成本差异
-- 看懂 ERC20 与权限控制的核心实现
-- 发现几个基础级安全问题
-- 不靠抄模板独立写出一个中小型合约项目
-
-## 继续深入看什么
-
-### 必读
-
-- [Foundry Book](https://book.getfoundry.sh/)
-- [OpenZeppelin Contracts](https://docs.openzeppelin.com/contracts)
-
-### 进阶
-
-- [evm.codes](https://www.evm.codes/)
-- [Ethereum Yellow Paper](https://ethereum.github.io/yellowpaper/paper.pdf)
-
-### 实战
-
-- 给自己定一个 30 天计划：每周一类主题，每周至少一个合约练习和一份测试。
+- 第 1 章：交易心智模型
+- 第 2 章：账户模型与状态模型
+- 第 3 章：交易生命周期
+- 第 4 章：Gas、Nonce、Fee 与 Receipt
+- 第 5 章：Event、Log 与前端可观察性
 ```
 
-- [ ] **Step 4: Write the mental-model chapter**
-
-Create `book/mental-model/index.md`:
+Create `book/part-2-solidity/index.md`:
 
 ```md
-# Part 1: 认知重建
+# 卷二：Solidity（从零到高级）
 
-## 先理解什么
+## 这一卷解决什么
 
-你需要先理解，一次“前端调用合约”在链上世界里并不是一次普通 API 请求。它更像是一组被编码、签名、广播、排序、执行、结算的状态变更请求。中间经过 ABI 编码、RPC 传输、节点接收、mempool 排队、打包进块、EVM 执行，再生成 logs、receipt 和新的 state root。
+这一卷负责把你从“会调用别人写好的合约”推进到“能自己设计状态和接口”。重点不是背语法，而是理解状态、权限和链上成本。
 
-很多前端开发者的问题，不是不会调合约，而是把这条链路理解成了“发个请求到链上”。一旦这样简化，后面所有 Gas、失败原因、pending 状态、nonce 冲突、事件顺序、安全边界都会显得像黑盒。
+## 建议阅读顺序
 
-## 为什么重要
+先读 Solidity 与状态基础，再沿着数据位置、状态设计、OpenZeppelin、Upgradeable 的路线逐步往下读。
 
-如果你不能把这条执行链路讲完整，你就很难定位问题究竟出在哪一层：
+## 本卷章节
 
-- 是前端参数编码错了？
-- 是钱包签名前用户改了链或账户？
-- 是 RPC 节点返回不稳定？
-- 是交易进了 mempool 但迟迟没被打包？
-- 是合约内部 `require` 或自定义 `error` 触发了回滚？
-
-理解链路，本质上是在给你的工程判断加坐标轴。
-
-## 常见误区
-
-- 误以为 `view` 调用和真实交易只是“少了签名”。
-- 误以为交易发出去就等于“成功了”。
-- 误以为 receipt、log、state change 是同一层概念。
-- 误以为前端看到的失败一定是合约代码本身的问题。
-
-## 怎么练
-
-挑一个你熟悉的功能，比如“领取奖励”或“质押”，把它拆成以下步骤写下来：
-
-1. 用户在前端点了什么。
-2. 前端编码了什么 calldata。
-3. 钱包签了什么。
-4. 交易进入哪条链的 mempool。
-5. 验证者打包后 EVM 如何执行。
-6. 成功后有哪些状态变化、哪些事件、哪些前端 UI 更新。
-
-最好把这条流程画成一张图。只要你能稳定复述三次，这一章就真的开始进脑子了。
-
-## 继续深入看什么
-
-### 必读
-
-- [Ethereum Transactions](https://ethereum.org/developers/docs/transactions/)
-- [JSON-RPC API 概览](https://ethereum.org/developers/docs/apis/json-rpc/)
-
-### 进阶
-
-- [Execution Layer 概览](https://ethereum.org/developers/docs/evm/)
-- [EIP-1559](https://eips.ethereum.org/EIPS/eip-1559)
-
-### 实战
-
-- 在测试网手动发一笔交易，记录 nonce、gas、receipt、logs，并用区块浏览器把全过程串起来。
+- 第 1 章：Solidity 与状态基础
+- 第 2 章：Storage / Memory / Calldata
+- 第 3 章：Function / Modifier / Event / Error
+- 第 4 章：状态设计与数据结构
+- 第 5 章：权限、接口与库
+- 第 6 章：OpenZeppelin 与标准代币
+- 第 7 章：Upgradeable 与 UUPS
 ```
 
-- [ ] **Step 5: Run the foundation validator and confirm it passes**
+- [ ] **Step 3: Create the landing pages for volumes 3 and 4**
 
-Run: `npm run docs:check -- foundation`
-Expected: PASS with `Book validation passed for scopes: foundation`
+Create `book/part-3-foundry/index.md`:
 
-- [ ] **Step 6: Commit the foundation chapters**
+```md
+# 卷三：Foundry 完整开发指南
 
-Run: `git add book/preface.md book/learning-map.md book/mental-model/index.md`
+## 这一卷解决什么
 
-Run: `git commit -m "feat: add reading foundation chapters"`
+这一卷负责建立合约工程工作流。你会把“写得出来”推进到“能测试、能调试、能部署、能验证”。
 
-### Task 4: Write The Solidity And EVM Core Chapters
+## 建议阅读顺序
+
+先读 Foundry 工程工作流，再进入测试、脚本、调试和持续集成章节。
+
+## 本卷章节
+
+- 第 1 章：Foundry 工程工作流
+- 第 2 章：Forge / Cast / Anvil / Script
+- 第 3 章：单元测试与 Cheatcodes
+- 第 4 章：Fuzz / Invariant / Fork Test
+- 第 5 章：Debug / Deploy / Verify / CI
+```
+
+Create `book/part-4-evm/index.md`:
+
+```md
+# 卷四：EVM 原理
+
+## 这一卷解决什么
+
+这一卷负责解释交易进入执行环境之后，EVM 究竟在做什么。你会第一次真正理解 stack、memory、storage 和 call context 的区别。
+
+## 建议阅读顺序
+
+先读执行模型，再看数据区域，再看 opcode、storage layout 和 bytecode。
+
+## 本卷章节
+
+- 第 1 章：EVM 执行模型
+- 第 2 章：Stack / Memory / Storage / Calldata
+- 第 3 章：Opcode 与调用上下文
+- 第 4 章：Storage Slot 与 Layout
+- 第 5 章：Bytecode 与 ABI Encoding
+```
+
+- [ ] **Step 4: Create the landing page for volume 5**
+
+Create `book/part-5-gas/index.md`:
+
+```md
+# 卷五：Gas 与性能优化
+
+## 这一卷解决什么
+
+这一卷负责把 gas 从“经验口号”变成“可以解释和推理的成本模型”。重点不是为了炫技式优化，而是为了建立正确的设计判断。
+
+## 建议阅读顺序
+
+先读 Gas 成本心智模型，再进入 storage、memory、calldata 和 slot-aware 设计。
+
+## 本卷章节
+
+- 第 1 章：Gas 成本心智模型
+- 第 2 章：Storage 成本
+- 第 3 章：Memory / Calldata 成本
+- 第 4 章：Packing / Immutable / Constant
+- 第 5 章：优化模式与反模式
+- 第 6 章：实战案例
+```
+
+- [ ] **Step 5: Run the first volume scope to verify it passes**
+
+Run: `npm run docs:check -- volumesA`
+Expected: PASS with `Book validation passed for scopes: volumesA`
+
+- [ ] **Step 6: Commit the first five volume landings**
+
+```bash
+git add book/part-1-foundations/index.md book/part-2-solidity/index.md book/part-3-foundry/index.md book/part-4-evm/index.md book/part-5-gas/index.md
+git commit -m "docs: scaffold volumes one through five"
+```
+
+## Task 4: Add Volume Landing Pages For Volumes 6 Through 10
 
 **Files:**
-- Create: `book/solidity-state/index.md`
-- Create: `book/evm-gas/index.md`
+- Create: `book/part-6-security/index.md`
+- Create: `book/part-7-ethereum-internals/index.md`
+- Create: `book/part-8-defi/index.md`
+- Create: `book/part-9-protocol-reading/index.md`
+- Create: `book/part-10-training/index.md`
 
-- [ ] **Step 1: Verify the first core scope fails**
+- [ ] **Step 1: Run the second volume scope to confirm the red state**
 
-Run: `npm run docs:check -- core1`
-Expected: FAIL with missing files under `book/solidity-state/index.md` and `book/evm-gas/index.md`
+Run: `npm run docs:check -- volumesB`
+Expected: FAIL with at least `Missing file: book/part-6-security/index.md`
 
-- [ ] **Step 2: Write the Solidity and state chapter**
+- [ ] **Step 2: Create the landing pages for volumes 6 and 7**
 
-Create `book/solidity-state/index.md`:
-
-```md
-# Part 2: Solidity 与状态
-
-## 先理解什么
-
-真正重要的 Solidity，不是把语法关键字背熟，而是理解这些语法最终如何落到状态、存储和访问控制上。你必须把下面这些概念连起来看：
-
-- `storage`、`memory`、`calldata`
-- `mapping`、`struct`、`array`
-- `event`、`error`
-- `modifier`、`inheritance`、`interface`
-
-前端开发者最容易忽略的是：Solidity 代码看起来像普通高级语言，但每一个状态变量、每一次写入、每一个可见性选择，背后都对应真实的链上成本和权限边界。
-
-## 为什么重要
-
-理解状态模型以后，你会突然明白很多以前只是死记的结论：
-
-- 为什么 `uint256 public totalSupply;` 的写入要花钱。
-- 为什么 `view` 方法链上仍然是在执行，只是本地模拟调用时不需要付费。
-- 为什么 `mapping(address => uint256)` 没法直接遍历所有 key。
-- 为什么 event 适合做链下检索，却不适合当成链上真相来源。
-
-这部分一旦打通，你写合约时就不会只是在拼语法，而是在做状态设计。
-
-## 常见误区
-
-- 把 `public` 当作“和前端对象暴露属性一样”的概念。
-- 把 event 当数据库。
-- 把 `memory` 和 `storage` 的差异理解成“只是语法要求”。
-- 看到 OpenZeppelin 的继承层次就直接照抄，却不知道每层到底解决什么问题。
-
-## 怎么练
-
-按这个顺序写最小合约：
-
-1. `Todo`：练 struct、array、状态更新。
-2. `Bank`：练 payable、余额记录、提取逻辑。
-3. `Voting`：练 mapping、权限和事件。
-4. `ERC20`：练 total supply、allowance、transfer 流程。
-
-练的时候强制回答四个问题：
-
-- 状态存在哪？
-- 谁能改？
-- 谁能读？
-- 失败时怎么暴露原因？
-
-## 继续深入看什么
-
-### 必读
-
-- [Solidity 官方文档](https://docs.soliditylang.org/en/latest/)
-- [OpenZeppelin Contracts 文档](https://docs.openzeppelin.com/contracts)
-
-### 进阶
-
-- [Solidity Storage Layout](https://docs.soliditylang.org/en/latest/internals/layout_in_storage.html)
-- [Solidity ABI Specification](https://docs.soliditylang.org/en/latest/abi-spec.html)
-
-### 实战
-
-- 自己写一个最小版 ERC20 和 Vault，并分别为余额变化、权限边界、错误场景写测试。
-```
-
-- [ ] **Step 3: Write the EVM and gas chapter**
-
-Create `book/evm-gas/index.md`:
+Create `book/part-6-security/index.md`:
 
 ```md
-# Part 3: EVM 与 Gas
+# 卷六：智能合约安全
 
-## 先理解什么
+## 这一卷解决什么
 
-EVM 不是“合约运行环境”这么一句话就能带过的黑盒。你需要抓住四个最关键的区域：
+这一卷负责把你从“功能开发视角”切到“攻击与防御视角”。重点是重入、权限、签名、代理和外部依赖带来的系统风险。
 
-- stack：操作码执行时的临时操作栈
-- memory：一次调用期间临时可扩展的内存
-- storage：真正持久化到链上状态的数据
-- calldata：外部调用带进来的只读输入
+## 建议阅读顺序
 
-只要这四者分工不清，你后面对 Gas、ABI、slot、packing、低级调用和优化的理解都会很虚。
+先读安全审查基础，再进入重入、权限、签名、代理与 Oracle/Flash Loan/MEV 相关主题。
 
-## 为什么重要
+## 本卷章节
 
-Gas 不是抽象的手续费概念，它是你使用底层资源的成本映射。之所以 `SSTORE` 贵，是因为你在改持久状态；之所以 `memory` 相对便宜，是因为它只在当前执行上下文里存活；之所以 `calldata` 常常更省，是因为它是只读输入，不需要复制成可变内存。
-
-一旦把资源模型想清楚，你会更明白为什么某些“优化写法”存在，也更知道哪些优化值得做，哪些只是牺牲可读性的噪音。
-
-## 常见误区
-
-- 以为 Gas 优化就是到处改短变量名或疯狂 `unchecked`。
-- 只记住“storage 贵、memory 便宜”，却说不出为什么。
-- 以为 event 一定比 storage 好，却不区分链上读取和链下消费场景。
-- 看到 slot packing 就想全项目硬上，忽略可读性与变更成本。
-
-## 怎么练
-
-最适合的练法不是先背 opcode，而是做三类小实验：
-
-1. 写两个版本的状态更新合约，对比 `storage` 与 `memory` 的 gas 差异。
-2. 写结构体并观察 slot packing 是否生效。
-3. 用区块浏览器或 Foundry 输出 gas report，比较不同实现的成本。
-
-把每一次对比都写成“我改了什么、为什么更省、代价是什么”，你对 Gas 的理解才会开始沉淀成工程判断。
-
-## 继续深入看什么
-
-### 必读
-
-- [EVM Overview](https://ethereum.org/developers/docs/evm/)
-- [evm.codes](https://www.evm.codes/)
-
-### 进阶
-
-- [Yellow Paper](https://ethereum.github.io/yellowpaper/paper.pdf)
-- [Solidity Storage Layout](https://docs.soliditylang.org/en/latest/internals/layout_in_storage.html)
-
-### 实战
-
-- 写两个版本的合约并记录 gas report：一个朴素实现，一个做适度优化，然后解释为什么数据会不同。
+- 第 1 章：安全审查基础
+- 第 2 章：Reentrancy
+- 第 3 章：Access Control
+- 第 4 章：Signature / Permit / Replay
+- 第 5 章：Delegatecall / Proxy / Upgrade
+- 第 6 章：Oracle / Flash Loan / MEV
+- 第 7 章：审计前自查
 ```
 
-- [ ] **Step 4: Run the core validator and confirm it passes**
+Create `book/part-7-ethereum-internals/index.md`:
 
-Run: `npm run docs:check -- core1`
-Expected: PASS with `Book validation passed for scopes: core1`
+```md
+# 卷七：Ethereum 底层原理
 
-- [ ] **Step 5: Commit the Solidity and EVM chapters**
+## 这一卷解决什么
 
-Run: `git add book/solidity-state/index.md book/evm-gas/index.md`
+这一卷负责把交易、区块、Trie、共识和签名这些底层概念放回开发者的工程语境，而不是孤立地背术语。
 
-Run: `git commit -m "feat: add solidity and evm chapters"`
+## 建议阅读顺序
 
-### Task 5: Write The Security And Engineering Chapters
+先看交易与状态变更，再看 mempool、Trie、共识和钱包原理。当前 Phase 1 先提供卷级导读，正文在下一阶段展开。
+
+## 本卷章节
+
+- 第 1 章：Transaction / Block / State Transition
+- 第 2 章：Mempool / Reorg / Finality
+- 第 3 章：Merkle / Trie
+- 第 4 章：Consensus / Validator
+- 第 5 章：Hash / ECDSA / Wallet
+```
+
+- [ ] **Step 3: Create the landing pages for volumes 8 and 9**
+
+Create `book/part-8-defi/index.md`:
+
+```md
+# 卷八：DeFi 原理
+
+## 这一卷解决什么
+
+这一卷负责建立读 DeFi 协议前必须掌握的积木：AMM、借贷、预言机、清算和 MEV。
+
+## 建议阅读顺序
+
+先看 DeFi 积木和 AMM，再进入借贷、Oracle、清算和博弈问题。当前 Phase 1 先提供卷级导读，正文在下一阶段展开。
+
+## 本卷章节
+
+- 第 1 章：DeFi 积木
+- 第 2 章：AMM
+- 第 3 章：Lending
+- 第 4 章：Oracle
+- 第 5 章：Liquidation
+- 第 6 章：MEV
+```
+
+Create `book/part-9-protocol-reading/index.md`:
+
+```md
+# 卷九：协议源码阅读
+
+## 这一卷解决什么
+
+这一卷负责回答一个常见问题：打开一个大型协议仓库后，第一眼到底该看什么，第二眼看什么，怎么避免被复杂度淹没。
+
+## 建议阅读顺序
+
+先读如何读真实协议，再按 OpenZeppelin、Uniswap V2、Uniswap V3、Aave、EigenLayer 的顺序推进。
+
+## 本卷章节
+
+- 第 1 章：如何读真实协议
+- 第 2 章：OpenZeppelin
+- 第 3 章：Uniswap V2
+- 第 4 章：Uniswap V3
+- 第 5 章：Aave
+- 第 6 章：EigenLayer
+```
+
+- [ ] **Step 4: Create the landing page for volume 10**
+
+Create `book/part-10-training/index.md`:
+
+```md
+# 卷十：训练与实战
+
+## 这一卷解决什么
+
+这一卷负责把前面所有理论压回手上，形成可执行的 100 天计划、项目阶梯和面试准备路径。
+
+## 建议阅读顺序
+
+先读项目路线与 100 天计划，再进入面试题体系和个人长期学习系统。
+
+## 本卷章节
+
+- 第 1 章：项目路线与 100 天计划
+- 第 2 章：面试题体系
+- 第 3 章：项目实战路线
+- 第 4 章：从 Todo 到 DEX
+- 第 5 章：长期学习系统
+```
+
+- [ ] **Step 5: Run the second volume scope to verify it passes**
+
+Run: `npm run docs:check -- volumesB`
+Expected: PASS with `Book validation passed for scopes: volumesB`
+
+- [ ] **Step 6: Commit the last five volume landings**
+
+```bash
+git add book/part-6-security/index.md book/part-7-ethereum-internals/index.md book/part-8-defi/index.md book/part-9-protocol-reading/index.md book/part-10-training/index.md
+git commit -m "docs: scaffold volumes six through ten"
+```
+
+## Task 5: Migrate Canonical Seed Chapters For Volumes 1 Through 3
 
 **Files:**
-- Create: `book/security/index.md`
-- Create: `book/engineering-testing/index.md`
+- Create: `book/part-1-foundations/chapter-01-transaction-mental-model/index.md`
+- Create: `book/part-1-foundations/chapter-01-transaction-mental-model/from-click-to-state.md`
+- Create: `book/part-1-foundations/chapter-01-transaction-mental-model/exercises.md`
+- Create: `book/part-1-foundations/chapter-01-transaction-mental-model/practice.md`
+- Create: `book/part-1-foundations/chapter-01-transaction-mental-model/reading.md`
+- Create: `book/part-2-solidity/chapter-01-solidity-state-foundations/index.md`
+- Create: `book/part-2-solidity/chapter-01-solidity-state-foundations/state-and-data-locations.md`
+- Create: `book/part-2-solidity/chapter-01-solidity-state-foundations/exercises.md`
+- Create: `book/part-2-solidity/chapter-01-solidity-state-foundations/practice.md`
+- Create: `book/part-2-solidity/chapter-01-solidity-state-foundations/reading.md`
+- Create: `book/part-3-foundry/chapter-01-foundry-engineering-workflow/index.md`
+- Create: `book/part-3-foundry/chapter-01-foundry-engineering-workflow/foundry-loop.md`
+- Create: `book/part-3-foundry/chapter-01-foundry-engineering-workflow/exercises.md`
+- Create: `book/part-3-foundry/chapter-01-foundry-engineering-workflow/practice.md`
+- Create: `book/part-3-foundry/chapter-01-foundry-engineering-workflow/reading.md`
 
-- [ ] **Step 1: Verify the second core scope fails**
+- [ ] **Step 1: Run the first chapter bundle scope to confirm the red state**
 
-Run: `npm run docs:check -- core2`
-Expected: FAIL with missing files under `book/security/index.md` and `book/engineering-testing/index.md`
+Run: `npm run docs:check -- chaptersA`
+Expected: FAIL with at least `Missing file: book/part-1-foundations/chapter-01-transaction-mental-model/index.md`
 
-- [ ] **Step 2: Write the security chapter**
+- [ ] **Step 2: Create the canonical chapter bundle for volume 1**
 
-Create `book/security/index.md`:
+Create `book/part-1-foundations/chapter-01-transaction-mental-model/index.md`:
 
 ```md
-# Part 4: 安全
+# 第 1 章：交易心智模型
+
+## 本章要解决什么
+
+把一次前端交互如何变成链上状态变化完整讲清楚。
+
+## 读完后你应该会什么
+
+- 解释一笔交易从签名到 receipt 的完整链路
+- 说清 event、log 和状态变化分别属于哪一层
+- 能画出一次熟悉业务的交易流程图
+
+## 本章目录
+
+- [从点击到状态变化](/part-1-foundations/chapter-01-transaction-mental-model/from-click-to-state)
+
+## 练习与实践入口
+
+- [练习题](/part-1-foundations/chapter-01-transaction-mental-model/exercises)
+- [项目实践](/part-1-foundations/chapter-01-transaction-mental-model/practice)
+
+## 延伸阅读入口
+
+- [继续深入](/part-1-foundations/chapter-01-transaction-mental-model/reading)
+```
+
+Create `book/part-1-foundations/chapter-01-transaction-mental-model/from-click-to-state.md`:
+
+```md
+# 从点击到状态变化
 
 ## 先理解什么
 
-Web3 里最残酷的一点是：很多 bug 不是“功能不可用”，而是“资金可被拿走”。因此安全不能放到项目最后，也不能理解成“审计前再补补”。对合约工程师来说，安全就是设计的一部分。
-
-这一章先抓最常见、也最容易造成真实损失的几类问题：
-
-- 重入
-- 权限控制错误
-- 签名重放
-- `delegatecall` 风险
-- `tx.origin` 误用
-- 预言机操纵
-- Flash Loan 辅助攻击
+前端发起的不是“直接改链上数据”，而是构造交易、签名、广播，再由节点和区块生产者决定什么时候执行。
 
 ## 为什么重要
 
-如果你不知道这些问题怎么发生，就很容易把代码写成“功能上能跑通，但攻击面完全敞开”。安全思维的核心不是背漏洞名词，而是始终追问：
+如果这条链路不清楚，你就很难解释 pending、失败回滚、event、receipt 和前端状态更新之间的差别。
 
-- 谁能调用？
-- 谁能受益？
-- 谁能影响价格、状态或外部依赖？
-- 外部调用之后，我的假设还成立吗？
+## 核心机制
+
+用户点击按钮以后，前端会编码参数、构造交易、请求钱包签名，再把交易发给 RPC 节点。交易进入 mempool 之后，等待打包进块，再由 EVM 执行，最后产生状态变化、日志和 receipt。
 
 ## 常见误区
 
-- 以为用了 OpenZeppelin 就自动安全。
-- 以为单元测试全绿就等于没有风险。
-- 只盯着合约本体，不看外部依赖和权限配置。
-- 把安全问题理解成“黑客很高级，我项目太小没人打”。
+很多人会把 RPC 返回成功当成链上执行成功，也会把 event 当成状态本身。实际上，交易广播成功、交易执行成功、交易确认完成，是三个不同层次。
 
-## 怎么练
+## 工程判断
 
-最有效的练习方式是“故意写出漏洞，再亲手打掉它”：
+前端应该把“提交中、已广播、已确认、失败回滚”拆开建模，而不是只用一个 loading 状态覆盖所有链上阶段。
 
-1. 写一个可重入的 Bank，再用攻击合约复现。
-2. 写一个权限边界不清的管理函数，再补上 `Ownable` 或 `AccessControl`。
-3. 写一个签名校验逻辑，检查链 ID、nonce、deadline 是否被正确纳入。
+## 本节小结
 
-每次练习都要写出攻击前提、攻击路径和修复方式。
-
-## 继续深入看什么
-
-### 必读
-
-- [OpenZeppelin Security](https://docs.openzeppelin.com/contracts/4.x/api/security)
-- [Solidity Security Considerations](https://docs.soliditylang.org/en/latest/security-considerations.html)
-
-### 进阶
-
-- [Cyfrin Updraft](https://updraft.cyfrin.io/)
-- [SWC Registry](https://swcregistry.io/)
-
-### 实战
-
-- 选一个最小金库合约，分别验证重入、权限和签名三个维度，写出你的审查笔记。
+把交易看成一条跨越钱包、RPC、mempool、区块和 EVM 的执行链，而不是一次同步函数调用。
 ```
 
-- [ ] **Step 3: Write the engineering and testing chapter**
-
-Create `book/engineering-testing/index.md`:
+Create `book/part-1-foundations/chapter-01-transaction-mental-model/exercises.md`:
 
 ```md
-# Part 5: 工程化与测试
+# 练习题
+
+## 概念题
+
+1. 交易广播成功和交易执行成功有什么区别？
+2. receipt、log、state change 分别代表什么？
+
+## 分析题
+
+画出你最熟悉的一个 dApp 功能，从点击按钮到前端 UI 最终更新的完整链路。
+
+## 代码题
+
+用任意熟悉的前端框架，实现一个把交易状态拆成 `idle`、`signing`、`broadcasted`、`confirmed`、`failed` 的最小状态机。
+```
+
+Create `book/part-1-foundations/chapter-01-transaction-mental-model/practice.md`:
+
+```md
+# 项目实践
+
+## 实践目标
+
+把一个真实合约交互流程画成可解释的状态图。
+
+## 操作步骤
+
+1. 选一个你熟悉的写操作
+2. 标出签名、广播、等待打包、确认、失败回滚几个阶段
+3. 记录每个阶段前端应该展示什么
+
+## 交付物
+
+- 一张流程图
+- 一段文字解释每个阶段为什么存在
+- 一个最小前端状态实现
+```
+
+Create `book/part-1-foundations/chapter-01-transaction-mental-model/reading.md`:
+
+```md
+# 延伸阅读
+
+## 必读
+
+- Ethereum.org 的 transactions 与 blocks 文档
+- Ethers 或 viem 的 transaction lifecycle 文档
+
+## 进阶
+
+- Yellow Paper 中和交易执行相关的术语定义
+- client 实现里关于 mempool 和 receipt 的代码入口
+
+## 实战
+
+- 用区块浏览器对比一笔成功交易和一笔失败交易的详情页
+- 记录同一笔交易在钱包、RPC 和区块浏览器中的不同可观察信号
+```
+
+- [ ] **Step 3: Create the canonical chapter bundle for volume 2**
+
+Create `book/part-2-solidity/chapter-01-solidity-state-foundations/index.md`:
+
+```md
+# 第 1 章：Solidity 与状态基础
+
+## 本章要解决什么
+
+把 Solidity 从语法表面推进到状态设计层。
+
+## 读完后你应该会什么
+
+- 区分 storage、memory 和 calldata
+- 解释为什么 state write 要花明显 gas
+- 理解 mapping 为什么天然不适合枚举
+
+## 本章目录
+
+- [状态与数据位置](/part-2-solidity/chapter-01-solidity-state-foundations/state-and-data-locations)
+
+## 练习与实践入口
+
+- [练习题](/part-2-solidity/chapter-01-solidity-state-foundations/exercises)
+- [项目实践](/part-2-solidity/chapter-01-solidity-state-foundations/practice)
+
+## 延伸阅读入口
+
+- [继续深入](/part-2-solidity/chapter-01-solidity-state-foundations/reading)
+```
+
+Create `book/part-2-solidity/chapter-01-solidity-state-foundations/state-and-data-locations.md`:
+
+```md
+# 状态与数据位置
 
 ## 先理解什么
 
-真正让你从“会写合约”走向“能交付合约系统”的，不只是语法和底层原理，而是工程化能力。对这本书的目标读者来说，最值得优先投入的工具链是 Foundry。
-
-你需要会：
-
-- 写单元测试
-- 写失败路径测试
-- 做 fuzz
-- 做 fork test
-- 看 trace 和 gas report
-- 做部署与验证
+Solidity 不只是“声明变量”，而是在描述数据最终放在哪一层：持久状态、临时内存还是只读输入。
 
 ## 为什么重要
 
-合约开发和很多普通前端最大的差别之一，是错误代价极高，而且链上行为一旦部署就难以回退。所以你不能只靠手点几次前端页面确认“看起来能跑”。你需要让测试覆盖状态变化、权限边界、回滚场景和输入空间。
+数据放在哪，决定了 gas 成本、可修改性和函数边界。很多合约设计习惯其实都来自这个选择。
 
-Foundry 的价值在于它把这些流程压到很短的反馈回路里，让你能边写边验证。
+## 核心机制
+
+`storage` 对应链上持久状态，写入昂贵但可跨交易保留。`memory` 用于单次执行过程中的临时数据。`calldata` 用于外部调用输入，便宜且只读。`mapping` 用哈希方式定位键值，因此天然适合按键查，不适合全量遍历。
 
 ## 常见误区
 
-- 只测 happy path，不测 revert 和权限失败。
-- 把测试写成“证明我代码会工作”，而不是“尽量证明我的假设可能错”。
-- 完全不做 fork test，导致和真实协议或真实 token 交互时才暴露问题。
-- 把部署脚本当成上线前一次性文件，而不是工程资产。
+最常见的误区是把 `view` 理解成“完全免费”，或者把 `mapping` 当成普通对象数组来想象。
 
-## 怎么练
+## 工程判断
 
-建议按这个顺序练：
+当你设计状态结构时，先问自己哪些数据必须持久化，哪些只是执行过程中的中间态，哪些应该从事件或离线索引里恢复。
 
-1. 用 Foundry 给 ERC20 写基础转账测试。
-2. 给 Vault 写失败路径与权限测试。
-3. 为一个状态机更复杂的合约加 fuzz。
-4. 对真实主网协议做 fork test，验证交互假设。
+## 本节小结
 
-当你开始习惯“先写测试，再写代码，再看 trace 和 gas”，合约开发的可靠性会明显提升。
-
-## 继续深入看什么
-
-### 必读
-
-- [Foundry Book](https://book.getfoundry.sh/)
-- [OpenZeppelin Upgrades](https://docs.openzeppelin.com/upgrades)
-
-### 进阶
-
-- [Forge Std Reference](https://book.getfoundry.sh/reference/forge-std/overview)
-- [Anvil Reference](https://book.getfoundry.sh/anvil/)
-
-### 实战
-
-- 用 Foundry 给你自己最熟悉的一个合约写一套完整测试：成功路径、失败路径、fuzz、fork test 各至少一个。
+理解数据位置，就是理解 Solidity 状态成本和接口设计的起点。
 ```
 
-- [ ] **Step 4: Run the second core validator and confirm it passes**
+Create `book/part-2-solidity/chapter-01-solidity-state-foundations/exercises.md`:
 
-Run: `npm run docs:check -- core2`
-Expected: PASS with `Book validation passed for scopes: core2`
+```md
+# 练习题
 
-- [ ] **Step 5: Commit the security and engineering chapters**
+## 概念题
 
-Run: `git add book/security/index.md book/engineering-testing/index.md`
+1. `storage`、`memory`、`calldata` 的边界分别是什么？
+2. 为什么 `mapping` 不能自然遍历？
 
-Run: `git commit -m "feat: add security and engineering chapters"`
+## 分析题
 
-### Task 6: Write The Protocol, Project, And Appendix Content
+给一个简单的银行合约列出哪些字段必须在 `storage`，哪些逻辑只需要 `memory`。
+
+## 代码题
+
+写一个最小合约，同时演示 `storage` 引用修改和 `memory` 拷贝修改的行为差异。
+```
+
+Create `book/part-2-solidity/chapter-01-solidity-state-foundations/practice.md`:
+
+```md
+# 项目实践
+
+## 实践目标
+
+写一个最小金库或投票合约，并解释每个状态字段为什么放在那里。
+
+## 操作步骤
+
+1. 设计 3 到 5 个状态字段
+2. 写出读写函数
+3. 标注每个字段的存在理由和成本含义
+
+## 交付物
+
+- 一份最小合约
+- 一张状态字段说明表
+- 一段关于 gas 成本的短说明
+```
+
+Create `book/part-2-solidity/chapter-01-solidity-state-foundations/reading.md`:
+
+```md
+# 延伸阅读
+
+## 必读
+
+- Solidity 官方文档中的 state variables 与 data location
+- OpenZeppelin 文档中的 access control 与 token standards
+
+## 进阶
+
+- Solidity layout 文档
+- storage slot 相关深入文章
+
+## 实战
+
+- 用 Remix 或 Foundry 比较不同数据位置的 gas 差异
+- 给一个真实协议画出它的核心状态结构
+```
+
+- [ ] **Step 4: Create the canonical chapter bundle for volume 3**
+
+Create `book/part-3-foundry/chapter-01-foundry-engineering-workflow/index.md`:
+
+```md
+# 第 1 章：Foundry 工程工作流
+
+## 本章要解决什么
+
+把合约开发从“会写代码”推进到“会迭代、会测试、会调试、会部署”。
+
+## 读完后你应该会什么
+
+- 解释 Forge、Cast、Anvil 和 Script 的角色
+- 建立本地开发与测试闭环
+- 把测试当成状态边界保护，而不只是功能验证
+
+## 本章目录
+
+- [Foundry 的工程闭环](/part-3-foundry/chapter-01-foundry-engineering-workflow/foundry-loop)
+
+## 练习与实践入口
+
+- [练习题](/part-3-foundry/chapter-01-foundry-engineering-workflow/exercises)
+- [项目实践](/part-3-foundry/chapter-01-foundry-engineering-workflow/practice)
+
+## 延伸阅读入口
+
+- [继续深入](/part-3-foundry/chapter-01-foundry-engineering-workflow/reading)
+```
+
+Create `book/part-3-foundry/chapter-01-foundry-engineering-workflow/foundry-loop.md`:
+
+```md
+# Foundry 的工程闭环
+
+## 先理解什么
+
+Foundry 不是单一命令，而是一整套本地执行、测试、脚本和调试工具链。
+
+## 为什么重要
+
+如果你只会写 Solidity，却没有稳定的测试和调试回路，合约很容易停留在 demo 阶段。
+
+## 核心机制
+
+`forge build` 负责编译，`forge test` 负责执行测试，`anvil` 提供本地链，`cast` 负责命令行交互，`forge script` 负责可复用部署与执行脚本。
+
+## 常见误区
+
+很多人把测试当成“最后补一下”，或者把脚本只当成部署入口，不把它视为可重复的工程流程。
+
+## 工程判断
+
+对合约项目来说，最稳的节奏是写最小功能、补最小测试、跑本地链验证、再扩展边界条件，而不是一口气写完整个协议。
+
+## 本节小结
+
+Foundry 的核心价值在于把合约开发变成一个可以反复验证的小闭环。
+```
+
+Create `book/part-3-foundry/chapter-01-foundry-engineering-workflow/exercises.md`:
+
+```md
+# 练习题
+
+## 概念题
+
+1. Forge、Cast、Anvil、Script 分别解决什么问题？
+2. 为什么本地链和脚本是工程工作流的一部分？
+
+## 分析题
+
+为一个最小 ERC20 项目设计一条从编译到部署验证的本地工作流。
+
+## 代码题
+
+创建一个最小 Foundry 项目，写一条部署脚本和一条测试命令说明。
+```
+
+Create `book/part-3-foundry/chapter-01-foundry-engineering-workflow/practice.md`:
+
+```md
+# 项目实践
+
+## 实践目标
+
+把一个最小合约项目跑通完整的本地工程闭环。
+
+## 操作步骤
+
+1. 新建 Foundry 项目
+2. 写一个最小合约
+3. 写一条单元测试
+4. 用本地链和脚本完成一次部署
+
+## 交付物
+
+- 合约文件
+- 测试文件
+- 部署脚本
+- 一段命令执行记录
+```
+
+Create `book/part-3-foundry/chapter-01-foundry-engineering-workflow/reading.md`:
+
+```md
+# 延伸阅读
+
+## 必读
+
+- Foundry Book
+- Cheatcodes 文档
+
+## 进阶
+
+- invariant testing 文档
+- fork testing 示例仓库
+
+## 实战
+
+- 为一个已有练习合约补齐测试与部署脚本
+- 对一次失败测试做 trace 分析
+```
+
+- [ ] **Step 5: Run the first chapter bundle scope to verify it passes**
+
+Run: `npm run docs:check -- chaptersA`
+Expected: PASS with `Book validation passed for scopes: chaptersA`
+
+- [ ] **Step 6: Commit the first three canonical chapter bundles**
+
+```bash
+git add book/part-1-foundations/chapter-01-transaction-mental-model book/part-2-solidity/chapter-01-solidity-state-foundations book/part-3-foundry/chapter-01-foundry-engineering-workflow
+git commit -m "docs: migrate seed chapters for foundations to foundry"
+```
+
+## Task 6: Migrate Canonical Seed Chapters For Volumes 4 Through 6
 
 **Files:**
-- Create: `book/protocol-reading/index.md`
-- Create: `book/project-roadmap/index.md`
-- Create: `book/appendix/resources.md`
-- Create: `book/appendix/faq.md`
-- Create: `book/appendix/glossary.md`
+- Create: `book/part-4-evm/chapter-01-evm-execution-model/index.md`
+- Create: `book/part-4-evm/chapter-01-evm-execution-model/storage-memory-calldata.md`
+- Create: `book/part-4-evm/chapter-01-evm-execution-model/exercises.md`
+- Create: `book/part-4-evm/chapter-01-evm-execution-model/practice.md`
+- Create: `book/part-4-evm/chapter-01-evm-execution-model/reading.md`
+- Create: `book/part-5-gas/chapter-01-gas-cost-mental-model/index.md`
+- Create: `book/part-5-gas/chapter-01-gas-cost-mental-model/why-sstore-hurts.md`
+- Create: `book/part-5-gas/chapter-01-gas-cost-mental-model/exercises.md`
+- Create: `book/part-5-gas/chapter-01-gas-cost-mental-model/practice.md`
+- Create: `book/part-5-gas/chapter-01-gas-cost-mental-model/reading.md`
+- Create: `book/part-6-security/chapter-01-security-review-basics/index.md`
+- Create: `book/part-6-security/chapter-01-security-review-basics/reentrancy-and-access-control.md`
+- Create: `book/part-6-security/chapter-01-security-review-basics/exercises.md`
+- Create: `book/part-6-security/chapter-01-security-review-basics/practice.md`
+- Create: `book/part-6-security/chapter-01-security-review-basics/reading.md`
 
-- [ ] **Step 1: Verify the advanced and appendix scopes fail**
+- [ ] **Step 1: Run the second chapter bundle scope to confirm the red state**
 
-Run: `npm run docs:check -- advanced appendix`
-Expected: FAIL with missing files under `book/protocol-reading`, `book/project-roadmap`, and `book/appendix`
+Run: `npm run docs:check -- chaptersB`
+Expected: FAIL with at least `Missing file: book/part-4-evm/chapter-01-evm-execution-model/index.md`
 
-- [ ] **Step 2: Write the protocol-reading chapter**
+- [ ] **Step 2: Create the canonical chapter bundle for volume 4**
 
-Create `book/protocol-reading/index.md`:
+Create `book/part-4-evm/chapter-01-evm-execution-model/index.md`:
 
 ```md
-# Part 6: 协议源码阅读
+# 第 1 章：EVM 执行模型
+
+## 本章要解决什么
+
+解释交易进入执行环境后，EVM 到底如何处理数据和上下文。
+
+## 读完后你应该会什么
+
+- 区分 stack、memory、storage、calldata
+- 解释为什么不同区域的成本差异很大
+- 把常见 gas 结论和执行模型关联起来
+
+## 本章目录
+
+- [Storage、Memory 与 Calldata](/part-4-evm/chapter-01-evm-execution-model/storage-memory-calldata)
+
+## 练习与实践入口
+
+- [练习题](/part-4-evm/chapter-01-evm-execution-model/exercises)
+- [项目实践](/part-4-evm/chapter-01-evm-execution-model/practice)
+
+## 延伸阅读入口
+
+- [继续深入](/part-4-evm/chapter-01-evm-execution-model/reading)
+```
+
+Create `book/part-4-evm/chapter-01-evm-execution-model/storage-memory-calldata.md`:
+
+```md
+# Storage、Memory 与 Calldata
 
 ## 先理解什么
 
-读协议源码的关键，不是逐行从头读到尾，而是先抓结构，再抓状态流，再抓权限边界。源码阅读不应该像背课文，而应该像拆系统。
-
-对这本书的读者，最推荐的顺序是：
-
-1. OpenZeppelin 的 ERC20、Ownable、AccessControl
-2. OpenZeppelin 的代理与升级模块
-3. Uniswap V2
-4. Aave
+EVM 不是一整块内存，它区分多种数据区域，而且这些区域的生命周期和成本完全不同。
 
 ## 为什么重要
 
-源码阅读是你把“知道概念”变成“理解真实工程决策”的最快方式。你会看到标准接口如何落地、状态如何组织、边界如何防守、事件如何定义、为什么一些看似奇怪的写法其实是在处理约束。
+很多 Solidity 写法只有在你理解这些执行区域之后，才会从“经验法则”变成“可解释设计”。
+
+## 核心机制
+
+`storage` 持久保存在链上，`memory` 只在单次执行期间存在，`calldata` 是只读的输入载体。不同区域的读写方式和 gas 成本都不一样，这决定了函数参数、内部处理和状态更新该如何组织。
 
 ## 常见误区
 
-- 一上来就读最复杂的协议主合约。
-- 只看函数，不看状态变量和事件。
-- 只关心业务逻辑，不关心权限、升级、暂停、外部依赖。
-- 读不懂就怀疑自己，其实多数时候只是阅读顺序错了。
+常见误区是把 `memory` 当成“更快版本的 storage”，或者把 `calldata` 误解成“只是语法写法差异”。
 
-## 怎么练
+## 工程判断
 
-每次读源码，都强制输出一页笔记，至少包含：
+当函数只是消费外部输入时，优先考虑 `calldata`。当你需要中间态或临时聚合时，再进入 `memory`。只有真正要跨交易保存的信息才值得进入 `storage`。
 
-- 核心状态有哪些
-- 核心入口函数有哪些
-- 谁能调用
-- 资金或状态如何流动
-- 有哪些事件
-- 最值得追的 3 个内部函数
+## 本节小结
 
-如果你做不到这一页总结，说明你还没有真正读懂。
-
-## 继续深入看什么
-
-### 必读
-
-- [OpenZeppelin Contracts](https://github.com/OpenZeppelin/openzeppelin-contracts)
-- [Uniswap V2 Core](https://github.com/Uniswap/v2-core)
-
-### 进阶
-
-- [Aave V3 Core](https://github.com/aave/aave-v3-core)
-- [Uniswap V3 Core](https://github.com/Uniswap/v3-core)
-
-### 实战
-
-- 先从 OpenZeppelin 的 ERC20 开始，画出状态与函数关系，再去读 Uniswap V2 Pair 合约。
+执行区域不是细枝末节，而是 EVM 成本模型和 Solidity 接口设计的核心。
 ```
 
-- [ ] **Step 3: Write the project-roadmap chapter**
-
-Create `book/project-roadmap/index.md`:
+Create `book/part-4-evm/chapter-01-evm-execution-model/exercises.md`:
 
 ```md
-# Part 7: 项目实战路线
+# 练习题
+
+## 概念题
+
+1. 为什么 `calldata` 常常是外部函数参数的首选？
+2. `memory` 和 `storage` 的生命周期差异是什么？
+
+## 分析题
+
+选一个真实合约函数，分析其中哪些数据应该留在 `calldata`，哪些需要拷贝到 `memory`。
+
+## 代码题
+
+写一个最小函数，比较 `memory` 数组和 `calldata` 数组在处理流程上的差异。
+```
+
+Create `book/part-4-evm/chapter-01-evm-execution-model/practice.md`:
+
+```md
+# 项目实践
+
+## 实践目标
+
+用一个最小合约实验三种数据区域的使用方式。
+
+## 操作步骤
+
+1. 写一个接收数组的外部函数
+2. 分别尝试 `memory` 和 `calldata` 参数
+3. 增加一次 `storage` 写入并记录 gas 差异
+
+## 交付物
+
+- 实验合约
+- gas 对比记录
+- 一段关于差异来源的解释
+```
+
+Create `book/part-4-evm/chapter-01-evm-execution-model/reading.md`:
+
+```md
+# 延伸阅读
+
+## 必读
+
+- Solidity 官方文档中的 data location
+- evm.codes 关于 memory 和 storage 的说明
+
+## 进阶
+
+- Yellow Paper 中和 machine state 相关的定义
+- 深入讲 storage layout 的文章
+
+## 实战
+
+- 用 Foundry 跑一次 gas snapshot，对比不同数据位置写法
+- 打开一个真实协议的合约函数，标注每种数据区域的角色
+```
+
+- [ ] **Step 3: Create the canonical chapter bundles for volumes 5 and 6**
+
+Create `book/part-5-gas/chapter-01-gas-cost-mental-model/index.md`:
+
+```md
+# 第 1 章：Gas 成本心智模型
+
+## 本章要解决什么
+
+解释 gas 为什么花在这些地方，而不是只背“什么贵什么便宜”。
+
+## 读完后你应该会什么
+
+- 理解状态写入为什么昂贵
+- 把 gas 优化和状态设计联系起来
+- 分辨结构性优化与微优化
+
+## 本章目录
+
+- [为什么 SSTORE 特别疼](/part-5-gas/chapter-01-gas-cost-mental-model/why-sstore-hurts)
+
+## 练习与实践入口
+
+- [练习题](/part-5-gas/chapter-01-gas-cost-mental-model/exercises)
+- [项目实践](/part-5-gas/chapter-01-gas-cost-mental-model/practice)
+
+## 延伸阅读入口
+
+- [继续深入](/part-5-gas/chapter-01-gas-cost-mental-model/reading)
+```
+
+Create `book/part-5-gas/chapter-01-gas-cost-mental-model/why-sstore-hurts.md`:
+
+```md
+# 为什么 SSTORE 特别疼
 
 ## 先理解什么
 
-项目顺序会决定你的成长曲线。太简单的项目学不到状态复杂度，太复杂的项目会让你只剩复制粘贴。最好的顺序是让每个项目都只多出一层新难点。
-
-推荐顺序：
-
-1. ERC20
-2. NFT
-3. Voting
-4. MultiSig
-5. Staking
-6. DEX
-7. Marketplace
-8. Lending
+gas 本质上是在为执行环境的资源消耗定价，而持久状态是最昂贵的资源之一。
 
 ## 为什么重要
 
-如果项目顺序合理，你每做完一个项目，脑子里都会多一块稳定模型：
+如果不理解 storage 成本，你就很容易把 gas 优化误解成语法技巧，而忽略真正有价值的状态设计。
 
-- ERC20 帮你理解余额与授权
-- MultiSig 帮你理解权限和签名
-- Staking 帮你理解奖励结算
-- DEX 帮你理解池子、定价和状态变化
-- Lending 帮你理解抵押、清算与风险边界
+## 核心机制
+
+`SSTORE` 涉及链上持久状态更新，后续状态读取和全局状态结构都要为它承担成本。相比之下，`memory` 和 `calldata` 只服务于单次执行或输入读取，因此便宜得多。
 
 ## 常见误区
 
-- 一开始就做桥或复杂借贷协议。
-- 做项目只重功能，不重测试与安全。
-- 一边写一边搜模板，最后自己也说不清状态设计。
-- 每个项目都只写 happy path demo。
+常见误区是只盯着 `unchecked`、短变量名或者一些零碎写法，却不先看状态字段是否真的需要存在。
 
-## 怎么练
+## 工程判断
 
-每做一个项目都写这四样东西：
+先减少不必要的持久写入，再考虑局部微优化。真正高价值的 gas 优化，往往来自状态结构和调用模式设计。
 
-1. 状态设计说明
-2. 权限模型说明
-3. 失败路径清单
-4. 测试覆盖说明
+## 本节小结
 
-做完再问自己：这个项目最值得我迁移到下一个项目里的能力是什么？
-
-## 继续深入看什么
-
-### 必读
-
-- [Solidity By Example](https://solidity-by-example.org/)
-- [Foundry Book](https://book.getfoundry.sh/)
-
-### 进阶
-
-- [Damn Vulnerable DeFi](https://www.damnvulnerabledefi.xyz/)
-- [Paradigm CTF Archive](https://github.com/paradigmxyz/paradigm-ctf)
-
-### 实战
-
-- 在 ERC20、MultiSig、Staking、DEX 四个项目里至少做完两个，并为每个项目补上测试与审查笔记。
+最贵的通常不是语法，而是你决定把什么永久写进链上。
 ```
 
-- [ ] **Step 4: Write the resources appendix**
+Create `book/part-5-gas/chapter-01-gas-cost-mental-model/exercises.md`:
 
-Create `book/appendix/resources.md`:
+```md
+# 练习题
+
+## 概念题
+
+1. 为什么 `SSTORE` 通常比 `memory` 写入贵很多？
+2. 什么叫结构性 gas 优化？
+
+## 分析题
+
+分析一个最小合约，找出哪些状态字段其实可以不持久化。
+
+## 代码题
+
+写两种版本的计数器或金库合约，对比一次操作中的 gas 成本差异。
+```
+
+Create `book/part-5-gas/chapter-01-gas-cost-mental-model/practice.md`:
+
+```md
+# 项目实践
+
+## 实践目标
+
+做一次以状态设计为中心的 gas 对比实验。
+
+## 操作步骤
+
+1. 选一个最小业务模型
+2. 写一个“状态较重”的版本
+3. 写一个“状态较轻”的版本
+4. 对比 gas 并解释原因
+
+## 交付物
+
+- 两份合约
+- 一份 gas 对比表
+- 一段设计复盘
+```
+
+Create `book/part-5-gas/chapter-01-gas-cost-mental-model/reading.md`:
+
+```md
+# 延伸阅读
+
+## 必读
+
+- Solidity docs 中与 gas optimization 相关的部分
+- evm.codes 上的 `SSTORE` 与 `SLOAD`
+
+## 进阶
+
+- storage packing 深入文章
+- 一些真实协议的 gas review
+
+## 实战
+
+- 对自己的练习合约做一次 slot packing 复盘
+- 为一个函数写出“先结构、后语法”的优化清单
+```
+
+Create `book/part-6-security/chapter-01-security-review-basics/index.md`:
+
+```md
+# 第 1 章：安全审查基础
+
+## 本章要解决什么
+
+建立最基本的安全审查视角：看资产、看权限、看外部调用、看失败路径。
+
+## 读完后你应该会什么
+
+- 从攻击者视角检查最小合约
+- 识别最基础的重入和权限风险
+- 把功能测试和安全边界测试区分开
+
+## 本章目录
+
+- [重入与权限边界](/part-6-security/chapter-01-security-review-basics/reentrancy-and-access-control)
+
+## 练习与实践入口
+
+- [练习题](/part-6-security/chapter-01-security-review-basics/exercises)
+- [项目实践](/part-6-security/chapter-01-security-review-basics/practice)
+
+## 延伸阅读入口
+
+- [继续深入](/part-6-security/chapter-01-security-review-basics/reading)
+```
+
+Create `book/part-6-security/chapter-01-security-review-basics/reentrancy-and-access-control.md`:
+
+```md
+# 重入与权限边界
+
+## 先理解什么
+
+很多合约漏洞不是“语法不会写”，而是状态更新时机、外部调用和权限模型的边界没有设计清楚。
+
+## 为什么重要
+
+重入和权限问题是最常见、也最容易造成资产损失的漏洞类型之一。
+
+## 核心机制
+
+当合约在更新关键状态之前把控制权交给外部地址，就可能暴露重入窗口。权限问题则通常来自角色划分含糊、管理员能力过大或关键操作缺乏检查。
+
+## 常见误区
+
+很多人会把安全理解成“加个 onlyOwner 就够了”，或者认为“测试通过就说明没问题”。
+
+## 工程判断
+
+审查看三件事：谁能动钱，谁能改规则，谁能在外部调用期间拿到第二次机会。
+
+## 本节小结
+
+安全不是附加标签，而是对状态边界和控制流的持续检查。
+```
+
+Create `book/part-6-security/chapter-01-security-review-basics/exercises.md`:
+
+```md
+# 练习题
+
+## 概念题
+
+1. 重入的最小触发条件是什么？
+2. 为什么权限边界不能只靠一个 `onlyOwner` 来理解？
+
+## 分析题
+
+阅读一个最小金库合约，分析它的资产入口、出口和管理员边界。
+
+## 代码题
+
+写一个带有重入缺陷的最小示例，再写出修复版本。
+```
+
+Create `book/part-6-security/chapter-01-security-review-basics/practice.md`:
+
+```md
+# 项目实践
+
+## 实践目标
+
+做一次最小合约的安全审查演练。
+
+## 操作步骤
+
+1. 选一个带余额或权限的合约
+2. 检查外部调用顺序
+3. 检查管理员能力
+4. 列出至少 3 个潜在风险点
+
+## 交付物
+
+- 一份审查清单
+- 一个漏洞说明
+- 一个修复建议
+```
+
+Create `book/part-6-security/chapter-01-security-review-basics/reading.md`:
+
+```md
+# 延伸阅读
+
+## 必读
+
+- OpenZeppelin 安全文档
+- Solidity 安全考虑章节
+
+## 进阶
+
+- Cyfrin 安全课程
+- 典型重入与权限事故复盘
+
+## 实战
+
+- 对自己的练习合约做一次安全审查
+- 为每个关键写操作补一条失败路径测试
+```
+
+- [ ] **Step 4: Run the second chapter bundle scope to verify it passes**
+
+Run: `npm run docs:check -- chaptersB`
+Expected: PASS with `Book validation passed for scopes: chaptersB`
+
+- [ ] **Step 5: Commit the EVM, Gas, and security chapter bundles**
+
+```bash
+git add book/part-4-evm/chapter-01-evm-execution-model book/part-5-gas/chapter-01-gas-cost-mental-model book/part-6-security/chapter-01-security-review-basics
+git commit -m "docs: migrate evm gas and security seed chapters"
+```
+
+## Task 7: Migrate Protocol And Training Seed Chapters And Preserve Legacy Routes
+
+**Files:**
+- Create: `book/part-9-protocol-reading/chapter-01-reading-real-protocols/index.md`
+- Create: `book/part-9-protocol-reading/chapter-01-reading-real-protocols/reading-order-and-questions.md`
+- Create: `book/part-9-protocol-reading/chapter-01-reading-real-protocols/exercises.md`
+- Create: `book/part-9-protocol-reading/chapter-01-reading-real-protocols/practice.md`
+- Create: `book/part-9-protocol-reading/chapter-01-reading-real-protocols/reading.md`
+- Create: `book/part-10-training/chapter-01-roadmap-and-100-days/index.md`
+- Create: `book/part-10-training/chapter-01-roadmap-and-100-days/project-ladder.md`
+- Create: `book/part-10-training/chapter-01-roadmap-and-100-days/exercises.md`
+- Create: `book/part-10-training/chapter-01-roadmap-and-100-days/practice.md`
+- Create: `book/part-10-training/chapter-01-roadmap-and-100-days/reading.md`
+- Modify: `book/mental-model/index.md`
+- Modify: `book/solidity-state/index.md`
+- Modify: `book/evm-gas/index.md`
+- Modify: `book/security/index.md`
+- Modify: `book/engineering-testing/index.md`
+- Modify: `book/protocol-reading/index.md`
+- Modify: `book/project-roadmap/index.md`
+
+- [ ] **Step 1: Run the final chapter and legacy scopes to confirm the red state**
+
+Run: `npm run docs:check -- chaptersC legacy`
+Expected: FAIL with at least `Missing file: book/part-9-protocol-reading/chapter-01-reading-real-protocols/index.md`
+
+- [ ] **Step 2: Create the canonical chapter bundle for volume 9**
+
+Create `book/part-9-protocol-reading/chapter-01-reading-real-protocols/index.md`:
+
+```md
+# 第 1 章：如何读真实协议
+
+## 本章要解决什么
+
+建立一套能读下去、读得动、读得有收获的协议源码阅读顺序。
+
+## 读完后你应该会什么
+
+- 进入仓库后知道先看哪些文件
+- 能围绕状态、权限、资金流提问题
+- 不再被复杂目录和大量辅助代码吓退
+
+## 本章目录
+
+- [阅读顺序与问题清单](/part-9-protocol-reading/chapter-01-reading-real-protocols/reading-order-and-questions)
+
+## 练习与实践入口
+
+- [练习题](/part-9-protocol-reading/chapter-01-reading-real-protocols/exercises)
+- [项目实践](/part-9-protocol-reading/chapter-01-reading-real-protocols/practice)
+
+## 延伸阅读入口
+
+- [继续深入](/part-9-protocol-reading/chapter-01-reading-real-protocols/reading)
+```
+
+Create `book/part-9-protocol-reading/chapter-01-reading-real-protocols/reading-order-and-questions.md`:
+
+```md
+# 阅读顺序与问题清单
+
+## 先理解什么
+
+协议源码阅读不是“从第一行读到最后一行”，而是先找到系统的状态核心和控制核心。
+
+## 为什么重要
+
+如果阅读顺序不对，你很容易被辅助函数、库和测试细节淹没，看半天却说不出协议真正的骨架。
+
+## 核心机制
+
+先看入口合约和核心状态，再看关键写操作，再看权限与外部依赖，最后再回到测试和边缘模块。阅读时持续追问：钱从哪来，到哪去，谁能改规则，失败会怎么暴露。
+
+## 常见误区
+
+最常见的误区是顺着文件树硬啃，或者先看测试却没有任何系统模型做支撑。
+
+## 工程判断
+
+读协议时先抓资产流和状态流。只要这两条线抓住了，剩下的大量实现细节就有了落点。
+
+## 本节小结
+
+协议源码阅读首先是一种提问方法，而不是阅读耐力比赛。
+```
+
+Create `book/part-9-protocol-reading/chapter-01-reading-real-protocols/exercises.md`:
+
+```md
+# 练习题
+
+## 概念题
+
+1. 为什么协议阅读应该先抓状态和资金流？
+2. 阅读顺序错了会带来什么问题？
+
+## 分析题
+
+给一个你熟悉的仓库，写出“先看哪些文件、为什么先看这些”的顺序表。
+
+## 代码题
+
+为一个小型协议仓库写一份阅读清单，至少包含入口、状态、权限、测试四类文件。
+```
+
+Create `book/part-9-protocol-reading/chapter-01-reading-real-protocols/practice.md`:
+
+```md
+# 项目实践
+
+## 实践目标
+
+对一个真实仓库做第一次结构化阅读。
+
+## 操作步骤
+
+1. 选 OpenZeppelin 或 Uniswap V2
+2. 标出入口合约和核心状态
+3. 记录 3 个关键函数和 3 个关键问题
+
+## 交付物
+
+- 一份阅读顺序表
+- 一张状态和资金流草图
+- 一页阅读笔记
+```
+
+Create `book/part-9-protocol-reading/chapter-01-reading-real-protocols/reading.md`:
+
+```md
+# 延伸阅读
+
+## 必读
+
+- OpenZeppelin 仓库
+- Uniswap V2 Core 仓库
+
+## 进阶
+
+- Uniswap V3 文档与源码
+- Aave 核心仓库
+
+## 实战
+
+- 每天只读几十行并写提问笔记
+- 给每个核心函数补一句“它为什么存在”
+```
+
+- [ ] **Step 3: Create the canonical chapter bundle for volume 10**
+
+Create `book/part-10-training/chapter-01-roadmap-and-100-days/index.md`:
+
+```md
+# 第 1 章：项目路线与 100 天计划
+
+## 本章要解决什么
+
+把“应该学什么”变成“明天就能开始做什么”。
+
+## 读完后你应该会什么
+
+- 按阶段安排 100 天学习节奏
+- 给自己选择合适的项目阶梯
+- 把阅读和练习绑定到真实输出
+
+## 本章目录
+
+- [从 Todo 到 DEX 的项目阶梯](/part-10-training/chapter-01-roadmap-and-100-days/project-ladder)
+
+## 练习与实践入口
+
+- [练习题](/part-10-training/chapter-01-roadmap-and-100-days/exercises)
+- [项目实践](/part-10-training/chapter-01-roadmap-and-100-days/practice)
+
+## 延伸阅读入口
+
+- [继续深入](/part-10-training/chapter-01-roadmap-and-100-days/reading)
+```
+
+Create `book/part-10-training/chapter-01-roadmap-and-100-days/project-ladder.md`:
+
+```md
+# 从 Todo 到 DEX 的项目阶梯
+
+## 先理解什么
+
+项目顺序会直接决定学习效率。先做小而闭环的项目，再进入高耦合系统，成长速度会快很多。
+
+## 为什么重要
+
+如果一开始就挑战桥、借贷或复杂 DEX，往往会把多个难点叠在一起，最后既没做完，也没真正理解原因。
+
+## 核心机制
+
+建议从 Todo、Bank、Voting、ERC20、NFT、MultiSig、Staking、DEX 这样的阶梯往上走。每一层只新增一到两个关键难点，让你知道自己在练什么。
+
+## 常见误区
+
+常见误区是只做 UI 接入项目，或者一开始就复制大型协议代码，却没有最小可解释版本。
+
+## 工程判断
+
+每做完一个项目，都要回答三个问题：状态是怎么设计的，测试覆盖了什么，最容易出漏洞的边界在哪里。
+
+## 本节小结
+
+项目不是为了“做过很多”，而是为了建立一层一层叠加的判断力。
+```
+
+Create `book/part-10-training/chapter-01-roadmap-and-100-days/exercises.md`:
+
+```md
+# 练习题
+
+## 概念题
+
+1. 为什么项目练习要按阶梯安排？
+2. 一个好的练习项目应该新增哪些难点，而不是把所有难点堆在一起？
+
+## 分析题
+
+为自己设计一条 8 周项目路线，并说明每一周为什么这样排。
+
+## 代码题
+
+写一个最小项目清单，从合约、测试、前端到文档，列出你本周要完成的最小交付。
+```
+
+Create `book/part-10-training/chapter-01-roadmap-and-100-days/practice.md`:
+
+```md
+# 项目实践
+
+## 实践目标
+
+把你未来 30 天的学习计划压成一个真实执行清单。
+
+## 操作步骤
+
+1. 选一个当前阶段最合适的项目
+2. 拆成功能、测试、复盘三条线
+3. 为每周设一个可交付成果
+
+## 交付物
+
+- 30 天计划表
+- 本周项目清单
+- 一段风险预估说明
+```
+
+Create `book/part-10-training/chapter-01-roadmap-and-100-days/reading.md`:
+
+```md
+# 延伸阅读
+
+## 必读
+
+- Foundry Book
+- OpenZeppelin 文档
+- Ethereum.org 开发者文档
+
+## 进阶
+
+- Uniswap V2 和 V3 仓库
+- Aave 与 EigenLayer 相关资料
+
+## 实战
+
+- 按 100 天节奏做每周复盘
+- 每完成一个项目就补一份“状态、Gas、安全”复盘笔记
+```
+
+- [ ] **Step 4: Convert the legacy flat pages into transition pages**
+
+Update `book/mental-model/index.md`:
+
+```md
+# 认知重建（旧路径）
+
+这部分内容已经迁移到新的书籍结构。
+
+- 新入口：[卷一：Web3 与 Ethereum 基础](/part-1-foundations/)
+- 练习题：[第 1 章练习题](/part-1-foundations/chapter-01-transaction-mental-model/exercises)
+- 项目实践：[第 1 章项目实践](/part-1-foundations/chapter-01-transaction-mental-model/practice)
+- 延伸阅读：[第 1 章继续深入](/part-1-foundations/chapter-01-transaction-mental-model/reading)
+```
+
+Update `book/solidity-state/index.md`:
+
+```md
+# Solidity 与状态（旧路径）
+
+这部分内容已经迁移到新的书籍结构。
+
+- 新入口：[卷二：Solidity（从零到高级）](/part-2-solidity/)
+- 练习题：[第 1 章练习题](/part-2-solidity/chapter-01-solidity-state-foundations/exercises)
+- 项目实践：[第 1 章项目实践](/part-2-solidity/chapter-01-solidity-state-foundations/practice)
+- 延伸阅读：[第 1 章继续深入](/part-2-solidity/chapter-01-solidity-state-foundations/reading)
+```
+
+Update `book/evm-gas/index.md`:
+
+```md
+# EVM 与 Gas（旧路径）
+
+这部分内容已经拆分进新的卷四和卷五结构。
+
+- 新入口：[卷四：EVM 原理](/part-4-evm/)
+- 练习题：[卷四第 1 章练习题](/part-4-evm/chapter-01-evm-execution-model/exercises)
+- 项目实践：[卷五第 1 章项目实践](/part-5-gas/chapter-01-gas-cost-mental-model/practice)
+- 延伸阅读：[卷五第 1 章继续深入](/part-5-gas/chapter-01-gas-cost-mental-model/reading)
+```
+
+Update `book/security/index.md`:
+
+```md
+# 安全（旧路径）
+
+这部分内容已经迁移到新的书籍结构。
+
+- 新入口：[卷六：智能合约安全](/part-6-security/)
+- 练习题：[第 1 章练习题](/part-6-security/chapter-01-security-review-basics/exercises)
+- 项目实践：[第 1 章项目实践](/part-6-security/chapter-01-security-review-basics/practice)
+- 延伸阅读：[第 1 章继续深入](/part-6-security/chapter-01-security-review-basics/reading)
+```
+
+Update `book/engineering-testing/index.md`:
+
+```md
+# 工程化与测试（旧路径）
+
+这部分内容已经迁移到新的书籍结构。
+
+- 新入口：[卷三：Foundry 完整开发指南](/part-3-foundry/)
+- 练习题：[第 1 章练习题](/part-3-foundry/chapter-01-foundry-engineering-workflow/exercises)
+- 项目实践：[第 1 章项目实践](/part-3-foundry/chapter-01-foundry-engineering-workflow/practice)
+- 延伸阅读：[第 1 章继续深入](/part-3-foundry/chapter-01-foundry-engineering-workflow/reading)
+```
+
+Update `book/protocol-reading/index.md`:
+
+```md
+# 协议源码阅读（旧路径）
+
+这部分内容已经迁移到新的书籍结构。
+
+- 新入口：[卷九：协议源码阅读](/part-9-protocol-reading/)
+- 练习题：[第 1 章练习题](/part-9-protocol-reading/chapter-01-reading-real-protocols/exercises)
+- 项目实践：[第 1 章项目实践](/part-9-protocol-reading/chapter-01-reading-real-protocols/practice)
+- 延伸阅读：[第 1 章继续深入](/part-9-protocol-reading/chapter-01-reading-real-protocols/reading)
+```
+
+Update `book/project-roadmap/index.md`:
+
+```md
+# 项目路线（旧路径）
+
+这部分内容已经迁移到新的书籍结构。
+
+- 新入口：[卷十：训练与实战](/part-10-training/)
+- 练习题：[第 1 章练习题](/part-10-training/chapter-01-roadmap-and-100-days/exercises)
+- 项目实践：[第 1 章项目实践](/part-10-training/chapter-01-roadmap-and-100-days/practice)
+- 延伸阅读：[第 1 章继续深入](/part-10-training/chapter-01-roadmap-and-100-days/reading)
+```
+
+- [ ] **Step 5: Run the final chapter and legacy scopes to verify they pass**
+
+Run: `npm run docs:check -- chaptersC legacy`
+Expected: PASS with `Book validation passed for scopes: chaptersC, legacy`
+
+- [ ] **Step 6: Commit the protocol, training, and legacy transitions**
+
+```bash
+git add book/part-9-protocol-reading/chapter-01-reading-real-protocols book/part-10-training/chapter-01-roadmap-and-100-days book/mental-model/index.md book/solidity-state/index.md book/evm-gas/index.md book/security/index.md book/engineering-testing/index.md book/protocol-reading/index.md book/project-roadmap/index.md
+git commit -m "docs: migrate protocol and training seed chapters"
+```
+
+## Task 8: Refresh Appendix And README, Then Run Final Verification
+
+**Files:**
+- Modify: `book/appendix/resources.md`
+- Modify: `README.md`
+
+- [ ] **Step 1: Run the appendix scope to confirm the red state**
+
+Run: `npm run docs:check -- appendix`
+Expected: FAIL with at least `Missing pattern "## 主线资料" in book/appendix/resources.md`
+
+- [ ] **Step 2: Rewrite the resources appendix for the new book structure**
+
+Update `book/appendix/resources.md`:
 
 ```md
 # 资料索引
 
 ## 官方文档
 
-- [Ethereum Developer Docs](https://ethereum.org/developers/docs/)
-- [Solidity 官方文档](https://docs.soliditylang.org/en/latest/)
-- [Foundry Book](https://book.getfoundry.sh/)
-- [OpenZeppelin Docs](https://docs.openzeppelin.com/contracts)
+- Solidity 官方文档
+- Foundry Book
+- OpenZeppelin 文档
+- Ethereum.org 开发者文档
 
-## 安全与工程
+## 主线资料
 
-- [Solidity Security Considerations](https://docs.soliditylang.org/en/latest/security-considerations.html)
-- [OpenZeppelin Security](https://docs.openzeppelin.com/contracts/4.x/api/security)
-- [SWC Registry](https://swcregistry.io/)
-- [Cyfrin Updraft](https://updraft.cyfrin.io/)
+- 卷一到卷六的章节与练习
+- 每章 `reading.md` 中的必读与进阶材料
+- `study-method.md` 与 `source-code-reading-guide.md`
 
-## 源码阅读
+## 源码入口
 
-- [OpenZeppelin Contracts](https://github.com/OpenZeppelin/openzeppelin-contracts)
-- [Uniswap V2 Core](https://github.com/Uniswap/v2-core)
-- [Aave V3 Core](https://github.com/aave/aave-v3-core)
-- [EIPs](https://eips.ethereum.org/)
+- OpenZeppelin
+- Uniswap V2
+- Uniswap V3
+- Aave
+- EigenLayer
 ```
 
-- [ ] **Step 5: Write the FAQ appendix**
+- [ ] **Step 3: Rewrite the README so it describes the book tree rather than the flat handbook**
 
-Create `book/appendix/faq.md`:
+Update `README.md`:
 
 ```md
-# 常见问题
-
-## 常见问题
-
-### 我是不是要先把密码学学完？
-
-不用。对合约与 dApp 工程师来说，先把 Solidity、状态、EVM、Gas、安全和测试吃透，收益更高。
-
-### 我应该先学 Hardhat 还是 Foundry？
-
-如果你的目标是补强合约开发和测试，我推荐先学 Foundry。它的反馈回路更短，也更适合你把测试、调试和 fork 场景接进日常开发。
-
-### 我为什么总觉得自己“会调合约但不会设计合约”？
-
-因为这两者中间隔着状态模型、权限边界、失败路径、Gas 成本和安全思维。前者是接口消费，后者是系统设计。
-
-### 我应该什么时候开始读源码？
-
-当你已经能独立写出基础合约、知道常见状态设计，并能读懂 OpenZeppelin 的标准实现时，就可以开始。
-```
-
-- [ ] **Step 6: Write the glossary appendix**
-
-Create `book/appendix/glossary.md`:
-
-```md
-# 术语表
-
-## 术语表
-
-- **ABI**：合约与外部世界交互时使用的接口编码规范。
-- **Calldata**：外部调用传给合约的只读输入区域。
-- **Delegatecall**：在当前合约上下文中执行另一个合约代码的低级调用方式。
-- **EVM**：Ethereum Virtual Machine，执行智能合约字节码的运行环境。
-- **Gas**：执行链上操作所需的资源计费单位。
-- **Mempool**：待打包交易的传播与排队区域。
-- **Nonce**：账户发出交易的递增计数器。
-- **Receipt**：交易执行后的结果摘要，包含状态、gas 使用、logs 等。
-- **Slot**：EVM storage 的逻辑存储单元。
-- **State Root**：区块执行后全局状态的根哈希。
-```
-
-- [ ] **Step 7: Run the advanced and appendix validators**
-
-Run: `npm run docs:check -- advanced appendix`
-Expected: PASS with `Book validation passed for scopes: advanced, appendix`
-
-- [ ] **Step 8: Commit the advanced content**
-
-Run: `git add book/protocol-reading/index.md book/project-roadmap/index.md book/appendix`
-
-Run: `git commit -m "feat: add advanced chapters and appendix"`
-
-### Task 7: Add Deployment And Repository Documentation
-
-**Files:**
-- Create: `.github/workflows/deploy.yml`
-- Create: `README.md`
-
-- [ ] **Step 1: Confirm the full validator passes before deployment setup**
-
-Run: `npm run docs:check`
-Expected: PASS with all scopes listed
-
-- [ ] **Step 2: Add the GitHub Pages workflow**
-
-Create `.github/workflows/deploy.yml`:
-
-```yml
-name: Deploy Book
-
-on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: pages
-  cancel-in-progress: true
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Validate book structure
-        run: npm run docs:check
-
-      - name: Build VitePress site
-        run: npm run docs:build
-
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: book/.vitepress/dist
-
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-```
-
-- [ ] **Step 3: Add the root README**
-
-Create `README.md`:
-
-````md
 # Web3 Learning Book
 
-一个面向已经做过 dApp 的前端开发者的中文 Web3 全栈学习手册，内容重点包括 Solidity、状态模型、EVM、Gas、安全、工程化、协议源码阅读和项目实战路径。
+一个面向已经做过 dApp 的前端开发者的中文 Web3 长期学习型书籍仓库。
+
+当前仓库已经完成 Phase 1 书籍重构：
+
+- VitePress 站点已升级为“卷 -> 章 -> 节”的书籍结构
+- 主干页面、卷级导读和种子章节已迁移到新路径
+- 旧路径保留为过渡页
+- 校验脚本会检查前言页、卷级导读、章节支持页和附录结构
 
 ## 本地开发
 
-```bash
-npm install
-npm run docs:dev
-```
-
-默认本地地址通常是 `http://localhost:5173/web3-learning/` 或 VitePress 输出的开发地址。
+- `npm install`
+- `npm run docs:dev`
 
 ## 本地校验
 
-```bash
-npm run docs:check
-npm run docs:build
+- `npm run docs:check`
+- `npm run docs:build`
+
+## 目录说明
+
+- `book/`：站点正文
+- `book/part-*`：卷级目录
+- `book/part-*/chapter-*`：章节与练习支持页
+- `scripts/validate-book.mjs`：结构校验脚本
+- `docs/superpowers/`：设计与计划记录
 ```
 
-## 部署到 GitHub Pages
+- [ ] **Step 4: Run the appendix scope to verify it passes**
 
-1. 把这个目录推到 GitHub 仓库 `web3-learning`
-2. 在 GitHub 仓库设置中启用 Pages，并选择 `GitHub Actions`
-3. push 到 `main` 后，工作流会自动构建并部署
+Run: `npm run docs:check -- appendix`
+Expected: PASS with `Book validation passed for scopes: appendix`
 
-## 内容目录
+- [ ] **Step 5: Run the full validation suite**
 
-- `book/`：书的正文与 VitePress 配置
-- `scripts/validate-book.mjs`：章节结构校验脚本
-- `.github/workflows/deploy.yml`：GitHub Pages 自动部署工作流
-````
+Run: `npm run docs:check -- frontmatter siteShell volumesA volumesB chaptersA chaptersB chaptersC legacy appendix`
+Expected: PASS with `Book validation passed for scopes: frontmatter, siteShell, volumesA, volumesB, chaptersA, chaptersB, chaptersC, legacy, appendix`
 
-- [ ] **Step 4: Run the final validation suite**
-
-Run: `npm run docs:check`
-Expected: PASS with all scopes listed
+- [ ] **Step 6: Run the production build**
 
 Run: `npm run docs:build`
-Expected: PASS and static output appears under `book/.vitepress/dist`
+Expected: PASS with VitePress build output ending in a successful build summary
 
-- [ ] **Step 5: Commit deployment support**
+- [ ] **Step 7: Commit the appendix refresh and verified Phase 1 restructure**
 
-Run: `git add .github/workflows/deploy.yml README.md`
-
-Run: `git commit -m "feat: add github pages deployment workflow"`
-
-### Task 8: Final Local Review And Publishing Prep
-
-**Files:**
-- Modify: `book/.vitepress/config.ts` if base URL or repo link needs correction after the first full build
-
-- [ ] **Step 1: Preview the built book locally**
-
-Run: `npm run docs:preview`
-Expected: local preview server starts and pages are navigable
-
-- [ ] **Step 2: Click through the main route list**
-
-Check these routes in the local preview:
-
-- `/`
-- `/preface`
-- `/learning-map`
-- `/mental-model/`
-- `/solidity-state/`
-- `/evm-gas/`
-- `/security/`
-- `/engineering-testing/`
-- `/protocol-reading/`
-- `/project-roadmap/`
-- `/appendix/resources`
-
-Expected: each page resolves and the sidebar links remain usable.
-
-- [ ] **Step 3: Fix repo-specific metadata if needed**
-
-If the repository name differs from `web3-learning`, update the `base` string in `book/.vitepress/config.ts` so it exactly matches the real GitHub repository name. If you later want a GitHub icon in the nav, add a `socialLinks` entry only after the final repository URL is known.
-
-- [ ] **Step 4: Re-run build after metadata fixes**
-
-Run: `npm run docs:build`
-Expected: PASS
-
-- [ ] **Step 5: Commit final polish**
-
-Run: `git add book/.vitepress/config.ts`
-
-Run: `git commit -m "chore: finalize site metadata"`
+```bash
+git add book/appendix/resources.md README.md
+git commit -m "docs: finish phase 1 book restructure"
+```
 
 ## Self-Review
 
-### Spec coverage
+### Spec Coverage
 
-- GitBook-style self-hosted docs site: covered by Tasks 1, 2, 7, and 8.
-- Chinese v1 with substantial content: covered by Tasks 3 through 6.
-- Mainline path for experienced dApp frontend engineers: reflected in all chapter files created in Tasks 3 through 6.
-- Chapter-level deep-dive resources: enforced structurally in every content task and by the validation script.
-- GitHub Pages deployment: covered in Task 7 and checked in Task 8.
+- Front matter pages from the spec are covered in Task 1.
+- Navigation and sidebar redesign are covered in Task 2.
+- Ten-volume shell is covered in Tasks 3 and 4.
+- Seed content migration into canonical chapter routes is covered in Tasks 5 through 7.
+- Legacy route preservation is covered in Task 7.
+- Appendix and repository guidance refresh are covered in Task 8.
+- Validation strategy from the spec is implemented across Tasks 1 through 8.
 
-### Placeholder scan
+### Placeholder Scan
 
-- No unresolved placeholders remain in the plan.
-- Every task names exact files and exact commands.
+This plan contains no unresolved placeholder markers or “similar to previous task” shortcuts. Each code step includes exact file contents or exact commands.
 
-### Type consistency
+### Type And Name Consistency
 
-- The content root is consistently `book/`.
-- Validation script scopes and file paths match the planned chapter paths.
-- The deployment artifact path matches the VitePress default output for `book/`.
-
-## Execution Handoff
-
-Plan complete and saved to `docs/superpowers/plans/2026-07-07-web3-frontend-to-fullstack-guide.md`. Two execution options:
-
-**1. Subagent-Driven (recommended)** - I dispatch a fresh subagent per task, review between tasks, fast iteration
-
-**2. Inline Execution** - Execute tasks in this session using executing-plans, batch execution with checkpoints
-
-Which approach?
+- The validator scope names used in run commands exactly match the scope names defined in `scripts/validate-book.mjs`.
+- Canonical chapter route names are consistent between the VitePress config, validator, canonical pages, and legacy transition pages.
+- Volume directory names in the file structure match the route names used throughout the plan.

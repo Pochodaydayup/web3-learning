@@ -1,62 +1,30 @@
 # Web3 Learning Book
 
-一个面向已经做过 dApp 的前端开发者的中文 Web3 全栈学习手册，重点覆盖：
+一个面向已经做过 dApp 的前端开发者的中文 Web3 长期学习型书籍仓库。
 
-- Solidity 与状态模型
-- EVM 与 Gas
-- 合约安全
-- 工程化与测试
-- 协议源码阅读
-- 项目实战路线
+当前仓库已经进入“书籍模式”：
 
-站点使用 `VitePress` 构建，目标部署平台为 `GitHub Pages`。
+- VitePress 站点已升级为“卷 -> 章 -> 节”的结构
+- 主干路径覆盖 Solidity、Foundry、EVM、Gas、安全、底层原理、DeFi、协议源码与训练计划
+- 每章都配有练习题、项目实践和延伸阅读入口
+- 旧路径保留为过渡页，方便从早期目录跳转到新书结构
 
 ## 本地开发
 
-安装依赖：
-
-```bash
-npm install
-```
-
-启动本地开发站点：
-
-```bash
-npm run docs:dev
-```
+- `npm install`
+- `npm run docs:dev`
 
 ## 本地校验
 
-结构校验：
+- `npm run docs:check`
+- `npm run docs:build`
+- `npm run docs:preview`
 
-```bash
-npm run docs:check
-```
-
-生产构建：
-
-```bash
-npm run docs:build
-```
-
-本地预览构建产物：
-
-```bash
-npm run docs:preview
-```
-
-## 部署到 GitHub Pages
-
-1. 将当前目录推送到名为 `web3-learning` 的 GitHub 仓库。
-2. 打开仓库设置中的 `Pages`。
-3. 将部署来源设置为 `GitHub Actions`。
-4. 后续每次 push 到 `main`，工作流都会自动构建并部署。
-
-如果你的实际仓库名不是 `web3-learning`，需要同步修改 [book/.vitepress/config.ts](/Users/zm00138ml/work/AI/web3-learning/book/.vitepress/config.ts) 里的 `base` 配置。
-
-## 内容目录
+## 目录说明
 
 - `book/`：书的正文与 VitePress 配置
+- `book/part-*`：卷级目录
+- `book/part-*/chapter-*`：章节与练习支持页
 - `scripts/validate-book.mjs`：章节结构校验脚本
 - `.github/workflows/deploy.yml`：GitHub Pages 自动部署工作流
-- `docs/superpowers/`：本次生成的设计与实现计划记录
+- `docs/superpowers/`：本次设计与执行计划记录

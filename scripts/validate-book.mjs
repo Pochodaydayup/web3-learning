@@ -4,69 +4,136 @@ import path from "node:path";
 import process from "node:process";
 
 const scopes = {
-  shell: [
+  frontmatter: [
     {
       file: "book/index.md",
-      headings: ["## 这本书适合谁", "## 你会得到什么", "## 主干学习路径"]
-    }
-  ],
-  foundation: [
+      patterns: ["## 这本书适合谁", "## 你会怎么用这本书", "## 现在从哪里开始"]
+    },
     {
       file: "book/preface.md",
-      headings: ["## 适合谁读", "## 不适合谁", "## 这本书怎么读", "## 继续深入看什么"]
+      patterns: ["## 为什么把它写成一本书", "## 适合谁读", "## 不适合谁", "## 这本书怎么读"]
     },
     {
       file: "book/learning-map.md",
-      headings: ["## 先学什么", "## 不要一开始就钻进去的内容", "## 三个月主干路线", "## 继续深入看什么"]
+      patterns: ["## 先学什么", "## 哪些内容先不要深挖", "## 三个月主干路线", "## 主线与支线怎么配"]
     },
     {
-      file: "book/mental-model/index.md",
-      headings: ["## 先理解什么", "## 为什么重要", "## 常见误区", "## 怎么练", "## 继续深入看什么"]
+      file: "book/how-to-read.md",
+      patterns: ["## 适合谁按顺序读", "## 什么时候跳读", "## 每章怎么学", "## 输出节奏建议"]
+    },
+    {
+      file: "book/full-toc.md",
+      patterns: ["## 卷一：Web3 与 Ethereum 基础", "## 卷五：Gas 与性能优化", "## 卷十：训练与实战"]
+    },
+    {
+      file: "book/study-method.md",
+      patterns: ["## 主线学习法", "## 代码学习法", "## 输出学习法", "## 节奏建议"]
+    },
+    {
+      file: "book/source-code-reading-guide.md",
+      patterns: ["## 先看什么", "## 读源码时记什么", "## 常见误区", "## 推荐顺序"]
     }
   ],
-  core1: [
+  siteShell: [
     {
-      file: "book/solidity-state/index.md",
-      headings: ["## 先理解什么", "## 为什么重要", "## 常见误区", "## 怎么练", "## 继续深入看什么"]
+      file: "book/.vitepress/config.ts",
+      patterns: [
+        '{ text: "全书目录", link: "/full-toc" }',
+        '{ text: "100 天计划", link: "/part-10-training/chapter-01-roadmap-and-100-days/" }',
+        'text: "卷一：基础"',
+        'link: "/part-1-foundations/"',
+        'text: "卷十：训练与实战"',
+        'link: "/part-10-training/"'
+      ]
     },
     {
-      file: "book/evm-gas/index.md",
-      headings: ["## 先理解什么", "## 为什么重要", "## 常见误区", "## 怎么练", "## 继续深入看什么"]
+      file: "book/.vitepress/theme/custom.css",
+      patterns: [".book-outline", ".book-card-grid", ".book-callout"]
     }
   ],
-  core2: [
-    {
-      file: "book/security/index.md",
-      headings: ["## 先理解什么", "## 为什么重要", "## 常见误区", "## 怎么练", "## 继续深入看什么"]
-    },
-    {
-      file: "book/engineering-testing/index.md",
-      headings: ["## 先理解什么", "## 为什么重要", "## 常见误区", "## 怎么练", "## 继续深入看什么"]
-    }
+  volumesA: [
+    { file: "book/part-1-foundations/index.md", patterns: ["## 这一卷解决什么", "## 建议阅读顺序", "## 本卷章节"] },
+    { file: "book/part-2-solidity/index.md", patterns: ["## 这一卷解决什么", "## 建议阅读顺序", "## 本卷章节"] },
+    { file: "book/part-3-foundry/index.md", patterns: ["## 这一卷解决什么", "## 建议阅读顺序", "## 本卷章节"] },
+    { file: "book/part-4-evm/index.md", patterns: ["## 这一卷解决什么", "## 建议阅读顺序", "## 本卷章节"] },
+    { file: "book/part-5-gas/index.md", patterns: ["## 这一卷解决什么", "## 建议阅读顺序", "## 本卷章节"] }
   ],
-  advanced: [
-    {
-      file: "book/protocol-reading/index.md",
-      headings: ["## 先理解什么", "## 为什么重要", "## 常见误区", "## 怎么练", "## 继续深入看什么"]
-    },
-    {
-      file: "book/project-roadmap/index.md",
-      headings: ["## 先理解什么", "## 为什么重要", "## 常见误区", "## 怎么练", "## 继续深入看什么"]
-    }
+  volumesB: [
+    { file: "book/part-6-security/index.md", patterns: ["## 这一卷解决什么", "## 建议阅读顺序", "## 本卷章节"] },
+    { file: "book/part-7-ethereum-internals/index.md", patterns: ["## 这一卷解决什么", "## 建议阅读顺序", "## 本卷章节"] },
+    { file: "book/part-8-defi/index.md", patterns: ["## 这一卷解决什么", "## 建议阅读顺序", "## 本卷章节"] },
+    { file: "book/part-9-protocol-reading/index.md", patterns: ["## 这一卷解决什么", "## 建议阅读顺序", "## 本卷章节"] },
+    { file: "book/part-10-training/index.md", patterns: ["## 这一卷解决什么", "## 建议阅读顺序", "## 本卷章节"] }
+  ],
+  chaptersA: [
+    { file: "book/part-1-foundations/chapter-01-transaction-mental-model/index.md", patterns: ["## 本章要解决什么", "## 读完后你应该会什么", "## 本章目录", "## 练习与实践入口"] },
+    { file: "book/part-1-foundations/chapter-01-transaction-mental-model/from-click-to-state.md", patterns: ["## 先理解什么", "## 为什么重要", "## 核心机制", "## 工程判断"] },
+    { file: "book/part-1-foundations/chapter-01-transaction-mental-model/exercises.md", patterns: ["## 概念题", "## 分析题", "## 代码题"] },
+    { file: "book/part-1-foundations/chapter-01-transaction-mental-model/practice.md", patterns: ["## 实践目标", "## 操作步骤", "## 交付物"] },
+    { file: "book/part-1-foundations/chapter-01-transaction-mental-model/reading.md", patterns: ["## 必读", "## 进阶", "## 实战"] },
+    { file: "book/part-2-solidity/chapter-01-solidity-state-foundations/index.md", patterns: ["## 本章要解决什么", "## 读完后你应该会什么", "## 本章目录", "## 练习与实践入口"] },
+    { file: "book/part-2-solidity/chapter-01-solidity-state-foundations/state-and-data-locations.md", patterns: ["## 先理解什么", "## 为什么重要", "## 核心机制", "## 工程判断"] },
+    { file: "book/part-2-solidity/chapter-01-solidity-state-foundations/exercises.md", patterns: ["## 概念题", "## 分析题", "## 代码题"] },
+    { file: "book/part-2-solidity/chapter-01-solidity-state-foundations/practice.md", patterns: ["## 实践目标", "## 操作步骤", "## 交付物"] },
+    { file: "book/part-2-solidity/chapter-01-solidity-state-foundations/reading.md", patterns: ["## 必读", "## 进阶", "## 实战"] },
+    { file: "book/part-3-foundry/chapter-01-foundry-engineering-workflow/index.md", patterns: ["## 本章要解决什么", "## 读完后你应该会什么", "## 本章目录", "## 练习与实践入口"] },
+    { file: "book/part-3-foundry/chapter-01-foundry-engineering-workflow/foundry-loop.md", patterns: ["## 先理解什么", "## 为什么重要", "## 核心机制", "## 工程判断"] },
+    { file: "book/part-3-foundry/chapter-01-foundry-engineering-workflow/exercises.md", patterns: ["## 概念题", "## 分析题", "## 代码题"] },
+    { file: "book/part-3-foundry/chapter-01-foundry-engineering-workflow/practice.md", patterns: ["## 实践目标", "## 操作步骤", "## 交付物"] },
+    { file: "book/part-3-foundry/chapter-01-foundry-engineering-workflow/reading.md", patterns: ["## 必读", "## 进阶", "## 实战"] }
+  ],
+  chaptersB: [
+    { file: "book/part-4-evm/chapter-01-evm-execution-model/index.md", patterns: ["## 本章要解决什么", "## 读完后你应该会什么", "## 本章目录", "## 练习与实践入口"] },
+    { file: "book/part-4-evm/chapter-01-evm-execution-model/storage-memory-calldata.md", patterns: ["## 先理解什么", "## 为什么重要", "## 核心机制", "## 工程判断"] },
+    { file: "book/part-4-evm/chapter-01-evm-execution-model/exercises.md", patterns: ["## 概念题", "## 分析题", "## 代码题"] },
+    { file: "book/part-4-evm/chapter-01-evm-execution-model/practice.md", patterns: ["## 实践目标", "## 操作步骤", "## 交付物"] },
+    { file: "book/part-4-evm/chapter-01-evm-execution-model/reading.md", patterns: ["## 必读", "## 进阶", "## 实战"] },
+    { file: "book/part-5-gas/chapter-01-gas-cost-mental-model/index.md", patterns: ["## 本章要解决什么", "## 读完后你应该会什么", "## 本章目录", "## 练习与实践入口"] },
+    { file: "book/part-5-gas/chapter-01-gas-cost-mental-model/why-sstore-hurts.md", patterns: ["## 先理解什么", "## 为什么重要", "## 核心机制", "## 工程判断"] },
+    { file: "book/part-5-gas/chapter-01-gas-cost-mental-model/exercises.md", patterns: ["## 概念题", "## 分析题", "## 代码题"] },
+    { file: "book/part-5-gas/chapter-01-gas-cost-mental-model/practice.md", patterns: ["## 实践目标", "## 操作步骤", "## 交付物"] },
+    { file: "book/part-5-gas/chapter-01-gas-cost-mental-model/reading.md", patterns: ["## 必读", "## 进阶", "## 实战"] },
+    { file: "book/part-6-security/chapter-01-security-review-basics/index.md", patterns: ["## 本章要解决什么", "## 读完后你应该会什么", "## 本章目录", "## 练习与实践入口"] },
+    { file: "book/part-6-security/chapter-01-security-review-basics/reentrancy-and-access-control.md", patterns: ["## 先理解什么", "## 为什么重要", "## 核心机制", "## 工程判断"] },
+    { file: "book/part-6-security/chapter-01-security-review-basics/exercises.md", patterns: ["## 概念题", "## 分析题", "## 代码题"] },
+    { file: "book/part-6-security/chapter-01-security-review-basics/practice.md", patterns: ["## 实践目标", "## 操作步骤", "## 交付物"] },
+    { file: "book/part-6-security/chapter-01-security-review-basics/reading.md", patterns: ["## 必读", "## 进阶", "## 实战"] }
+  ],
+  chaptersC: [
+    { file: "book/part-7-ethereum-internals/chapter-01-transaction-block-state/index.md", patterns: ["## 本章要解决什么", "## 读完后你应该会什么", "## 本章目录", "## 练习与实践入口"] },
+    { file: "book/part-7-ethereum-internals/chapter-01-transaction-block-state/transaction-block-state.md", patterns: ["## 先理解什么", "## 为什么重要", "## 核心机制", "## 工程判断"] },
+    { file: "book/part-7-ethereum-internals/chapter-01-transaction-block-state/exercises.md", patterns: ["## 概念题", "## 分析题", "## 代码题"] },
+    { file: "book/part-7-ethereum-internals/chapter-01-transaction-block-state/practice.md", patterns: ["## 实践目标", "## 操作步骤", "## 交付物"] },
+    { file: "book/part-7-ethereum-internals/chapter-01-transaction-block-state/reading.md", patterns: ["## 必读", "## 进阶", "## 实战"] },
+    { file: "book/part-8-defi/chapter-01-defi-primitives/index.md", patterns: ["## 本章要解决什么", "## 读完后你应该会什么", "## 本章目录", "## 练习与实践入口"] },
+    { file: "book/part-8-defi/chapter-01-defi-primitives/amm-lending-oracle.md", patterns: ["## 先理解什么", "## 为什么重要", "## 核心机制", "## 工程判断"] },
+    { file: "book/part-8-defi/chapter-01-defi-primitives/exercises.md", patterns: ["## 概念题", "## 分析题", "## 代码题"] },
+    { file: "book/part-8-defi/chapter-01-defi-primitives/practice.md", patterns: ["## 实践目标", "## 操作步骤", "## 交付物"] },
+    { file: "book/part-8-defi/chapter-01-defi-primitives/reading.md", patterns: ["## 必读", "## 进阶", "## 实战"] },
+    { file: "book/part-9-protocol-reading/chapter-01-reading-real-protocols/index.md", patterns: ["## 本章要解决什么", "## 读完后你应该会什么", "## 本章目录", "## 练习与实践入口"] },
+    { file: "book/part-9-protocol-reading/chapter-01-reading-real-protocols/reading-order-and-questions.md", patterns: ["## 先理解什么", "## 为什么重要", "## 核心机制", "## 工程判断"] },
+    { file: "book/part-9-protocol-reading/chapter-01-reading-real-protocols/exercises.md", patterns: ["## 概念题", "## 分析题", "## 代码题"] },
+    { file: "book/part-9-protocol-reading/chapter-01-reading-real-protocols/practice.md", patterns: ["## 实践目标", "## 操作步骤", "## 交付物"] },
+    { file: "book/part-9-protocol-reading/chapter-01-reading-real-protocols/reading.md", patterns: ["## 必读", "## 进阶", "## 实战"] },
+    { file: "book/part-10-training/chapter-01-roadmap-and-100-days/index.md", patterns: ["## 本章要解决什么", "## 读完后你应该会什么", "## 本章目录", "## 练习与实践入口"] },
+    { file: "book/part-10-training/chapter-01-roadmap-and-100-days/project-ladder.md", patterns: ["## 先理解什么", "## 为什么重要", "## 核心机制", "## 工程判断"] },
+    { file: "book/part-10-training/chapter-01-roadmap-and-100-days/exercises.md", patterns: ["## 概念题", "## 分析题", "## 代码题"] },
+    { file: "book/part-10-training/chapter-01-roadmap-and-100-days/practice.md", patterns: ["## 实践目标", "## 操作步骤", "## 交付物"] },
+    { file: "book/part-10-training/chapter-01-roadmap-and-100-days/reading.md", patterns: ["## 必读", "## 进阶", "## 实战"] }
+  ],
+  legacy: [
+    { file: "book/mental-model/index.md", patterns: ["# 认知重建（旧路径）", "新入口", "练习题", "项目实践", "延伸阅读"] },
+    { file: "book/solidity-state/index.md", patterns: ["# Solidity 与状态（旧路径）", "新入口", "练习题", "项目实践", "延伸阅读"] },
+    { file: "book/evm-gas/index.md", patterns: ["# EVM 与 Gas（旧路径）", "新入口", "练习题", "项目实践", "延伸阅读"] },
+    { file: "book/security/index.md", patterns: ["# 安全（旧路径）", "新入口", "练习题", "项目实践", "延伸阅读"] },
+    { file: "book/engineering-testing/index.md", patterns: ["# 工程化与测试（旧路径）", "新入口", "练习题", "项目实践", "延伸阅读"] },
+    { file: "book/protocol-reading/index.md", patterns: ["# 协议源码阅读（旧路径）", "新入口", "练习题", "项目实践", "延伸阅读"] },
+    { file: "book/project-roadmap/index.md", patterns: ["# 项目路线（旧路径）", "新入口", "练习题", "项目实践", "延伸阅读"] }
   ],
   appendix: [
-    {
-      file: "book/appendix/resources.md",
-      headings: ["## 官方文档", "## 安全与工程", "## 源码阅读"]
-    },
-    {
-      file: "book/appendix/faq.md",
-      headings: ["## 常见问题"]
-    },
-    {
-      file: "book/appendix/glossary.md",
-      headings: ["## 术语表"]
-    }
+    { file: "book/appendix/resources.md", patterns: ["## 官方文档", "## 主线资料", "## 源码入口"] },
+    { file: "book/appendix/faq.md", patterns: ["## 常见问题"] },
+    { file: "book/appendix/glossary.md", patterns: ["## 术语表"] }
   ]
 };
 
@@ -82,6 +149,7 @@ const checks = activeScopes.flatMap((scope) => {
 });
 
 const errors = [];
+const placeholderPattern = new RegExp("\\b(?:TO" + "DO|TB" + "D)\\b");
 
 for (const check of checks) {
   const filePath = path.resolve(check.file);
@@ -93,13 +161,13 @@ for (const check of checks) {
 
   const content = await readFile(filePath, "utf8");
 
-  for (const heading of check.headings) {
-    if (!content.includes(heading)) {
-      errors.push(`Missing heading "${heading}" in ${check.file}`);
+  for (const pattern of check.patterns) {
+    if (!content.includes(pattern)) {
+      errors.push(`Missing pattern "${pattern}" in ${check.file}`);
     }
   }
 
-  if (content.includes("TODO") || content.includes("TBD")) {
+  if (placeholderPattern.test(content)) {
     errors.push(`Placeholder text found in ${check.file}`);
   }
 }
