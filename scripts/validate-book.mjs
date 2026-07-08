@@ -1,5 +1,5 @@
 import { existsSync } from "node:fs";
-import { readFile } from "node:fs/promises";
+import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
 
@@ -511,7 +511,19 @@ const scopes = {
   appendix: [
     { file: "book/appendix/resources.md", patterns: ["## 官方文档", "## 主线资料", "## 源码入口"] },
     { file: "book/appendix/faq.md", patterns: ["## 常见问题"] },
-    { file: "book/appendix/glossary.md", patterns: ["## 术语表"] }
+    {
+      file: "book/appendix/glossary.md",
+      patterns: [
+        "## 账户与交易",
+        "## Solidity 与合约结构",
+        "## EVM 与执行",
+        "## Gas 与性能",
+        "## 安全与权限",
+        "## 链与底层网络",
+        "## DeFi 与协议机制",
+        "## 工程化与训练"
+      ]
+    }
   ]
 };
 
@@ -525,6 +537,55 @@ const checks = activeScopes.flatMap((scope) => {
 
   return scopes[scope];
 });
+
+async function getChapterIndexFiles() {
+  const bookDir = path.resolve("book");
+  const entries = await readdir(bookDir, { withFileTypes: true });
+  const files = [];
+
+  for (const entry of entries) {
+    if (!entry.isDirectory() || !/^part-\d+-/.test(entry.name)) {
+      continue;
+    }
+
+    const partDir = path.join(bookDir, entry.name);
+    const chapterEntries = await readdir(partDir, { withFileTypes: true });
+
+    for (const chapterEntry of chapterEntries) {
+      if (!chapterEntry.isDirectory() || !/^chapter-\d+-/.test(chapterEntry.name)) {
+        continue;
+      }
+
+      files.push(path.join("book", entry.name, chapterEntry.name, "index.md"));
+    }
+  }
+
+  return files.sort();
+}
+
+async function validateConceptHeadings(errors) {
+  const chapterIndexFiles = await getChapterIndexFiles();
+
+  if (chapterIndexFiles.length === 0) {
+    errors.push("No chapter index files found for concept heading validation");
+    return;
+  }
+
+  for (const file of chapterIndexFiles) {
+    const filePath = path.resolve(file);
+
+    if (!existsSync(filePath)) {
+      errors.push(`Missing file: ${file}`);
+      continue;
+    }
+
+    const content = await readFile(filePath, "utf8");
+
+    if (!content.includes("## 本章核心概念")) {
+      errors.push(`Missing pattern "## 本章核心概念" in ${file}`);
+    }
+  }
+}
 
 const errors = [];
 const placeholderPattern = new RegExp("\\b(?:TO" + "DO|TB" + "D)\\b");
@@ -549,6 +610,8 @@ for (const check of checks) {
     errors.push(`Placeholder text found in ${check.file}`);
   }
 }
+
+await validateConceptHeadings(errors);
 
 if (errors.length > 0) {
   console.error("Book validation failed:");
