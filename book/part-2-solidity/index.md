@@ -20,7 +20,7 @@
 - [第 1 章 Solidity 与状态基础](./chapter-01-solidity-state-foundations/)
 - [第 2 章 Function、Event、Error 与边界设计](./chapter-02-functions-events-and-errors/)
 - [第 3 章 OpenZeppelin 与标准代币](./chapter-03-openzeppelin-and-standard-tokens/)
-- 第 4 章 升级模式与初始化
+- [第 4 章 升级模式与初始化](./chapter-04-upgradeability-and-initialization/)
 - 第 5 章 合约设计中的状态机思维
 
 这卷读完以后，你应该已经能独立写出结构清晰、边界明确的小型合约，而不是只会调用标准接口。

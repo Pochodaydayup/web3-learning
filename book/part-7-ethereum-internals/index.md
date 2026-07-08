@@ -17,7 +17,7 @@
 - [第 1 章 交易、区块与状态](./chapter-01-transaction-block-state/)
 - [第 2 章 Mempool、重组与最终性](./chapter-02-mempool-reorg-and-finality/)
 - [第 3 章 Trie 与 State Root](./chapter-03-trie-and-state-root/)
-- 第 4 章 Gas Limit、Base Fee 与打包激励
+- [第 4 章 Gas Limit、Base Fee 与打包激励](./chapter-04-gas-limit-base-fee-and-inclusion/)
 - 第 5 章 共识、验证者与最终性基础
 
 这卷不用你先成为底层研究员，但它会让你成为更稳的应用和合约工程师。

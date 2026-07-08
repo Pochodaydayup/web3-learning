@@ -24,7 +24,7 @@
 - [第 1 章 交易心智模型](./chapter-01-transaction-mental-model/)
 - [第 2 章 账户模型与 Nonce](./chapter-02-account-model-and-nonce/)
 - [第 3 章 Gas Fee、Receipt 与 Revert](./chapter-03-gas-fee-and-receipt/)
-- 第 4 章 Event、Log 与链下索引
+- [第 4 章 Event、Log 与链下索引](./chapter-04-events-logs-and-indexing/)
 - 第 5 章 前端状态管理里的链上异步模型
 
 后续章节会继续沿这条主线展开，但第 1 章已经足够承担“认知重建”的入口作用。

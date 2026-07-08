@@ -17,7 +17,7 @@
 - [第 1 章 安全审查基础](./chapter-01-security-review-basics/)
 - [第 2 章 签名、重放与 Delegatecall](./chapter-02-signatures-replay-and-delegatecall/)
 - [第 3 章 Oracle、Flash Loan 与 MEV 风险](./chapter-03-oracle-flash-loan-and-mev/)
-- 第 4 章 升级、代理与初始化风险
+- [第 4 章 升级、代理与初始化风险](./chapter-04-upgrade-proxy-and-init-risks/)
 - 第 5 章 安全测试与审计协作
 
 这卷的目标不是让你“会背漏洞”，而是让你在写代码时天然开始问：这个边界安全吗？
