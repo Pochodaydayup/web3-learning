@@ -19,5 +19,6 @@
 - [第 3 章 Oracle、Flash Loan 与 MEV 风险](./chapter-03-oracle-flash-loan-and-mev/)
 - [第 4 章 升级、代理与初始化风险](./chapter-04-upgrade-proxy-and-init-risks/)
 - [第 5 章 安全测试与审计协作](./chapter-05-security-testing-and-audit-collaboration/)
+- [第 6 章 监控、响应与运营安全](./chapter-06-monitoring-response-and-operational-security/)
 
 这卷的目标不是让你“会背漏洞”，而是让你在写代码时天然开始问：这个边界安全吗？

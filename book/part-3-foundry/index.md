@@ -22,5 +22,6 @@
 - [第 3 章 Script、部署与验证](./chapter-03-scripts-deploy-and-verify/)
 - [第 4 章 调试、Trace 与 Gas 报告](./chapter-04-debugging-trace-and-gas/)
 - [第 5 章 更完整的 CI 与工程自动化](./chapter-05-ci-and-engineering-automation/)
+- [第 6 章 发布管理与多网络交付](./chapter-06-release-management-and-multi-network-delivery/)
 
 这卷的目标不是让你背命令，而是让你形成一种“任何假设都尽快被验证”的工程纪律。

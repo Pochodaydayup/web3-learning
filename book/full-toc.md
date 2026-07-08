@@ -7,6 +7,7 @@
 3. [第 3 章 Gas Fee、Receipt 与 Revert](/part-1-foundations/chapter-03-gas-fee-and-receipt/)
 4. [第 4 章 Event、Log 与链下索引](/part-1-foundations/chapter-04-events-logs-and-indexing/)
 5. [第 5 章 前端状态管理里的链上异步模型](/part-1-foundations/chapter-05-chain-async-state-management/)
+6. [第 6 章 RPC 一致性与多数据源读取](/part-1-foundations/chapter-06-rpc-consistency-and-multi-source-reads/)
 
 ## 卷二：Solidity（从零到高级）
 
@@ -15,6 +16,7 @@
 3. [第 3 章 OpenZeppelin 与标准代币](/part-2-solidity/chapter-03-openzeppelin-and-standard-tokens/)
 4. [第 4 章 升级模式与初始化](/part-2-solidity/chapter-04-upgradeability-and-initialization/)
 5. [第 5 章 合约设计中的状态机思维](/part-2-solidity/chapter-05-state-machine-thinking/)
+6. [第 6 章 模块化、继承与组合](/part-2-solidity/chapter-06-modularity-inheritance-and-composition/)
 
 ## 卷三：Foundry 完整开发指南
 
@@ -23,6 +25,7 @@
 3. [第 3 章 Script、部署与验证](/part-3-foundry/chapter-03-scripts-deploy-and-verify/)
 4. [第 4 章 调试、Trace 与 Gas 报告](/part-3-foundry/chapter-04-debugging-trace-and-gas/)
 5. [第 5 章 更完整的 CI 与工程自动化](/part-3-foundry/chapter-05-ci-and-engineering-automation/)
+6. [第 6 章 发布管理与多网络交付](/part-3-foundry/chapter-06-release-management-and-multi-network-delivery/)
 
 ## 卷四：EVM 原理
 
@@ -31,6 +34,7 @@
 3. [第 3 章 存储布局与 Slot](/part-4-evm/chapter-03-storage-slots-and-layout/)
 4. [第 4 章 低级调用、返回数据与回滚](/part-4-evm/chapter-04-low-level-calls-and-revert-data/)
 5. [第 5 章 字节码、部署代码与运行时代码](/part-4-evm/chapter-05-bytecode-and-selectors/)
+6. [第 6 章 合约创建与部署路径](/part-4-evm/chapter-06-contract-creation-and-deployment-path/)
 
 ## 卷五：Gas 与性能优化
 
@@ -39,6 +43,7 @@
 3. [第 3 章 常见优化手法与收益判断](/part-5-gas/chapter-03-optimization-patterns-and-tradeoffs/)
 4. [第 4 章 批处理、循环与复杂度](/part-5-gas/chapter-04-batching-loops-and-complexity/)
 5. [第 5 章 可读性、可维护性与优化取舍](/part-5-gas/chapter-05-readability-maintainability-and-tradeoffs/)
+6. [第 6 章 测量、剖析与基准测试](/part-5-gas/chapter-06-measuring-profiling-and-benchmarking/)
 
 ## 卷六：智能合约安全
 
@@ -47,6 +52,7 @@
 3. [第 3 章 Oracle、Flash Loan 与 MEV 风险](/part-6-security/chapter-03-oracle-flash-loan-and-mev/)
 4. [第 4 章 升级、代理与初始化风险](/part-6-security/chapter-04-upgrade-proxy-and-init-risks/)
 5. [第 5 章 安全测试与审计协作](/part-6-security/chapter-05-security-testing-and-audit-collaboration/)
+6. [第 6 章 监控、响应与运营安全](/part-6-security/chapter-06-monitoring-response-and-operational-security/)
 
 ## 卷七：Ethereum 底层原理
 
@@ -55,6 +61,7 @@
 3. [第 3 章 Trie 与 State Root](/part-7-ethereum-internals/chapter-03-trie-and-state-root/)
 4. [第 4 章 Gas Limit、Base Fee 与打包激励](/part-7-ethereum-internals/chapter-04-gas-limit-base-fee-and-inclusion/)
 5. [第 5 章 共识、验证者与最终性基础](/part-7-ethereum-internals/chapter-05-consensus-validators-and-finality/)
+6. [第 6 章 客户端、同步与数据可用性](/part-7-ethereum-internals/chapter-06-clients-sync-and-data-availability/)
 
 ## 卷八：DeFi 原理
 
@@ -63,6 +70,7 @@
 3. [第 3 章 借贷、抵押与清算](/part-8-defi/chapter-03-lending-collateral-and-liquidation/)
 4. [第 4 章 Oracle、TWAP 与价格操纵](/part-8-defi/chapter-04-oracle-twap-and-manipulation/)
 5. [第 5 章 MEV、套利与协议设计约束](/part-8-defi/chapter-05-mev-arbitrage-and-protocol-constraints/)
+6. [第 6 章 稳定币、锚定与系统性风险](/part-8-defi/chapter-06-stablecoins-peg-and-systemic-risk/)
 
 ## 卷九：协议源码阅读
 
@@ -71,6 +79,7 @@
 3. [第 3 章 阅读 Uniswap V2](/part-9-protocol-reading/chapter-03-reading-uniswap-v2/)
 4. [第 4 章 Aave 借贷主线阅读法](/part-9-protocol-reading/chapter-04-reading-aave/)
 5. [第 5 章 EigenLayer 与复杂系统阅读策略](/part-9-protocol-reading/chapter-05-reading-eigenlayer/)
+6. [第 6 章 阅读 Uniswap V3](/part-9-protocol-reading/chapter-06-reading-uniswap-v3/)
 
 ## 卷十：训练与实战
 
@@ -79,3 +88,4 @@
 3. [第 3 章 项目复盘与作品资产化](/part-10-training/chapter-03-project-review-and-portfolio/)
 4. [第 4 章 作品集与源码笔记仓库](/part-10-training/chapter-04-portfolio-and-notes-repository/)
 5. [第 5 章 持续迭代的长期学习系统](/part-10-training/chapter-05-long-term-learning-system/)
+6. [第 6 章 协作、简历与求职路径](/part-10-training/chapter-06-collaboration-resume-and-job-search/)

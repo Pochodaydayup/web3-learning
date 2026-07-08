@@ -26,5 +26,6 @@
 - [第 3 章 Gas Fee、Receipt 与 Revert](./chapter-03-gas-fee-and-receipt/)
 - [第 4 章 Event、Log 与链下索引](./chapter-04-events-logs-and-indexing/)
 - [第 5 章 前端状态管理里的链上异步模型](./chapter-05-chain-async-state-management/)
+- [第 6 章 RPC 一致性与多数据源读取](./chapter-06-rpc-consistency-and-multi-source-reads/)
 
 后续章节会继续沿这条主线展开，但第 1 章已经足够承担“认知重建”的入口作用。
