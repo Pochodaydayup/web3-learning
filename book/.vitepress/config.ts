@@ -44,7 +44,8 @@ export default defineConfig({
         items: [
           { text: "卷一导读", link: "/part-1-foundations/" },
           { text: "第 1 章 交易心智模型", link: "/part-1-foundations/chapter-01-transaction-mental-model/" },
-          { text: "第 2 章 账户模型与 Nonce", link: "/part-1-foundations/chapter-02-account-model-and-nonce/" }
+          { text: "第 2 章 账户模型与 Nonce", link: "/part-1-foundations/chapter-02-account-model-and-nonce/" },
+          { text: "第 3 章 Gas Fee、Receipt 与 Revert", link: "/part-1-foundations/chapter-03-gas-fee-and-receipt/" }
         ]
       },
       {
@@ -52,7 +53,8 @@ export default defineConfig({
         items: [
           { text: "卷二导读", link: "/part-2-solidity/" },
           { text: "第 1 章 Solidity 与状态基础", link: "/part-2-solidity/chapter-01-solidity-state-foundations/" },
-          { text: "第 2 章 Function、Event、Error 与边界设计", link: "/part-2-solidity/chapter-02-functions-events-and-errors/" }
+          { text: "第 2 章 Function、Event、Error 与边界设计", link: "/part-2-solidity/chapter-02-functions-events-and-errors/" },
+          { text: "第 3 章 OpenZeppelin 与标准代币", link: "/part-2-solidity/chapter-03-openzeppelin-and-standard-tokens/" }
         ]
       },
       {
@@ -60,7 +62,8 @@ export default defineConfig({
         items: [
           { text: "卷三导读", link: "/part-3-foundry/" },
           { text: "第 1 章 Foundry 工程工作流", link: "/part-3-foundry/chapter-01-foundry-engineering-workflow/" },
-          { text: "第 2 章 Forge Test、Fuzz 与 Fork", link: "/part-3-foundry/chapter-02-testing-fuzz-and-fork/" }
+          { text: "第 2 章 Forge Test、Fuzz 与 Fork", link: "/part-3-foundry/chapter-02-testing-fuzz-and-fork/" },
+          { text: "第 3 章 Script、部署与验证", link: "/part-3-foundry/chapter-03-scripts-deploy-and-verify/" }
         ]
       },
       {
@@ -68,7 +71,8 @@ export default defineConfig({
         items: [
           { text: "卷四导读", link: "/part-4-evm/" },
           { text: "第 1 章 EVM 执行模型", link: "/part-4-evm/chapter-01-evm-execution-model/" },
-          { text: "第 2 章 Opcode 与调用上下文", link: "/part-4-evm/chapter-02-call-context-and-opcodes/" }
+          { text: "第 2 章 Opcode 与调用上下文", link: "/part-4-evm/chapter-02-call-context-and-opcodes/" },
+          { text: "第 3 章 存储布局与 Slot", link: "/part-4-evm/chapter-03-storage-slots-and-layout/" }
         ]
       },
       {
@@ -76,7 +80,8 @@ export default defineConfig({
         items: [
           { text: "卷五导读", link: "/part-5-gas/" },
           { text: "第 1 章 Gas 成本心智模型", link: "/part-5-gas/chapter-01-gas-cost-mental-model/" },
-          { text: "第 2 章 Storage 布局与 Packing", link: "/part-5-gas/chapter-02-storage-layout-and-packing/" }
+          { text: "第 2 章 Storage 布局与 Packing", link: "/part-5-gas/chapter-02-storage-layout-and-packing/" },
+          { text: "第 3 章 常见优化手法与收益判断", link: "/part-5-gas/chapter-03-optimization-patterns-and-tradeoffs/" }
         ]
       },
       {
@@ -84,7 +89,8 @@ export default defineConfig({
         items: [
           { text: "卷六导读", link: "/part-6-security/" },
           { text: "第 1 章 安全审查基础", link: "/part-6-security/chapter-01-security-review-basics/" },
-          { text: "第 2 章 签名、重放与 Delegatecall", link: "/part-6-security/chapter-02-signatures-replay-and-delegatecall/" }
+          { text: "第 2 章 签名、重放与 Delegatecall", link: "/part-6-security/chapter-02-signatures-replay-and-delegatecall/" },
+          { text: "第 3 章 Oracle、Flash Loan 与 MEV 风险", link: "/part-6-security/chapter-03-oracle-flash-loan-and-mev/" }
         ]
       },
       {
@@ -92,7 +98,8 @@ export default defineConfig({
         items: [
           { text: "卷七导读", link: "/part-7-ethereum-internals/" },
           { text: "第 1 章 交易、区块与状态", link: "/part-7-ethereum-internals/chapter-01-transaction-block-state/" },
-          { text: "第 2 章 Mempool、重组与最终性", link: "/part-7-ethereum-internals/chapter-02-mempool-reorg-and-finality/" }
+          { text: "第 2 章 Mempool、重组与最终性", link: "/part-7-ethereum-internals/chapter-02-mempool-reorg-and-finality/" },
+          { text: "第 3 章 Trie 与 State Root", link: "/part-7-ethereum-internals/chapter-03-trie-and-state-root/" }
         ]
       },
       {
@@ -100,7 +107,8 @@ export default defineConfig({
         items: [
           { text: "卷八导读", link: "/part-8-defi/" },
           { text: "第 1 章 DeFi 基础积木", link: "/part-8-defi/chapter-01-defi-primitives/" },
-          { text: "第 2 章 AMM 与流动性池设计", link: "/part-8-defi/chapter-02-amm-design/" }
+          { text: "第 2 章 AMM 与流动性池设计", link: "/part-8-defi/chapter-02-amm-design/" },
+          { text: "第 3 章 借贷、抵押与清算", link: "/part-8-defi/chapter-03-lending-collateral-and-liquidation/" }
         ]
       },
       {
@@ -108,7 +116,8 @@ export default defineConfig({
         items: [
           { text: "卷九导读", link: "/part-9-protocol-reading/" },
           { text: "第 1 章 如何读真实协议", link: "/part-9-protocol-reading/chapter-01-reading-real-protocols/" },
-          { text: "第 2 章 OpenZeppelin 阅读法", link: "/part-9-protocol-reading/chapter-02-reading-openzeppelin/" }
+          { text: "第 2 章 OpenZeppelin 阅读法", link: "/part-9-protocol-reading/chapter-02-reading-openzeppelin/" },
+          { text: "第 3 章 阅读 Uniswap V2", link: "/part-9-protocol-reading/chapter-03-reading-uniswap-v2/" }
         ]
       },
       {
@@ -116,7 +125,8 @@ export default defineConfig({
         items: [
           { text: "卷十导读", link: "/part-10-training/" },
           { text: "第 1 章 项目路线与 100 天计划", link: "/part-10-training/chapter-01-roadmap-and-100-days/" },
-          { text: "第 2 章 面试题系统与输出节奏", link: "/part-10-training/chapter-02-interview-system-and-output/" }
+          { text: "第 2 章 面试题系统与输出节奏", link: "/part-10-training/chapter-02-interview-system-and-output/" },
+          { text: "第 3 章 项目复盘与作品资产化", link: "/part-10-training/chapter-03-project-review-and-portfolio/" }
         ]
       },
       {

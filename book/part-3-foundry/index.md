@@ -19,8 +19,8 @@
 
 - [第 1 章 Foundry 工程工作流](./chapter-01-foundry-engineering-workflow/)
 - [第 2 章 Forge Test、Fuzz 与 Fork](./chapter-02-testing-fuzz-and-fork/)
-- 第 3 章 Fork Test 与真实协议联调
-- 第 4 章 Script、部署与验证
-- 第 5 章 调试、Trace 与 Gas 报告
+- [第 3 章 Script、部署与验证](./chapter-03-scripts-deploy-and-verify/)
+- 第 4 章 调试、Trace 与 Gas 报告
+- 第 5 章 更完整的 CI 与工程自动化
 
 这卷的目标不是让你背命令，而是让你形成一种“任何假设都尽快被验证”的工程纪律。

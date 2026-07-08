@@ -16,7 +16,7 @@
 
 - [第 1 章 DeFi 基础积木](./chapter-01-defi-primitives/)
 - [第 2 章 AMM 与流动性池设计](./chapter-02-amm-design/)
-- 第 3 章 借贷、抵押与清算
+- [第 3 章 借贷、抵押与清算](./chapter-03-lending-collateral-and-liquidation/)
 - 第 4 章 Oracle、TWAP 与价格操纵
 - 第 5 章 MEV、套利与协议设计约束
 

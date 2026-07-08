@@ -16,7 +16,7 @@
 
 - [第 1 章 项目路线与 100 天计划](./chapter-01-roadmap-and-100-days/)
 - [第 2 章 面试题系统与输出节奏](./chapter-02-interview-system-and-output/)
-- 第 3 章 面试题与系统化答题法
+- [第 3 章 项目复盘与作品资产化](./chapter-03-project-review-and-portfolio/)
 - 第 4 章 作品集与源码笔记仓库
 - 第 5 章 持续迭代的长期学习系统
 
