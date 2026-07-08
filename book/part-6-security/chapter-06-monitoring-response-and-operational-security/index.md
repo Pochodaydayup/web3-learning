@@ -13,6 +13,13 @@
 - 在出事前准备应急动作而不是临场 improvisation
 - 用更成熟的方式看待“上线后安全”
 
+## 本章核心概念
+
+- **监控（Monitoring）**：对关键状态、事件和异常行为做持续观察的安全运维机制。
+- **事故响应（Incident Response）**：安全事件发生后用来止损、定位和恢复的处置流程。
+- **密钥管理（Key Management）**：围绕私钥、管理员权限和签名身份的保存与操作规则。
+- **Circuit Breaker**：在异常条件下自动或手动切断高风险路径的保护机制。
+
 ## 本章目录
 
 1. [当安全问题变成运营问题时，团队该怎么活下来](./when-security-becomes-an-operations-problem)
