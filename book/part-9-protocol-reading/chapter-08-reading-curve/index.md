@@ -13,6 +13,13 @@
 - 区分普通 AMM 阅读法和稳定资产池阅读法
 - 写出一份结构清楚的 Curve 源码笔记
 
+## 本章核心概念
+
+- **放大系数（Amplification Coefficient）**：Curve 类稳定曲线用来调整价格敏感度的关键参数。
+- **不变量曲线（Invariant Curve）**：协议用来约束池子状态和报价关系的核心数学曲线。
+- **Virtual Price**：稳定池份额对底层资产价值的内部参考价格。
+- **Imbalance**：池子不同资产储备相对目标配比发生偏离的状态。
+
 ## 本章目录
 
 1. [怎样阅读稳定交换系统](./reading-stableswap-systems)

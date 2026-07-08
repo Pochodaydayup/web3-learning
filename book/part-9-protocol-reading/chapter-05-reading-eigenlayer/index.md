@@ -13,6 +13,13 @@
 - 对 EigenLayer / restaking 这类系统建立最小结构感
 - 把前面学过的源码阅读方法进一步升级
 
+## 本章核心概念
+
+- **Operator**：在 EigenLayer 等系统里代表某类运行职责和风险承诺的执行者角色。
+- **AVS**：基于再质押安全性运行的主动验证服务。
+- **Restaking**：把已有质押安全性重复分配给更多系统使用的机制。
+- **Slashing**：当参与者违背规则时对其质押或安全资本进行惩罚的机制。
+
 ## 本章目录
 
 1. [如何阅读 Restaking 这类复杂系统](./reading-restaking-systems)
