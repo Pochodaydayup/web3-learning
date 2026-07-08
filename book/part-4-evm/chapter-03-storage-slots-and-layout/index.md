@@ -13,6 +13,13 @@
 - 理解为什么布局会影响升级安全和 gas 判断
 - 带着更稳的 storage 直觉去读真实协议源码
 
+## 本章核心概念
+
+- **Slot**：EVM storage 中以 32 字节为单位组织状态的逻辑存储单元。
+- **Packing**：把多个较小变量压进同一个 storage slot 的布局方式。
+- **布局（Layout）**：状态变量在 slot 和偏移上的整体排布规则。
+- **Keccak 派生寻址**：用 keccak 计算复杂状态结构实际存储位置的方式。
+
 ## 本章目录
 
 1. [状态布局怎样映射到 slot](./how-layout-maps-to-slots)

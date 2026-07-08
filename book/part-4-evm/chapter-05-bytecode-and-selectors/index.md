@@ -13,6 +13,13 @@
 - 知道合约调用为什么最终会走到 selector dispatch
 - 在源码、ABI 和字节码之间建立基本映射感
 
+## 本章核心概念
+
+- **Selector**：函数签名哈希前 4 字节构成的调用分发标识。
+- **ABI 编码（ABI Encoding）**：把函数参数和返回值转换成 EVM 可处理字节格式的规则。
+- **Bytecode**：EVM 实际执行的低级字节序列。
+- **分发器（Dispatcher）**：运行时字节码里依据 selector 决定进入哪个函数入口的分发逻辑。
+
 ## 本章目录
 
 1. [从函数签名到运行时代码入口](./from-signature-to-runtime)
