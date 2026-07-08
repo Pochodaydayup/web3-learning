@@ -13,6 +13,13 @@
 - 说明“替换交易”和“取消交易”为什么都依赖同 nonce
 - 把 pending 问题和账户级顺序约束联系起来
 
+## 本章核心概念
+
+- **外部账户（EOA, Externally Owned Account）**：由私钥控制、能够主动发起交易和支付 gas 的账户。
+- **合约账户（Contract Account）**：由链上代码控制、负责执行业务逻辑和保存状态的账户。
+- **Nonce**：账户级递增计数器，用来约束交易顺序并防止简单重放。
+- **账户状态（Account State）**：地址背后真正存放的余额、代码、storage 和 nonce 等信息。
+
 ## 本章目录
 
 1. [账户、Nonce 与顺序约束](./account-nonce-and-ordering)

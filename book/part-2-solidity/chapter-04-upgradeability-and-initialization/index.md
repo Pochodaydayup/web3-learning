@@ -13,6 +13,14 @@
 - 知道存储布局为什么在升级场景下极度敏感
 - 对 Transparent Proxy、UUPS 这类模式建立最基础判断
 
+## 本章核心概念
+
+- **Proxy**：对外稳定存在、负责承接用户调用和保存状态的入口合约。
+- **Implementation**：承载业务逻辑代码、被 proxy 委托执行的实现合约。
+- **Initializer**：替代 constructor 在代理上下文里完成初始化的函数。
+- **Delegatecall**：在当前合约状态上下文中执行另一份代码的低级调用方式。
+- **Storage Layout**：状态变量映射到存储槽位的排列规则，升级时必须保持兼容。
+
 ## 本章目录
 
 1. [Proxy、初始化与存储纪律](./proxy-init-and-storage-discipline)
