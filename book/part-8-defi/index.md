@@ -18,6 +18,6 @@
 - [第 2 章 AMM 与流动性池设计](./chapter-02-amm-design/)
 - [第 3 章 借贷、抵押与清算](./chapter-03-lending-collateral-and-liquidation/)
 - [第 4 章 Oracle、TWAP 与价格操纵](./chapter-04-oracle-twap-and-manipulation/)
-- 第 5 章 MEV、套利与协议设计约束
+- [第 5 章 MEV、套利与协议设计约束](./chapter-05-mev-arbitrage-and-protocol-constraints/)
 
 这一卷的目标，是让你以后看 DeFi 协议时不再只看到“很多函数”，而是能看到资金和状态在怎样流动。

@@ -18,6 +18,6 @@
 - [第 2 章 Opcode 与调用上下文](./chapter-02-call-context-and-opcodes/)
 - [第 3 章 存储布局与 Slot](./chapter-03-storage-slots-and-layout/)
 - [第 4 章 低级调用、返回数据与回滚](./chapter-04-low-level-calls-and-revert-data/)
-- 第 5 章 字节码、部署代码与运行时代码
+- [第 5 章 字节码、部署代码与运行时代码](./chapter-05-bytecode-and-selectors/)
 
 这卷会成为你后面学 Gas、安全和协议源码时的底层参考层。
