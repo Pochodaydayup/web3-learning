@@ -21,5 +21,6 @@ Gas 是很多 Solidity 工程师最早听说、最晚真正理解的主题。你
 - [第 5 章 可读性、可维护性与优化取舍](./chapter-05-readability-maintainability-and-tradeoffs/)
 - [第 6 章 测量、剖析与基准测试](./chapter-06-measuring-profiling-and-benchmarking/)
 - [第 7 章 L1 / L2 费用模型与 Calldata 成本](./chapter-07-l1-l2-fee-models-and-calldata/)
+- [第 8 章 链下计算与成本转移](./chapter-08-offchain-computation-and-cost-shifting/)
 
 这一卷的目标不是让你追求最极致的数字，而是让你知道“为什么这里值得优化，为什么那里不值得”。

@@ -24,5 +24,6 @@
 - [第 5 章 合约设计中的状态机思维](./chapter-05-state-machine-thinking/)
 - [第 6 章 模块化、继承与组合](./chapter-06-modularity-inheritance-and-composition/)
 - [第 7 章 ETH 流转、`receive` 与 `fallback`](./chapter-07-ether-flow-receive-and-fallback/)
+- [第 8 章 迭代、枚举与链上数据结构](./chapter-08-iteration-enumeration-and-onchain-data-structures/)
 
 这卷读完以后，你应该已经能独立写出结构清晰、边界明确的小型合约，而不是只会调用标准接口。

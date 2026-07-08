@@ -24,5 +24,6 @@
 - [第 5 章 更完整的 CI 与工程自动化](./chapter-05-ci-and-engineering-automation/)
 - [第 6 章 发布管理与多网络交付](./chapter-06-release-management-and-multi-network-delivery/)
 - [第 7 章 依赖管理与可复现环境](./chapter-07-dependencies-and-reproducible-environments/)
+- [第 8 章 静态分析、覆盖率与安全工具链](./chapter-08-static-analysis-coverage-and-security-tooling/)
 
 这卷的目标不是让你背命令，而是让你形成一种“任何假设都尽快被验证”的工程纪律。

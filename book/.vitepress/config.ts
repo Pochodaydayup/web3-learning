@@ -49,7 +49,8 @@ export default defineConfig({
           { text: "第 4 章 Event、Log 与链下索引", link: "/part-1-foundations/chapter-04-events-logs-and-indexing/" },
           { text: "第 5 章 前端状态管理里的链上异步模型", link: "/part-1-foundations/chapter-05-chain-async-state-management/" },
           { text: "第 6 章 RPC 一致性与多数据源读取", link: "/part-1-foundations/chapter-06-rpc-consistency-and-multi-source-reads/" },
-          { text: "第 7 章 钱包、Provider、链切换与权限边界", link: "/part-1-foundations/chapter-07-wallet-providers-chain-switching-and-permissions/" }
+          { text: "第 7 章 钱包、Provider、链切换与权限边界", link: "/part-1-foundations/chapter-07-wallet-providers-chain-switching-and-permissions/" },
+          { text: "第 8 章 交易模拟与预检查", link: "/part-1-foundations/chapter-08-transaction-simulation-and-preflight-checks/" }
         ]
       },
       {
@@ -62,7 +63,8 @@ export default defineConfig({
           { text: "第 4 章 升级模式与初始化", link: "/part-2-solidity/chapter-04-upgradeability-and-initialization/" },
           { text: "第 5 章 合约设计中的状态机思维", link: "/part-2-solidity/chapter-05-state-machine-thinking/" },
           { text: "第 6 章 模块化、继承与组合", link: "/part-2-solidity/chapter-06-modularity-inheritance-and-composition/" },
-          { text: "第 7 章 ETH 流转、`receive` 与 `fallback`", link: "/part-2-solidity/chapter-07-ether-flow-receive-and-fallback/" }
+          { text: "第 7 章 ETH 流转、`receive` 与 `fallback`", link: "/part-2-solidity/chapter-07-ether-flow-receive-and-fallback/" },
+          { text: "第 8 章 迭代、枚举与链上数据结构", link: "/part-2-solidity/chapter-08-iteration-enumeration-and-onchain-data-structures/" }
         ]
       },
       {
@@ -75,7 +77,8 @@ export default defineConfig({
           { text: "第 4 章 调试、Trace 与 Gas 报告", link: "/part-3-foundry/chapter-04-debugging-trace-and-gas/" },
           { text: "第 5 章 更完整的 CI 与工程自动化", link: "/part-3-foundry/chapter-05-ci-and-engineering-automation/" },
           { text: "第 6 章 发布管理与多网络交付", link: "/part-3-foundry/chapter-06-release-management-and-multi-network-delivery/" },
-          { text: "第 7 章 依赖管理与可复现环境", link: "/part-3-foundry/chapter-07-dependencies-and-reproducible-environments/" }
+          { text: "第 7 章 依赖管理与可复现环境", link: "/part-3-foundry/chapter-07-dependencies-and-reproducible-environments/" },
+          { text: "第 8 章 静态分析、覆盖率与安全工具链", link: "/part-3-foundry/chapter-08-static-analysis-coverage-and-security-tooling/" }
         ]
       },
       {
@@ -88,7 +91,8 @@ export default defineConfig({
           { text: "第 4 章 低级调用、返回数据与回滚", link: "/part-4-evm/chapter-04-low-level-calls-and-revert-data/" },
           { text: "第 5 章 字节码、部署代码与运行时代码", link: "/part-4-evm/chapter-05-bytecode-and-selectors/" },
           { text: "第 6 章 合约创建与部署路径", link: "/part-4-evm/chapter-06-contract-creation-and-deployment-path/" },
-          { text: "第 7 章 预编译合约与密码学原语", link: "/part-4-evm/chapter-07-precompiles-and-crypto-primitives/" }
+          { text: "第 7 章 预编译合约与密码学原语", link: "/part-4-evm/chapter-07-precompiles-and-crypto-primitives/" },
+          { text: "第 8 章 代码自省、EXTCODE 与 SELFDESTRUCT", link: "/part-4-evm/chapter-08-code-introspection-extcode-and-selfdestruct/" }
         ]
       },
       {
@@ -101,7 +105,8 @@ export default defineConfig({
           { text: "第 4 章 批处理、循环与复杂度", link: "/part-5-gas/chapter-04-batching-loops-and-complexity/" },
           { text: "第 5 章 可读性、可维护性与优化取舍", link: "/part-5-gas/chapter-05-readability-maintainability-and-tradeoffs/" },
           { text: "第 6 章 测量、剖析与基准测试", link: "/part-5-gas/chapter-06-measuring-profiling-and-benchmarking/" },
-          { text: "第 7 章 L1 / L2 费用模型与 Calldata 成本", link: "/part-5-gas/chapter-07-l1-l2-fee-models-and-calldata/" }
+          { text: "第 7 章 L1 / L2 费用模型与 Calldata 成本", link: "/part-5-gas/chapter-07-l1-l2-fee-models-and-calldata/" },
+          { text: "第 8 章 链下计算与成本转移", link: "/part-5-gas/chapter-08-offchain-computation-and-cost-shifting/" }
         ]
       },
       {
@@ -114,7 +119,8 @@ export default defineConfig({
           { text: "第 4 章 升级、代理与初始化风险", link: "/part-6-security/chapter-04-upgrade-proxy-and-init-risks/" },
           { text: "第 5 章 安全测试与审计协作", link: "/part-6-security/chapter-05-security-testing-and-audit-collaboration/" },
           { text: "第 6 章 监控、响应与运营安全", link: "/part-6-security/chapter-06-monitoring-response-and-operational-security/" },
-          { text: "第 7 章 不变量、威胁建模与形式化思维", link: "/part-6-security/chapter-07-invariants-threat-modeling-and-formal-reasoning/" }
+          { text: "第 7 章 不变量、威胁建模与形式化思维", link: "/part-6-security/chapter-07-invariants-threat-modeling-and-formal-reasoning/" },
+          { text: "第 8 章 拒绝服务、Griefing 与活性", link: "/part-6-security/chapter-08-denial-of-service-griefing-and-liveness/" }
         ]
       },
       {
@@ -127,7 +133,8 @@ export default defineConfig({
           { text: "第 4 章 Gas Limit、Base Fee 与打包激励", link: "/part-7-ethereum-internals/chapter-04-gas-limit-base-fee-and-inclusion/" },
           { text: "第 5 章 共识、验证者与最终性基础", link: "/part-7-ethereum-internals/chapter-05-consensus-validators-and-finality/" },
           { text: "第 6 章 客户端、同步与数据可用性", link: "/part-7-ethereum-internals/chapter-06-clients-sync-and-data-availability/" },
-          { text: "第 7 章 Rollup、桥与结算层", link: "/part-7-ethereum-internals/chapter-07-rollups-bridges-and-settlement/" }
+          { text: "第 7 章 Rollup、桥与结算层", link: "/part-7-ethereum-internals/chapter-07-rollups-bridges-and-settlement/" },
+          { text: "第 8 章 MEV、Builder 与区块构造", link: "/part-7-ethereum-internals/chapter-08-mev-builders-and-block-construction/" }
         ]
       },
       {
@@ -140,7 +147,8 @@ export default defineConfig({
           { text: "第 4 章 Oracle、TWAP 与价格操纵", link: "/part-8-defi/chapter-04-oracle-twap-and-manipulation/" },
           { text: "第 5 章 MEV、套利与协议设计约束", link: "/part-8-defi/chapter-05-mev-arbitrage-and-protocol-constraints/" },
           { text: "第 6 章 稳定币、锚定与系统性风险", link: "/part-8-defi/chapter-06-stablecoins-peg-and-systemic-risk/" },
-          { text: "第 7 章 Vault、策略与收益聚合", link: "/part-8-defi/chapter-07-vaults-strategies-and-yield/" }
+          { text: "第 7 章 Vault、策略与收益聚合", link: "/part-8-defi/chapter-07-vaults-strategies-and-yield/" },
+          { text: "第 8 章 永续合约、杠杆与资金费率", link: "/part-8-defi/chapter-08-perpetuals-leverage-and-funding/" }
         ]
       },
       {
@@ -153,7 +161,8 @@ export default defineConfig({
           { text: "第 4 章 Aave 借贷主线阅读法", link: "/part-9-protocol-reading/chapter-04-reading-aave/" },
           { text: "第 5 章 EigenLayer 与复杂系统阅读策略", link: "/part-9-protocol-reading/chapter-05-reading-eigenlayer/" },
           { text: "第 6 章 阅读 Uniswap V3", link: "/part-9-protocol-reading/chapter-06-reading-uniswap-v3/" },
-          { text: "第 7 章 阅读 MakerDAO", link: "/part-9-protocol-reading/chapter-07-reading-makerdao/" }
+          { text: "第 7 章 阅读 MakerDAO", link: "/part-9-protocol-reading/chapter-07-reading-makerdao/" },
+          { text: "第 8 章 阅读 Curve", link: "/part-9-protocol-reading/chapter-08-reading-curve/" }
         ]
       },
       {
@@ -166,7 +175,8 @@ export default defineConfig({
           { text: "第 4 章 作品集与源码笔记仓库", link: "/part-10-training/chapter-04-portfolio-and-notes-repository/" },
           { text: "第 5 章 持续迭代的长期学习系统", link: "/part-10-training/chapter-05-long-term-learning-system/" },
           { text: "第 6 章 协作、简历与求职路径", link: "/part-10-training/chapter-06-collaboration-resume-and-job-search/" },
-          { text: "第 7 章 开源贡献与公开可信度", link: "/part-10-training/chapter-07-open-source-and-public-credibility/" }
+          { text: "第 7 章 开源贡献与公开可信度", link: "/part-10-training/chapter-07-open-source-and-public-credibility/" },
+          { text: "第 8 章 专业化方向与长期定位", link: "/part-10-training/chapter-08-specialization-and-long-term-positioning/" }
         ]
       },
       {

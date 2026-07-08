@@ -21,5 +21,6 @@
 - [第 5 章 字节码、部署代码与运行时代码](./chapter-05-bytecode-and-selectors/)
 - [第 6 章 合约创建与部署路径](./chapter-06-contract-creation-and-deployment-path/)
 - [第 7 章 预编译合约与密码学原语](./chapter-07-precompiles-and-crypto-primitives/)
+- [第 8 章 代码自省、EXTCODE 与 SELFDESTRUCT](./chapter-08-code-introspection-extcode-and-selfdestruct/)
 
 这卷会成为你后面学 Gas、安全和协议源码时的底层参考层。
