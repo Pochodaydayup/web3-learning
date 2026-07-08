@@ -20,5 +20,6 @@
 - [第 4 章 Gas Limit、Base Fee 与打包激励](./chapter-04-gas-limit-base-fee-and-inclusion/)
 - [第 5 章 共识、验证者与最终性基础](./chapter-05-consensus-validators-and-finality/)
 - [第 6 章 客户端、同步与数据可用性](./chapter-06-clients-sync-and-data-availability/)
+- [第 7 章 Rollup、桥与结算层](./chapter-07-rollups-bridges-and-settlement/)
 
 这卷不用你先成为底层研究员，但它会让你成为更稳的应用和合约工程师。

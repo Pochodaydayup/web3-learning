@@ -20,5 +20,6 @@
 - [第 4 章 Aave 借贷主线阅读法](./chapter-04-reading-aave/)
 - [第 5 章 EigenLayer 与复杂系统阅读策略](./chapter-05-reading-eigenlayer/)
 - [第 6 章 阅读 Uniswap V3](./chapter-06-reading-uniswap-v3/)
+- [第 7 章 阅读 MakerDAO](./chapter-07-reading-makerdao/)
 
 这一卷的目标，是把源码阅读变成你的长期学习主干，而不是“偶尔点开看看”。

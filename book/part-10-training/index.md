@@ -20,5 +20,6 @@
 - [第 4 章 作品集与源码笔记仓库](./chapter-04-portfolio-and-notes-repository/)
 - [第 5 章 持续迭代的长期学习系统](./chapter-05-long-term-learning-system/)
 - [第 6 章 协作、简历与求职路径](./chapter-06-collaboration-resume-and-job-search/)
+- [第 7 章 开源贡献与公开可信度](./chapter-07-open-source-and-public-credibility/)
 
 这一卷的重点不是“更努力”，而是“更稳定地把主干路线执行下去”。

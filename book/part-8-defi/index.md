@@ -20,5 +20,6 @@
 - [第 4 章 Oracle、TWAP 与价格操纵](./chapter-04-oracle-twap-and-manipulation/)
 - [第 5 章 MEV、套利与协议设计约束](./chapter-05-mev-arbitrage-and-protocol-constraints/)
 - [第 6 章 稳定币、锚定与系统性风险](./chapter-06-stablecoins-peg-and-systemic-risk/)
+- [第 7 章 Vault、策略与收益聚合](./chapter-07-vaults-strategies-and-yield/)
 
 这一卷的目标，是让你以后看 DeFi 协议时不再只看到“很多函数”，而是能看到资金和状态在怎样流动。
